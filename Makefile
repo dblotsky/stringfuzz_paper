@@ -4,6 +4,9 @@ SECTIONS = $(shell find $(INCLUDES_DIR) -name "*.tex")
 
 paper: $(PAPER)
 
+watch:
+	while true; do make | grep -v "Nothing to be done"; sleep 0.5; done
+
 # real targets
 %.pdf: %.tex $(SECTIONS) %.bib
 	latexmk -pdf -bibtex $<
