@@ -1,5 +1,31 @@
 \section{Introduction}
 
-    Many SMT solvers that support the theory of strings have been developed over the past decade, and several have matured to the point of being performant and practically useful.
+    Many SMT solvers that support the theory of strings have been developed over the past decade, and several have matured to the point of being performant and practically useful. Moreover a standard input language, \smt{} (versions 2, 2.1, and 2.5), has been developed and many mature solvers support it.
 
-    Moreover a standard input language, SMT-LIB, has been developed, and many mature solvers support it.
+    \subsection{Prior Work}
+
+        Other fuzzers exist, but none of them support the theory of strings. We found these:
+
+        \begin{itemize}
+            \item http://fmv.jku.at/ddsmt/
+            \item http://fmv.jku.at/fuzzsmtbv/
+            \item http://fmv.jku.at/fuzzsmt/
+            \item http://fmv.jku.at/deltasmt/
+            \item http://fmv.jku.at/votesmt/
+            \item http://www.verit-solver.org/papers/smt2015.pdf
+            \item http://smt2015.csl.sri.com/wp-content/uploads/2015/07/smt2015-slides-deharbe.pdf
+        \end{itemize}
+
+    \subsection{Contributions}
+
+        In this paper, we present the following contributions:
+
+        \begin{itemize}
+            \item StringFuzzG, a generator of \smt{} string problems
+            \item StringFuzzX, a transformer of \smt{} string problems
+            \item Experiments that show evidence of poor performance in \us{} and \cvc{}
+            \item A recommended fix to \us{} that alleviates the poor performance
+            \item A suite of \smt{} problems
+        \end{itemize}
+
+        In the following sections, we elaborate on each of these items.

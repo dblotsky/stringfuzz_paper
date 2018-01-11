@@ -8,8 +8,18 @@
 \setlength{\pdfpagewidth}{\paperwidth}
 
 % constants
+\def\cvc{CVC4}
+\def\us{Z3Str3}
+\def\fuzzer{StringFuzz}
+\def\generator{StringFuzzG}
+\def\transformer{StringFuzzX}
+\def\smt{SMT-LIB 2.0/2.5}
+
 \def\numSolvers{four}
-\def\theSolvers{Z3str3, Norn, CVC4, and ABC}
+\def\theSolvers{\us{}, Norn, \cvc{}, and ABC}
+
+\def\problemRepo{https://example.com}
+\def\sourceRepo{https://github.com/dblotsky/stringfuzz}
 
 \begin{document}
 
@@ -19,15 +29,15 @@
 
     % title
     \title{
-        StringFuzz: A Fuzzer for String Solvers
+        \fuzzer{}: A Fuzzer for String Solvers
     }
-    \titlerunning{StringFuzz} % abbreviated title (for running head)
+    \titlerunning{\fuzzer{}} % abbreviated title (for running head)
 
     % authors
     \author{
         Dmitry Blotsky\inst{1}\orcidID{0},
         Vijay~Ganesh\inst{2}\orcidID{1} \and
-        Federico Aureliano\inst{1}\orcidID{0}
+        Federico Mora\inst{1}\orcidID{0}
     }
     \authorrunning{Dmitry Blotsky et al.}
 

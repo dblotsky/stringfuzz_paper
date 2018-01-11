@@ -1,15 +1,54 @@
-\section{StringFuzz}
+\section{\fuzzer{}}
 
-    Here we present StringFuzz.
+    This section presents \fuzzer{}. \fuzzer{} is implemented as a Python package, and comes with several executables to generate, transform, and analyse \smt{} string problems. Its source code repository is available at \sourceRepo{}. It can either be installed from source, or from the Python PIP package repository.
 
-    \subsection{Generators}
+    \subsection{Generators: \generator{}}
 
-        Here we describe our generators (concats, overlaps, etc.).
+        \generator{} is available as a command-line tool, \texttt{stringfuzzg}. It supports several generators and options that control its output. The generators it implements are:
 
-    \subsection{Transformers}
+        \begin{itemize}
+            \item concats
+            \item lengths
+            \item overlaps
+            \item regex
+            \item random-text
+        \end{itemize}
 
-        Here we describe our transformers (graft, fuzz, etc.).
+    \subsection{Transformers: \transformer{}}
+
+        \transformer is available as a command-line tool, \texttt{stringfuzzx}. It supports several transformers and options that control its output and input. The transformers it implements are:
+
+        \begin{itemize}
+            \item concats
+            \item lengths
+            \item overlaps
+            \item regex
+            \item random-text
+        \end{itemize}
 
     \subsection{Utilities}
 
-        Here we describe our utilities (stringstats).
+        Some utilities are also provided with \fuzzer{}. They are: \texttt{stringstats}, \texttt{stringmerge}, \texttt{smtparse}, and \texttt{smtscan}.
+
+        \begin{description}
+
+            \item[\texttt{stringstats}] \hfill \\ \\
+                This tool takes as input an \smt{} problem, and outputs its properties. The properties are:
+
+                \begin{itemize}
+                    \item number of string variables
+                    \item number of string literals
+                    \item max/median syntactic depth of expressions
+                    \item max/median length of literals
+                \end{itemize}
+
+                \hfill
+
+            \item[\texttt{stringmerge}] \hfill \\ \\
+                This tool takes as input two \smt{} problems and combines them into one problem.
+
+        \end{description}
+
+    \subsection{Architecture}
+
+        Should I describe its architecture?
