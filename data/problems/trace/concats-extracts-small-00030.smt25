@@ -121,3 +121,4 @@
 (assert (= "N" (str.at var10 39)))
 (assert (= "<" (str.at var59 64)))
 (check-sat)
+(get-model)
