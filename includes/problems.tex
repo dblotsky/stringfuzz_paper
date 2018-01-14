@@ -1,6 +1,6 @@
 \section{Problem Suites}
 
-    Along with this paper we present several suites of ready-made problems produced by StringFuzz. These suites can be found on \problemRepo{}.
+    We generated several suites of string and regex problems using \fuzzer{}, and they are available at \problemRepo{}. They are described in more detail below.
 
     \subsection{\fuzzer{}-Generated}
 
@@ -20,7 +20,7 @@
             \item Random??
         \end{itemize}
 
-        Most of these problem sets either have a dedicated generator in \generator{}, or are variations of one. While it is likely that some of the pre-made suites will be immediately useful in analysing a solver, we also found that mass randomisation was helpful in finding some bugs, and we encourage this pattern as well. \generator{} is designed to be used in an exploratory fashion, and the following usage has helped us in our own experiments:
+        Most of these problem sets either have a dedicated generator in \generator{}, or are variations of one. While it is likely that some of the pre-made suites will be immediately useful in analysing a solver, we also found that mass randomisation was helpful in finding some bugs, and we encourage this pattern as well. \generator{} is designed to be used in an exploratory fashion. For example the following usage has helped us find bugs in \us{}:
 
 \begin{verbatim}
 while true; do stringfuzzg --random regex | z3str3 -in; done
@@ -41,7 +41,7 @@ while true; do stringfuzzg --random regex | z3str3 -in; done
 
         This suite covers corner cases of solver behaviour. We have used the instances in this suite to find bugs in \us{}.
 
-    \subsection{Results}
+    \subsection{Bugs Found}
 
         This section describes the bugs in \us{} that were discovered (and subsequently fixed) by testing it with the \fuzzer{} problem suites.
 
