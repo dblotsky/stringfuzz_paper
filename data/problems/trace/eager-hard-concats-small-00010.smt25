@@ -31,3 +31,4 @@
 (assert (= var18 (str.++ var19 var20)))
 (assert (= var0 "solution"))
 (check-sat)
+(get-model)

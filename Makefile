@@ -22,7 +22,7 @@ REAL_PROBLEM_DIR=$(DATA_DIR)/problems/release
 TRACE_PROBLEM_DIR=$(DATA_DIR)/problems/trace
 RESULTS_DIR=$(DATA_DIR)/results
 
-CVC4_CMD=$(CVC4) --strings-exp --lang smt2.5
+CVC4_CMD=$(CVC4) --strings-exp --lang smt2.5 -m
 Z3STR3_CMD=$(Z3STR3) smt.string_solver=z3str3
 
 REAL_PROBLEMS=$(shell find $(REAL_PROBLEM_DIR) -name "*.*")
