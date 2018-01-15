@@ -1,37 +1,45 @@
 \section{\fuzzer{}}
 
-    This section describes the fuzzer \fuzzer{}. \fuzzer{} is implemented as a Python package, and comes with several executables to generate, transform, and analyse \smt{} string problems. Its source code repository is available at \sourceRepo{}. It can either be installed from source, or from the Python PIP package repository.
+    This section describes the fuzzer \fuzzer{}, which generates new \smt{} problems or transforms existing ones. \fuzzer{} is implemented as a Python package, and comes with several executables to generate, transform, and analyse \smt{} string problems. Its source code repository is available at \sourceRepo{}. It can either be installed from source, or from the Python PIP package repository.
 
-    The \fuzzer{} code is organised to be easily extended with more generators and transformers. It is also implemented in the spirit of a Unix "filter", to be easily integrated into other tools. For example, the outputs of generators can be piped directly into transformers, and transformers can be chained to produce a tuned stream of challenging inputs to a solver.
+    The \fuzzer{} code is organised to be easily extended: all generators and transformers are independent modules. It is also implemented as a Unix "filter", to enable easy integration with other tools (including itself). For example, the outputs of generators can be piped directly into transformers, and transformers can be chained to produce a tuned stream of challenging inputs to a solver.
 
     Below are descriptions of the tools that come with \fuzzer{}:
 
     \begin{description}
 
         \item[\texttt{stringfuzzg}] \hfill \\
-            This tool generates \smt{} problems. It supports several generators and options that control its output. The generators it implements are:
+            This tool generates \smt{} problems. It supports several generators and options that control its output. The generators it implements are: \\
 
-            \begin{itemize}
-                \item concats
-                \item lengths
-                \item overlaps
-                \item regex
-                \item random-text
-            \end{itemize}
+            \begin{tabular}{|c|c|}
+                \hline
+                \textbf{Name} & \textbf{Description} \\ \hline
+                concats       & \\ \hline
+                lengths       & \\ \hline
+                overlaps      & \\ \hline
+                regex         & \\ \hline
+                random-text   & \\ \hline
+            \end{tabular}
+
+            \hfill \\
 
         \item[\texttt{stringfuzzx}] \hfill \\
-            This tool transforms \smt{} problems.. It supports several transformers and options that control its output and input. The transformers it implements are:
+            This tool transforms \smt{} problems.. It supports several transformers and options that control its output and input. The transformers it implements are:\\
 
-            \begin{itemize}
-                \item fuzz
-                \item graft
-                \item multiply
-                \item nop
-                \item reverse
-                \item rotate
-                \item translate
-                \item unprintable
-            \end{itemize}
+            \begin{tabular}{|c|c|}
+                \hline
+                \textbf{Name} & \textbf{Description} \\ \hline
+                fuzz          & \\ \hline
+                graft         & \\ \hline
+                multiply      & \\ \hline
+                nop           & \\ \hline
+                reverse       & \\ \hline
+                rotate        & \\ \hline
+                translate     & \\ \hline
+                unprintable   & \\ \hline
+            \end{tabular}
+
+            \hfill \\
 
         \item[\texttt{stringstats}] \hfill \\
             This tool takes as input an \smt{} problem, and outputs its properties. The properties are:

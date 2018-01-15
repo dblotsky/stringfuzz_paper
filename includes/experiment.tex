@@ -11,7 +11,20 @@
 
         \subsubsection{Performance on Lazy-Hard}
 
-            On this problem set \cvc{} did poorly, but \us{} did well. The graphs in figure X show the performance results for both solvers. We produce and analyse the execution trace files both solvers' execution on the problem set, and present them in the Appendix.
+            On this problem set \cvc{} did poorly, but \us{} did well. The graphs in Figures~\ref{fig:z3str3-lazy-hard} and ~\ref{fig:cvc4-lazy-hard} show the performance results for both solvers. We produce and analyse the execution trace files both solvers' execution on the problem set.
+
+            \begin{figure}[h]
+                \begin{subfigure}{.5\textwidth}
+                    \includegraphics[width=\textwidth]{data/graphs/z3str3-lazy-hard.png}
+                    \caption{Performance of \us{} on Lazy-Hard}
+                    \label{fig:z3str3-lazy-hard}
+                \end{subfigure}
+                \begin{subfigure}{.5\textwidth}
+                    \includegraphics[width=\textwidth]{data/graphs/cvc4-lazy-hard.png}
+                    \caption{Performance of \cvc{} on Lazy-Hard}
+                    \label{fig:cvc4-lazy-hard}
+                \end{subfigure}
+            \end{figure}
 
             The \cvc{} trace file indicates that it performs the following operations:
 
@@ -21,11 +34,12 @@
                 \item Computes equivalence classes for strings and integers.
             \end{enumerate}
 
-            At this stage it discovers that there is a conflict in one of its equivalence classes, as shown in figure X. After discovering the conflict, the rest of the trace is filled with apparently the same operation repeated hundreds of thousands of times. After this operation is finished, \cvc{} recalls the earlier conflict and returns \texttt{unsat}.
+            At this stage it discovers that there is a conflict in one of its equivalence classes, as shown in Figure~\ref{fig:cvc4-conflict}. After discovering the conflict, the rest of the trace is filled with apparently the same operation repeated hundreds of thousands of times. After this operation is finished, \cvc{} recalls the earlier conflict and returns \texttt{unsat}.
 
-            \us{} showed different behaviour on this problem set. It follows a similar process as \cvc{}, except it does not flatten concatenations. In contrast to \cvc{}, \us{} immediately returns \texttt{unsat} as soon as it verifies consistency of equivalence classes as it constructs them, as shown in figure X.
+            \us{} showed different behaviour on this problem set. It follows a similar process as \cvc{}, except it does not flatten concatenations. In contrast to \cvc{}, \us{} immediately returns \texttt{unsat} as soon as it verifies consistency of equivalence classes as it constructs them, as shown in Figure~\ref{fig:z3str3-conflict}.
 
-            {\scriptsize\begin{verbatim}
+            \begin{figure}[h]
+                {\scriptsize\begin{verbatim}
 -------- [str] new_eq_check ../src/smt/theory_str.cpp:1864 ---------
 checking whether (str.++ "woof" var2) and (str.++ "meow" var42) can be equal
 ------------------------------------------------
@@ -34,18 +48,23 @@ inconsistency detected: (str.++ "woof" var2) cannot be equal to (str.++ "meow" v
 ------------------------------------------------
 -------- [str] assert_axiom ../src/smt/theory_str.cpp:179 ---------
 asserting (not (= (str.++ "woof" var2) (str.++ "meow" var42)))
-------------------------------------------------
-            \end{verbatim}}
+------------------------------------------------\end{verbatim}}
+                \caption{Evidence of \us{} detecting conflict}
+                \label{fig:z3str3-conflict}
+            \end{figure}
 
-            {\scriptsize\begin{verbatim}
+            \begin{figure}[h]
+                {\scriptsize\begin{verbatim}
 CONFLICT: Eq engine conflict : (and
 (= "woof" (str.++ "woof" lsym_5 ... lsym_5))
 (= "" lsym_5)
 (= "" var3) ... (= "" var30)
 (= (str.++ "woof" var3 ... var30) (str.++ "meow" var43 ... var70))
 (= "" var43) ... (= "" var70)
-(= "meow" (str.++ "meow" lsym_5 ... lsym_5)))
-            \end{verbatim}}
+(= "meow" (str.++ "meow" lsym_5 ... lsym_5)))\end{verbatim}}
+                \caption{Evidence of \cvc{} detecting conflict}
+                \label{fig:cvc4-conflict}
+            \end{figure}
 
             % TODO:
             % - \us{} cactus plot
@@ -54,7 +73,20 @@ CONFLICT: Eq engine conflict : (and
 
         \subsubsection{Performance on Eager-Hard}
 
-            On this problem set \cvc{} did well, but \us{} did poorly. The graphs in figure X show the performance results for both solvers. We produce and analyse the execution trace files both solvers' execution on the problem set, and present them in the Appendix.
+            On this problem set \cvc{} did well, but \us{} did poorly. The graphs in Figures~\ref{fig:z3str3-eager-hard} and ~\ref{fig:cvc4-eager-hard} show the performance results for both solvers. We produce and analyse the execution trace files both solvers' execution on the problem set, and present them in the Appendix.
+
+            \begin{figure}[h]
+                \begin{subfigure}{.5\textwidth}
+                    \includegraphics[width=\textwidth]{data/graphs/z3str3-eager-hard.png}
+                    \caption{Performance of \us{} on Eager-Hard}
+                    \label{fig:z3str3-eager-hard}
+                \end{subfigure}
+                \begin{subfigure}{.5\textwidth}
+                    \includegraphics[width=\textwidth]{data/graphs/cvc4-eager-hard.png}
+                    \caption{Performance of \cvc{} on Eager-Hard}
+                    \label{fig:cvc4-eager-hard}
+                \end{subfigure}
+            \end{figure}
 
             Both solvers exhibit similar patterns in their trace files. They differ in their strategies for assigning possible satisfying assignments. \cvc{} assigns the first variable to a constant and all other variables to the empty string. \us{} however seems to ``drag'' the constant across the equation, splitting its characters among the variables in it.
 
