@@ -51,10 +51,10 @@ check: $(CVC4) $(Z3STR3)
 	# ../../bin/timesolver.py $(Z3STR3_NAME) "$(Z3STR3_CMD) " --verbose --timeout $(TIMEOUT) --format csv --problem-list $< > $(RESULTS_DIR)/z3str3.csv
 
 $(TRACES_DIR)/$(CVC4_NAME)-%.trace: $(TRACE_PROBLEM_DIR)/% $(CVC4)
-	-$(CVC4_CMD) $(CVC4_TRACE_ARGS) < $< > $@
+	-$(CVC4_CMD) $(CVC4_TRACE_ARGS) < $< 2> $@ > $@
 
 $(TRACES_DIR)/$(Z3STR3_NAME)-%.trace: $(TRACE_PROBLEM_DIR)/% $(Z3STR3)
-	-$(Z3STR3_CMD) -tr:str $< > $@
+	-$(Z3STR3_CMD) -tr:str $< 2> $@ > $@
 	cat .z3-trace >> $@
 	rm .z3-trace
 
