@@ -9,25 +9,37 @@
         \begin{tabular}{|c|c|}
             \hline
             \textbf{Name}    & \textbf{Description} \\ \hline
-            Lengths          & \\ \hline
-            Lengths-Concats  & \\ \hline
-            Concats          & \\ \hline
-            Concats-Extracts & \\ \hline
-            Overlaps         & \\ \hline
-            Regex            & \\ \hline
-            Many-Regexes     & \\ \hline
-            Regex-Deep       & \\ \hline
-            Regex-Pair       & \\ \hline
-            Regex-Lengths    & \\ \hline
-            Random??         & \\ \hline
+            Lengths          & \todo{} \\ \hline
+            Lengths-Concats  & \todo{} \\ \hline
+            Concats          & \todo{} \\ \hline
+            Concats-Extracts & \todo{} \\ \hline
+            Overlaps         & \todo{} \\ \hline
+            Regex            & \todo{} \\ \hline
+            Many-Regexes     & \todo{} \\ \hline
+            Regex-Deep       & \todo{} \\ \hline
+            Regex-Pair       & \todo{} \\ \hline
+            Regex-Lengths    & \todo{} \\ \hline
+            Random??         & \todo{} \\ \hline
         \end{tabular}
 
         \hfill \\
 
-        Most of these problem sets either have a dedicated generator in \generator{}, or are variations of one. While it is likely that some of the pre-made suites will be immediately useful in analysing a solver, we also found that mass randomisation was helpful in finding some bugs, and we encourage this pattern as well. \generator{} is designed to be used in an exploratory fashion. For example the following usage has helped us find bugs in \us{}: \\
+        Most of these problem sets either have a dedicated generator in \generator{}, or are variations of one. While it is likely that some of the pre-made suites will be immediately useful in analysing a solver, we also found that mass randomisation was helpful in finding some bugs, and we encourage this pattern as well. \generator{} is designed to be used in an exploratory fashion. For example the following usage has helped us find bugs in \us{}:
 
         {\scriptsize\begin{verbatim}
 while true; do stringfuzzg --random regex | z3str3 -in; done\end{verbatim}}
+
+        Some simple UNIX scripting can yield more interesting results. For example the following script finds a regex problem on which \us{} times out after 5 seconds:
+
+        {\scriptsize\begin{verbatim}while true; do
+    stringfuzzg --random regex --coincide --num-regexes 2 --num-terms 5 --depth 3 > hard-problem.smt2
+    result=`z3str3 -T:5 hard-problem.smt2`
+    echo $result
+    if [ "$result" == "timeout" ]; then
+        cat hard-problem.smt2
+        break
+    fi
+done\end{verbatim}}
 
     \subsubsection{\fuzzer{}-Transformed}
 
@@ -36,8 +48,8 @@ while true; do stringfuzzg --random regex | z3str3 -in; done\end{verbatim}}
         \begin{tabular}{|c|c|}
             \hline
             \textbf{Name} & \textbf{Description} \\ \hline
-            Amazon??      & \\ \hline
-            Regex??       & \\ \hline
+            Amazon??      & \todo{} \\ \hline
+            Regex??       & \todo{} \\ \hline
         \end{tabular}
 
         \hfill \\
@@ -50,11 +62,6 @@ while true; do stringfuzzg --random regex | z3str3 -in; done\end{verbatim}}
 
     \subsection{Bugs Found}
 
-        This section describes the bugs in \us{} that were discovered (and subsequently fixed) by testing it with the \fuzzer{} problem suites, as follows: \\
+        This section describes the bugs in \us{} that were discovered (and subsequently fixed) by testing it with the \fuzzer{} problem suites.
 
-        \begin{tabular}{|c|c|c|c|}
-            \hline
-            \textbf{Name} & \textbf{Description} & \textbf{Before Fix} & \textbf{After Fix} \\ \hline
-            length lookup  & & & \\ \hline
-            length-testing & & & \\ \hline
-        \end{tabular}
+        \todo{}: Describe the length lookup bug and length-testing bug, giving the before/after commits.

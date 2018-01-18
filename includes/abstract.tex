@@ -1,5 +1,5 @@
 \begin{abstract}
 
-    In this paper we present \fuzzer{}: an \smt{} problem fuzzer and generator for string solvers. With it we analyse \numSolvers{} mature string solvers: \theSolvers{}. We use it to craft inputs that elicit poor performance in \us{} and \cvc{}, and provide analyses of the causes of the performance degradations. Our experimental data suggest that there are classes of problems that will always be hard for \us{} and easy for \cvc{}, and vice versa, due to the limitations of the core algorithms implemented by those solvers. We also present several minor bugs in \us{} that were exposed by \fuzzer{}. Finally, we provide a rich repository of problems in \smt{} format, generated both by \fuzzer{} and by hand, to encourage other solver authors to likewise improve their solvers.
+    In this paper we present \fuzzer{}: an \smtlib{} problem fuzzer and generator for string solvers. We provide a rich repository of problems we generated with \fuzzer{} in \smt{} format. We also analyse \numSolvers{} mature string solvers: \theSolvers{}. We use \fuzzer{} to craft inputs that elicit poor performance in \us{} and \cvc{}, and analyse the causes of the performance degradations. We then describe an algorithm to mitigate the performance degradation in \us{}. Finally, we describe several bugs in \us{} that were exposed by \fuzzer{}.
 
 \end{abstract}
