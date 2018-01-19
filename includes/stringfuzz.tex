@@ -4,14 +4,14 @@
 
     % Its source code repository is available at \sourceRepo{}. It can either be installed from source, or from the Python PIP package repository.
 
-    The \fuzzer{} code is organised to be easily extended: all generators and transformers are independent modules. It is also implemented as a Unix ``filter'', to enable easy integration with other tools (including itself). For example, the outputs of generators can be piped directly into transformers, and transformers can be chained to produce a tuned stream of challenging inputs to a solver.
+    The \fuzzer{} code is organised to be easily extended: all generators and transformers are independent modules. Its components are also implemented as \unix{} ``filters'', to enable easy integration with other tools (including themselves). For example, the outputs of generators can be piped directly into transformers, and transformers can be chained to produce a tuned stream of challenging inputs to a solver.
 
     Below are descriptions of the tools that constitute \fuzzer{}:
 
     \begin{description}
 
         \item[\texttt{stringfuzzg}] \hfill \\
-            This tool generates \smt{} problems. It supports several generators and options that control its output. The generators it implements are: \\
+            This tool generates \smt{} problems. It supports several generators and options that specify its output. The generators it implements are: \\
 
             \todo{Fill in descriptions.}
 
@@ -28,7 +28,7 @@
             \hfill \\
 
         \item[\texttt{stringfuzzx}] \hfill \\
-            This tool transforms \smt{} problems.. It supports several transformers and options that control its output and input. The transformers it implements are: \\
+            This tool transforms \smt{} problems.. It supports several transformers and options that specify its output and input. The transformers it implements are: \\
 
             \todo{Fill in descriptions.}
 
@@ -48,14 +48,7 @@
             \hfill \\
 
         \item[\texttt{stringstats}] \hfill \\
-            This tool takes as input an \smt{} problem, and outputs its properties. The properties are:
-
-            \begin{itemize}
-                \item number of string variables
-                \item number of string literals
-                \item max/median syntactic depth of expressions
-                \item max/median length of literals
-            \end{itemize}
+            This tool takes as input an \smt{} problem, and outputs its properties, such as: numbers of string variables and literals, max/median syntactic depth of expressions, and max/median length of literals.
 
             \hfill
 
