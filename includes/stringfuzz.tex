@@ -1,42 +1,48 @@
 \section{\fuzzer{}}
 
-    This section describes the fuzzer \fuzzer{}, which generates new \smt{} problems or transforms existing ones. \fuzzer{} is implemented as a Python package, and comes with several executables to generate, transform, and analyse \smt{} string problems. Its source code repository is available at \sourceRepo{}. It can either be installed from source, or from the Python PIP package repository.
+    This section describes the fuzzer \fuzzer{}, which generates new \smt{} problems and transforms existing ones. \fuzzer{} is implemented as a Python package, and comes with several executables to generate, transform, and analyse \smt{} string problems.
 
-    The \fuzzer{} code is organised to be easily extended: all generators and transformers are independent modules. It is also implemented as a Unix "filter", to enable easy integration with other tools (including itself). For example, the outputs of generators can be piped directly into transformers, and transformers can be chained to produce a tuned stream of challenging inputs to a solver.
+    % Its source code repository is available at \sourceRepo{}. It can either be installed from source, or from the Python PIP package repository.
 
-    Below are descriptions of the tools that come with \fuzzer{}:
+    The \fuzzer{} code is organised to be easily extended: all generators and transformers are independent modules. It is also implemented as a Unix ``filter'', to enable easy integration with other tools (including itself). For example, the outputs of generators can be piped directly into transformers, and transformers can be chained to produce a tuned stream of challenging inputs to a solver.
+
+    Below are descriptions of the tools that constitute \fuzzer{}:
 
     \begin{description}
 
         \item[\texttt{stringfuzzg}] \hfill \\
             This tool generates \smt{} problems. It supports several generators and options that control its output. The generators it implements are: \\
 
+            \todo{Fill in descriptions.}
+
             \begin{tabular}{|c|c|}
                 \hline
                 \textbf{Name} & \textbf{Description} \\ \hline
-                concats       & \todo{} \\ \hline
-                lengths       & \todo{} \\ \hline
-                overlaps      & \todo{} \\ \hline
-                regex         & \todo{} \\ \hline
-                random-text   & \todo{} \\ \hline
+                concats       & \\ \hline
+                lengths       & \\ \hline
+                overlaps      & \\ \hline
+                regex         & \\ \hline
+                random-text   & \\ \hline
             \end{tabular}
 
             \hfill \\
 
         \item[\texttt{stringfuzzx}] \hfill \\
-            This tool transforms \smt{} problems.. It supports several transformers and options that control its output and input. The transformers it implements are:\\
+            This tool transforms \smt{} problems.. It supports several transformers and options that control its output and input. The transformers it implements are: \\
+
+            \todo{Fill in descriptions.}
 
             \begin{tabular}{|c|c|}
                 \hline
                 \textbf{Name} & \textbf{Description} \\ \hline
-                fuzz          & \todo{} \\ \hline
-                graft         & \todo{} \\ \hline
-                multiply      & \todo{} \\ \hline
-                nop           & \todo{} \\ \hline
-                reverse       & \todo{} \\ \hline
-                rotate        & \todo{} \\ \hline
-                translate     & \todo{} \\ \hline
-                unprintable   & \todo{} \\ \hline
+                fuzz          & \\ \hline
+                graft         & \\ \hline
+                multiply      & \\ \hline
+                nop           & \\ \hline
+                reverse       & \\ \hline
+                rotate        & \\ \hline
+                translate     & \\ \hline
+                unprintable   & \\ \hline
             \end{tabular}
 
             \hfill \\
@@ -54,6 +60,8 @@
             \hfill
 
         \item[\texttt{stringmerge}] \hfill \\
-            This tool takes as input two \smt{} problems and combines them into one problem. \textbf{TODO: Add details about merging strategies.}
+            This tool takes as input two \smt{} problems and combines them into one problem.
+
+            \todo{Add details about merging strategies.}
 
     \end{description}

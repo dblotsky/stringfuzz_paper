@@ -1,5 +1,5 @@
 \begin{abstract}
 
-    In this paper we present \fuzzer{}: an \smtlib{} problem fuzzer and generator for string solvers. We provide a rich repository of problems we generated with \fuzzer{} in \smt{} format. We also analyse \numSolvers{} mature string solvers: \theSolvers{}. We use \fuzzer{} to craft inputs that elicit poor performance in \us{} and \cvc{}, and analyse the causes of the performance degradations. We then describe an algorithm to mitigate the performance degradation in \us{}. Finally, we describe several bugs in \us{} that were exposed by \fuzzer{}.
+    In this paper we present \fuzzer{}: a modular \smtlib{} problem transformer and generator for string solvers. We supply a rich repository of problems we generated with \fuzzer{} in \smt{} format, and demonstrate its usefulness in the development of \us{} by presenting defects it helped find and fix. We also use \fuzzer{} to exercise \theSolvers{} with suites of problems that elicit poor performance in one solver but not the other. We analyse our experimental results to identify the causes of the performance degradations, and present our findings.
 
 \end{abstract}
