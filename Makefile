@@ -1,40 +1,51 @@
-PAPER = paper.pdf
-INCLUDES_DIR = includes
-SECTIONS = $(shell find $(INCLUDES_DIR) -name "*.tex")
+# config
+EXPERIMENT_SUITE_NAMES = \
+	concats-balanced \
+	concats-extracts-small \
+	concats-small \
+	different-prefix
 
-Z3STR3_REV=master
-Z3STR3_BUILD=trace
+# paper config
+PAPER          = paper.pdf
+INCLUDES_DIR   = includes
+PAPER_SECTIONS = $(shell find $(INCLUDES_DIR) -name "*.tex")
 
-CVC4_REV=latest
-CVC4_BUILD=trace
+# solver config
+Z3STR3_REV   = master
+Z3STR3_BUILD = trace
 
-Z3STR3_NAME=z3str3-$(Z3STR3_REV)-$(Z3STR3_BUILD)
-CVC4_NAME=cvc4-$(CVC4_REV)-$(CVC4_BUILD)
+CVC4_REV   = latest
+CVC4_BUILD = trace
 
-Z3STR3=~/bin/$(Z3STR3_NAME)
-CVC4=~/bin/$(CVC4_NAME)
+Z3STR3_NAME = z3str3-$(Z3STR3_REV)-$(Z3STR3_BUILD)
+CVC4_NAME   = cvc4-$(CVC4_REV)-$(CVC4_BUILD)
 
-TIMEOUT=300
+Z3STR3 = ~/bin/$(Z3STR3_NAME)
+CVC4   = ~/bin/$(CVC4_NAME)
 
-DATA_DIR=data
-TRACES_DIR=$(DATA_DIR)/traces
-REAL_PROBLEM_DIR=$(DATA_DIR)/problems/release
-TRACE_PROBLEM_DIR=$(DATA_DIR)/problems/trace
-RESULTS_DIR=$(DATA_DIR)/results
-
-CVC4_CMD=$(CVC4) --strings-exp --lang smt2.5 -m
-Z3STR3_CMD=$(Z3STR3) smt.string_solver=z3str3
-
-REAL_PROBLEMS=$(shell find $(REAL_PROBLEM_DIR) -name "*.*")
-TRACE_PROBLEMS=$(shell find $(TRACE_PROBLEM_DIR) -name "*.*")
-
-Z3STR3_TRACES=$(addprefix $(TRACES_DIR)/$(Z3STR3_NAME)-,$(addsuffix .trace, $(notdir $(TRACE_PROBLEMS))))
-CVC4_TRACES=$(addprefix $(TRACES_DIR)/$(CVC4_NAME)-,$(addsuffix .trace, $(notdir $(TRACE_PROBLEMS))))
+CVC4_CMD   = $(CVC4) --strings-exp --lang smt2.5 -m
+Z3STR3_CMD = $(Z3STR3) smt.string_solver=z3str3
 
 ifneq ("","$(wildcard $(CVC4))")
-CVC4_TAGS=$(shell $(CVC4) --show-trace-tags | tr " " "\n" | grep strings)
-CVC4_TRACE_ARGS=$(addprefix --trace=,$(CVC4_TAGS))
+CVC4_TAGS       = $(shell $(CVC4) --show-trace-tags | tr " " "\n" | grep strings)
+CVC4_TRACE_ARGS = $(addprefix --trace=,$(CVC4_TAGS))
 endif
+
+# directories
+DATA_DIR          = data
+TRACES_DIR        = $(DATA_DIR)/traces
+PROBLEM_DIR       = $(DATA_DIR)/problems
+GRAPHS_DIR        = $(DATA_DIR)/graphs
+TRACE_PROBLEM_DIR = $(PROBLEM_DIR)/trace
+
+# outputs
+TRACE_PROBLEMS    = $(shell find $(TRACE_PROBLEM_DIR) -name "*.*")
+EXPERIMENT_SUITES = $(addprefix $(PROBLEM_DIR)/,$(EXPERIMENT_SUITE_NAMES))
+
+GRAPHS = $(addprefix $(GRAPHS_DIR)/,$(addsuffix .png,$(notdir $(EXPERIMENT_SUITE_NAMES))))
+
+Z3STR3_TRACES = $(addprefix $(TRACES_DIR)/$(Z3STR3_NAME)-,$(addsuffix .trace, $(notdir $(TRACE_PROBLEMS))))
+CVC4_TRACES   = $(addprefix $(TRACES_DIR)/$(CVC4_NAME)-,$(addsuffix .trace, $(notdir $(TRACE_PROBLEMS))))
 
 # targets
 paper: $(PAPER)
@@ -46,23 +57,14 @@ check: $(CVC4) $(Z3STR3)
 	$(CVC4) --version
 	$(Z3STR3) --version
 
-# gather-real:
-	# ../../bin/timesolver.py $(CVC4_NAME) "$(CVC4_CMD) < " --verbose --timeout $(TIMEOUT) --format csv --problem-list $< > $(RESULTS_DIR)/cvc4.csv
-	# ../../bin/timesolver.py $(Z3STR3_NAME) "$(Z3STR3_CMD) " --verbose --timeout $(TIMEOUT) --format csv --problem-list $< > $(RESULTS_DIR)/z3str3.csv
+traces: $(Z3STR3_TRACES) $(CVC4_TRACES)
 
-$(TRACES_DIR)/$(CVC4_NAME)-%.trace: $(TRACE_PROBLEM_DIR)/% $(CVC4)
-	-$(CVC4_CMD) $(CVC4_TRACE_ARGS) < $< 2> $@ > $@
+graphs: $(GRAPHS)
 
-$(TRACES_DIR)/$(Z3STR3_NAME)-%.trace: $(TRACE_PROBLEM_DIR)/% $(Z3STR3)
-	-$(Z3STR3_CMD) -tr:str $< 2> $@ > $@
-	cat .z3-trace >> $@
-	rm .z3-trace
-
-gather: $(Z3STR3_TRACES)
-gather: $(CVC4_TRACES)
+problems: $(EXPERIMENT_SUITES)
 
 # real targets
-$(RESULTS_DIR) $(TRACES_DIR):
+$(TRACES_DIR) $(GRAPHS_DIR):
 	mkdir -p $@
 
 $(Z3STR3):
@@ -73,9 +75,29 @@ $(CVC4):
 	cd ../../ && $(RM) -r installed/solvers/cvc4
 	cd ../../ && $(MAKE) install_cvc4 CVC4_REV=$(CVC4_REV) CVC4_BUILD=$(CVC4_BUILD)
 
-%.pdf: %.tex $(SECTIONS) %.bib
+# patterns
+$(GRAPHS_DIR)/%.png:
+	cd ../../ && $(MAKE) graphs \
+		WHAT=$* \
+		CVC4_REV=$(CVC4_REV) CVC4_BUILD=$(CVC4_BUILD) \
+		Z3STR3_REV=$(Z3STR3_REV) Z3STR3_BUILD=$(Z3STR3_BUILD)
+	cp ../../experiment/graphs/cactus/$*.png $@
+
+$(PROBLEM_DIR)/%: | $(PROBLEM_DIR)
+	cp -r ../../website/problems/$* $@
+
+$(TRACES_DIR)/$(CVC4_NAME)-%.trace: $(TRACE_PROBLEM_DIR)/% $(CVC4)
+	-$(CVC4_CMD) $(CVC4_TRACE_ARGS) < $< 2> $@ > $@
+
+$(TRACES_DIR)/$(Z3STR3_NAME)-%.trace: $(TRACE_PROBLEM_DIR)/% $(Z3STR3)
+	-$(Z3STR3_CMD) -tr:str $< 2> $@ > $@
+	cat .z3-trace >> $@
+	rm .z3-trace
+
+%.pdf: %.tex $(PAPER_SECTIONS) %.bib
 	latexmk -pdf -bibtex $<
 
+# maintenance targets
 clean:
 	latexmk -C
 	$(RM) *.fdb_latexmk *.fls *.run.xml *.bbl *.lol
