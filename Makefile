@@ -81,7 +81,7 @@ $(GRAPHS_DIR)/%.png:
 		WHAT=$* \
 		CVC4_REV=$(CVC4_REV) CVC4_BUILD=$(CVC4_BUILD) \
 		Z3STR3_REV=$(Z3STR3_REV) Z3STR3_BUILD=$(Z3STR3_BUILD)
-	cp ../../experiment/graphs/cactus/$*.png $@
+	cp ../../experiment/graphs/cactus/$*-cactus.png $@
 
 $(PROBLEM_DIR)/%: | $(PROBLEM_DIR)
 	cp -r ../../website/problems/$* $@
