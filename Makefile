@@ -79,8 +79,8 @@ $(CVC4):
 $(GRAPHS_DIR)/%.png: | $(GRAPHS_DIR)
 	cd ../../ && $(MAKE) graphs \
 		WHAT=$* \
-		CVC4_REV=$(CVC4_REV) CVC4_BUILD=$(CVC4_BUILD) \
-		Z3STR3_REV=$(Z3STR3_REV) Z3STR3_BUILD=$(Z3STR3_BUILD)
+		CVC4_REV=$(CVC4_REV) CVC4_BUILD=release \
+		Z3STR3_REV=$(Z3STR3_REV) Z3STR3_BUILD=release
 	cp ../../experiment/graphs/cactus/$*-cactus.png $@
 
 $(PROBLEM_DIR)/%: | $(PROBLEM_DIR)
