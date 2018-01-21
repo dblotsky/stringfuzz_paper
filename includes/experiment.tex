@@ -1,38 +1,30 @@
-\section{Experiments}
+\section{Experimental Data}
 
-    We generated several problem suites with \fuzzer{} that made one solver perform poorly, but not another. We call those suites: \cHard{} and \zHard{}. On \cHard{} \cvc{} did poorly, but \us{} did well. The graphs in Figures ~\ref{fig:cvc4-hard} and ~\ref{fig:z3str3-hard} show the performance results.
-
-    \todo{Make real graphs}
-    \todo{Add data on Concats-Extracts}
+    We generated several problem suites with \fuzzer{} that made one solver perform poorly, but not others. The graphs in the figures below show the performance results. All experiments were run in series on the same Linux computer, with a timeout of 15 seconds.
 
     \begin{figure}[H]
         \begin{subfigure}{.5\textwidth}
-            \includegraphics[width=\textwidth]{data/graphs/cvc4-cvc4-hard.png}
-            \caption{Performance of \cvc{} on \cHard{}}
-            \label{fig:cvc4-cvc4-hard}
+            \caption{Performance on concats-balanced}
+            \label{fig:concats-balanced}
+            \includegraphics[width=\textwidth]{data/graphs/concats-balanced.png}
         \end{subfigure}
         \begin{subfigure}{.5\textwidth}
-            \includegraphics[width=\textwidth]{data/graphs/z3str3-cvc4-hard.png}
-            \caption{Performance of \us{} on \cHard{}}
-            \label{fig:z3str3-cvc4-hard}
-        \end{subfigure}
-        \caption{Results on \cHard}
-        \label{fig:cvc4-hard}
-    \end{figure}
-
-    \begin{figure}[H]
-        \begin{subfigure}{.5\textwidth}
-            \includegraphics[width=\textwidth]{data/graphs/cvc4-z3str3-hard.png}
-            \caption{Performance of \cvc{} on \zHard{}}
-            \label{fig:cvc4-z3str3-hard}
+            \caption{Performance on concats-small}
+            \label{fig:concats-small}
+            \includegraphics[width=\textwidth]{data/graphs/concats-small.png}
         \end{subfigure}
         \begin{subfigure}{.5\textwidth}
-            \includegraphics[width=\textwidth]{data/graphs/z3str3-z3str3-hard.png}
-            \caption{Performance of \us{} on \zHard{}}
-            \label{fig:z3str3-z3str3-hard}
+            \caption{Performance on concats-extracts-small}
+            \label{fig:concats-extracts-small}
+            \includegraphics[width=\textwidth]{data/graphs/concats-extracts-small.png}
         \end{subfigure}
-        \caption{Results on \zHard}
-        \label{fig:z3str3-hard}
+        \begin{subfigure}{.5\textwidth}
+            \caption{Performance on different-prefix}
+            \label{fig:different-prefix}
+            \includegraphics[width=\textwidth]{data/graphs/different-prefix.png}
+        \end{subfigure}
+        \caption{Results on selected \fuzzer{} problems}
+        \label{fig:graphs}
     \end{figure}
 
 \section{Analyses}
