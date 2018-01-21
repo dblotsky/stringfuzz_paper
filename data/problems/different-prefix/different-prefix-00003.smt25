@@ -1,0 +1,8 @@
+(declare-fun var0 () String)
+(declare-fun var1 () String)
+(declare-fun var2 () String)
+(declare-fun var3 () String)
+(assert (= var0 (str.++ "EE=sF" (str.++ var1 ""))))
+(assert (= var2 (str.++ "~~,W4" (str.++ var3 ""))))
+(assert (= var0 var2))
+(check-sat)

@@ -1,0 +1,6 @@
+(declare-fun var0 () String)
+(declare-fun var1 () String)
+(declare-fun var2 () String)
+(assert (= var0 (str.++ var1 var2)))
+(assert (= var0 "solution"))
+(check-sat)
