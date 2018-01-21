@@ -76,7 +76,7 @@ $(CVC4):
 	cd ../../ && $(MAKE) install_cvc4 CVC4_REV=$(CVC4_REV) CVC4_BUILD=$(CVC4_BUILD)
 
 # patterns
-$(GRAPHS_DIR)/%.png:
+$(GRAPHS_DIR)/%.png: | $(GRAPHS_DIR)
 	cd ../../ && $(MAKE) graphs \
 		WHAT=$* \
 		CVC4_REV=$(CVC4_REV) CVC4_BUILD=$(CVC4_BUILD) \
@@ -84,7 +84,7 @@ $(GRAPHS_DIR)/%.png:
 	cp ../../experiment/graphs/cactus/$*-cactus.png $@
 
 $(PROBLEM_DIR)/%: | $(PROBLEM_DIR)
-	cp -r ../../website/problems/$* $@
+	cp -r ../../website/problems/$* $(PROBLEM_DIR)
 
 $(TRACES_DIR)/$(CVC4_NAME)-%.trace: $(TRACE_PROBLEM_DIR)/% $(CVC4)
 	-$(CVC4_CMD) $(CVC4_TRACE_ARGS) < $< 2> $@ > $@
