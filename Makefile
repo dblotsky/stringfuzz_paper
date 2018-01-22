@@ -63,11 +63,14 @@ graphs: $(GRAPHS)
 
 problems: $(EXPERIMENT_SUITES)
 
-re-gather:
+re-problems:
 	$(RM) -r $(PROBLEM_DIR)
-	$(RM) -r $(GRAPHS_DIR)
 	git checkout $(TRACE_PROBLEM_DIR)
-	$(MAKE) problems graphs
+	$(MAKE) problems
+
+re-graphs:
+	$(RM) -r $(GRAPHS_DIR)
+	$(MAKE) graphs
 
 # real targets
 $(TRACES_DIR) $(GRAPHS_DIR) $(PROBLEM_DIR):
