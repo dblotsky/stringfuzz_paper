@@ -90,5 +90,5 @@
 (assert (= var56 (str.++ var57 var58)))
 (assert (= var58 (str.++ var59 var60)))
 (assert (= var0 "solution"))
-(assert (= "r" (str.at var46 53)))
+(assert (= "_" (str.at var59 16)))
 (check-sat)

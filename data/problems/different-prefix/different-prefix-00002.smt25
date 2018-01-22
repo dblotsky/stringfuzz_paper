@@ -1,6 +1,4 @@
 (declare-fun var0 () String)
-(declare-fun var1 () String)
-(assert (= var0 (str.++ "T7FlL" "")))
-(assert (= var1 (str.++ "_uEL`" "")))
-(assert (= var0 var1))
+(assert (= var0 (str.++ "[zc<p" "")))
+(assert (= var0 (str.++ "MBQ5@" "")))
 (check-sat)

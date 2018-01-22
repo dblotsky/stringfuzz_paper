@@ -90,6 +90,6 @@
 (assert (= var56 (str.++ var57 var58)))
 (assert (= var58 (str.++ var59 var60)))
 (assert (= var0 "solution"))
-(assert (= "I" (str.at var54 47)))
-(assert (= "k" (str.at var30 79)))
+(assert (= "`" (str.at var35 17)))
+(assert (= "l" (str.at var49 47)))
 (check-sat)

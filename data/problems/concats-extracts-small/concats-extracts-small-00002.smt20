@@ -90,6 +90,6 @@
 (assert (= var56 (Concat var57 var58)))
 (assert (= var58 (Concat var59 var60)))
 (assert (= var0 "solution"))
-(assert (= "=" (CharAt var2 31)))
-(assert (= "<" (CharAt var8 24)))
+(assert (= "t" (CharAt var31 18)))
+(assert (= "g" (CharAt var58 23)))
 (check-sat)
