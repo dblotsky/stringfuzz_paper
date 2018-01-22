@@ -66,6 +66,7 @@ problems: $(EXPERIMENT_SUITES)
 re-gather:
 	$(RM) -r $(PROBLEM_DIR)
 	$(RM) -r $(GRAPHS_DIR)
+	git checkout $(TRACE_PROBLEM_DIR)
 	$(MAKE) problems graphs
 
 # real targets
