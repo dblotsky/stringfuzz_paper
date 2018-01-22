@@ -77,7 +77,7 @@ $(CVC4):
 
 # patterns
 $(GRAPHS_DIR)/%.png: | $(GRAPHS_DIR)
-	cd ../../ && $(MAKE) graphs \
+	cd ../../ && $(MAKE) graphs GRAPHS_ARGS=--no-title \
 		WHAT=$* \
 		CVC4_REV=$(CVC4_REV) CVC4_BUILD=release \
 		Z3STR3_REV=$(Z3STR3_REV) Z3STR3_BUILD=release
