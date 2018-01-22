@@ -1,6 +1,6 @@
 \section{Problem Suites}
 
-    We generated several suites of string and regex problems using \fuzzer{}, and they are available at \problemRepo{}. The \texttt{generated} suite contains problems that were generated using \generator{}, described below:
+    We generated several suites of string and regex problems using \fuzzer{}. These problems are available at \problemRepo{}. Below, we describe the \texttt{generated} suite that we generated using \generator{}:
 
     \todo{Fill in descriptions.}
 
@@ -33,16 +33,18 @@
 
     \subsection{Results}
 
-        This section describes the bugs in \us{} that were discovered (and subsequently fixed) by testing it with the \fuzzer{} problem suites.
+        This section describes the bugs we discovered in \us{} (that were subsequently fixed) by testing it with the \fuzzer{} problem suites.
 
         \todo{Describe the length lookup bug and length-testing bug, giving the before/after commits.}
 
     \subsection{Patterns}
 
-        While the aforementioned suites are useful in analysing a solver, we also found that randomisation was helpful in exploratory debugging, and we encourage this pattern as well. For example the following usage can feed random problems to \cvc{} until it returns an error:
+        While the aforementioned suites are useful in analysing a solver, we also used randomised \fuzzer{} runs for exploratory debugging. For example the following usage can feed random problems to \cvc{} until it returns an error:
 
         {\scriptsize\begin{verbatim}
-while stringfuzzg random | cvc4 --lang smt2.5 --tlimit=5000; do sleep 0; done\end{verbatim}}
+while stringfuzzg -r random | tee problem.smt25 | cvc4 --lang smt2.5 --tlimit=5000; do
+    sleep 0
+done\end{verbatim}}
 
         Some \unix{} scripting can yield other interesting results. For example the following script finds a regex problem on which \us{} times out after 5 seconds:
 

@@ -63,8 +63,13 @@ graphs: $(GRAPHS)
 
 problems: $(EXPERIMENT_SUITES)
 
+re-gather:
+	$(RM) -r $(PROBLEM_DIR)
+	$(RM) -r $(GRAPHS_DIR)
+	$(MAKE) problems graphs
+
 # real targets
-$(TRACES_DIR) $(GRAPHS_DIR):
+$(TRACES_DIR) $(GRAPHS_DIR) $(PROBLEM_DIR):
 	mkdir -p $@
 
 $(Z3STR3):
