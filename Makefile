@@ -70,6 +70,7 @@ re-problems:
 
 re-graphs:
 	$(RM) -r $(GRAPHS_DIR)
+	$(RM) -r ../../experiment/results
 	$(MAKE) graphs
 
 # real targets
