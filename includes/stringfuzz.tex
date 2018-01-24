@@ -1,49 +1,50 @@
 \section{\fuzzer{}}
+\label{sec:fuzzer}
 
-    This section describes the fuzzer \fuzzer{}, which generates new \smt{} problems and transforms existing ones. \fuzzer{} is implemented as a Python package, and comes with several executables to generate, transform, and analyse \smt{} string problems.
+    This section describes the fuzzer \fuzzer{}, which generates new \smtfull{} problems and transforms existing ones. \fuzzer{} is implemented as a Python package, and comes with several executables to generate, transform, and analyse \smtfull{} string problems.
 
     % Its source code repository is available at \sourceRepo{}. It can either be installed from source, or from the Python PIP package repository.
 
-    The \fuzzer{} code is organised to be easily extended: all generators and transformers are independent modules. Its components are also implemented as \unix{} ``filters'', to enable easy integration with other tools (including themselves). For example, the outputs of generators can be piped directly into transformers, and transformers can be chained to produce a tuned stream of challenging inputs to a solver.
+    The \fuzzer{} code is organised to be easily extended: all generators and transformers are independent Python modules. Its components are also implemented as \unix{} ``filters'', to enable easy integration with other tools (including themselves). For example, the outputs of generators can be piped directly into transformers, and transformers can be chained to produce a tuned stream of challenging inputs to a solver.
 
     Below are descriptions of the tools that constitute \fuzzer{}:
 
     \begin{description}
 
-        \item[\texttt{stringfuzzg}] \hfill \\
+        \item[\generator{}] \hfill \\
             This tool generates \smt{} problems. It supports several generators and options that specify its output. The generators it implements are: \\
 
-            \todo{Fill in descriptions.}
-
-            \begin{tabular}{|c|c|}
+            \begin{tabular}{|l|l|}
                 \hline
-                \textbf{Name} & \textbf{Description} \\ \hline
-                concats       & \\ \hline
-                lengths       & \\ \hline
-                overlaps      & \\ \hline
-                regex         & \\ \hline
-                random-text   & \\ \hline
+                \textbf{Name} & \textbf{Generated Problems have ...} \\ \hline
+                concats       & Long concats and optional random extracts. \\ \hline
+                lengths       & Many variables (and their concats) with length constraints. \\ \hline
+                overlaps      & An expression of the form A.X = X.B. \\ \hline
+                equality      & An equality among concats, each with variables or constants. \\ \hline
+                regex         & Regexes of variying complexity. \\ \hline
+                random-text   & Random, likely syntactically invalid text. \\ \hline
+                random-ast    & Totally random, but semantically valid text. \\ \hline
             \end{tabular}
 
             \hfill \\
 
-        \item[\texttt{stringfuzzx}] \hfill \\
+        \item[\transformer{}] \hfill \\
 
-            This tool transforms \smt{} problems.. It supports several transformers and options that specify its output and input. \todo{Maybe describe SAT-preserving properties?} The transformers it implements are: \\
+            This tool transforms \smt{} problems.. It supports several transformers and options that specify its output and input. The transformers it implements are: \\
 
-            \todo{Fill in descriptions.}
+            \todo{Dmitry: maybe add notes about SAT preservation?}
 
-            \begin{tabular}{|c|c|}
+            \begin{tabular}{|l|l|}
                 \hline
-                \textbf{Name} & \textbf{Description} \\ \hline
-                fuzz          & \\ \hline
-                graft         & \\ \hline
-                multiply      & \\ \hline
-                nop           & \\ \hline
-                reverse       & \\ \hline
-                rotate        & \\ \hline
-                translate     & \\ \hline
-                unprintable   & \\ \hline
+                \textbf{Name} & \textbf{The transformer ...} \\ \hline
+                fuzz          & Randomly replaces literals and operators with similar ones. \\ \hline
+                graft         & For each sort, swaps a random non-leaf node with a leaf node. \\ \hline
+                multiply      & Multiplies each number by N, and repeats each character N times. \\ \hline
+                nop           & Does nothing. \\ \hline
+                reverse       & Reverses all string literals and concat arguments. \\ \hline
+                rotate        & Performs a random concat tree rotation. \\ \hline
+                translate     & Maps every character X to a different character Y. \\ \hline
+                unprintable   & Replaces all characters with unprintable ones. \\ \hline
             \end{tabular}
 
             \hfill \\
@@ -56,6 +57,41 @@
         \item[\texttt{stringmerge}] \hfill \\
             This tool takes as input two \smt{} problems and combines them into one problem.
 
-            \todo{Add details about merging strategies.}
+            \todo{Federico: describe \texttt{stringmerge}.}
 
     \end{description}
+
+    \subsection{Regex Fuzzing Capabilities}
+
+        \fuzzer{} can generate and transform problems with regular expression constratints. The command \texttt{stringfuzzg regex} invokes the regex problem generator, and has several options to control its output. It generates a problem in the form\footnote{Variable declarations omitted for brevity.}:
+
+        \begin{align*}
+            \langle problem \rangle  & ::= \langle membership \rangle \; \langle membership \rangle * \\
+            \langle membership \rangle & ::= \texttt{(assert (str.in.re X}\; R\; \texttt{))}
+        \end{align*}
+
+
+        where $R \in RegEx$. More simply, the problem is a set of one or more regex constraints on a single variable.
+
+        \todo{Dmitry: further describe the properties of $R$.}
+
+    \subsection{Patterns}
+
+        \fuzzer{} can be used to generate static benchmarks as described in Section~\ref{sec:problems}. It cna also be used in a randomised fashion for exploratory debugging. As a motivating example, the following usage can feed random problems to \cvc{} until it returns an error:
+
+        {\scriptsize\begin{verbatim}
+while stringfuzzg -r random --num-terms 1000 | tee problem.smt25 | cvc4 --lang smt2.5 --tlimit=5000; do
+    sleep 0
+done\end{verbatim}}
+
+        Some \unix{} scripting can yield other interesting results. For example the following script finds a regex problem on which \us{} times out after 5 seconds:
+
+        {\scriptsize\begin{verbatim}while true; do
+    stringfuzzg -r regex -c -a increasing -r 2 -t 5 -d 3 > problem.smt25
+    result=`z3str3 -T:5 problem.smt25`
+    echo $result
+    if [ "$result" == "timeout" ]; then
+        cat hard-problem.smt2
+        break
+    fi
+done\end{verbatim}}

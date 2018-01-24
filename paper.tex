@@ -17,19 +17,23 @@
 \setlength{\pdfpagewidth}{\paperwidth}
 
 % constants
-\def\cvc{CVC4}
-\def\us{Z3str3}
 \def\fuzzer{StringFuzz}
 \def\generator{\texttt{stringfuzzg}}
 \def\transformer{\texttt{stringfuzzx}}
-\def\smt{SMT-LIB 2.0/2.5}
-\def\smtlib{SMT-LIB}
-\def\cHard{\cvc-Hard}
-\def\zHard{\us-Hard}
+
+\def\smtfull{SMT-LIB 2.0/2.5}
+\def\smt{SMT-LIB}
 \def\unix{UNIX}
 
-\def\numSolvers{two}
-\def\theSolvers{\us{} and \cvc{}}
+\def\theSuites{\textit{concats-balanced}, \textit{concats-small}, \textit{concats-extracts-small}, and \textit{different-prefix}}
+\def\numSuites{four}
+
+\def\cvc{CVC4}
+\def\us{Z3str3}
+\def\usOld{Z3str2}
+\def\norn{Norn}
+\def\theSolvers{\us{}, \cvc{}, \usOld{}, and \norn{}}
+\def\numSolvers{four}
 
 \def\problemRepo{\url{https://example.com}}
 \def\sourceRepo{\url{https://github.com/dblotsky/stringfuzz}}
@@ -49,10 +53,11 @@
     % authors
     \author{
         Dmitry Blotsky\inst{1}\orcidID{0},
-        Federico Mora\inst{1}\orcidID{0},
+        Federico Mora\inst{2}\orcidID{0},
         Murphy Berzish\inst{1}\orcidID{0},\and
+        Yunhui Zheng\inst{3}\orcidID{0},
         Ifaz Kabir\inst{1}\orcidID{0},
-        Vijay~Ganesh\inst{2}\orcidID{1}
+        Vijay~Ganesh\inst{1}\orcidID{0}
     }
     \authorrunning{Dmitry Blotsky et al.}
 
@@ -60,6 +65,8 @@
     \institute{
         University of Waterloo, Waterloo ON, Canada,\\
         \email{dblotsky@uwaterloo.ca}
+        % U of T for Federico
+        % IBM for Yunhui
     }
 
     \maketitle

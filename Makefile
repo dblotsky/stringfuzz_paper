@@ -3,6 +3,7 @@ EXPERIMENT_SUITE_NAMES = \
 	concats-balanced \
 	concats-extracts-small \
 	concats-small \
+	concats-big \
 	different-prefix
 
 # paper config
@@ -96,10 +97,10 @@ $(GRAPHS_DIR)/%.png: | $(GRAPHS_DIR)
 $(PROBLEM_DIR)/%: | $(PROBLEM_DIR)
 	cp -r ../../website/problems/$* $(PROBLEM_DIR)
 
-$(TRACES_DIR)/$(CVC4_NAME)-%.trace: $(TRACE_PROBLEM_DIR)/% $(CVC4)
+$(TRACES_DIR)/$(CVC4_NAME)-%.trace: $(TRACE_PROBLEM_DIR)/% $(CVC4) | $(TRACES_DIR)
 	-$(CVC4_CMD) $(CVC4_TRACE_ARGS) < $< 2> $@ > $@
 
-$(TRACES_DIR)/$(Z3STR3_NAME)-%.trace: $(TRACE_PROBLEM_DIR)/% $(Z3STR3)
+$(TRACES_DIR)/$(Z3STR3_NAME)-%.trace: $(TRACE_PROBLEM_DIR)/% $(Z3STR3) | $(TRACES_DIR)
 	-$(Z3STR3_CMD) -tr:str $< 2> $@ > $@
 	cat .z3-trace >> $@
 	rm .z3-trace
