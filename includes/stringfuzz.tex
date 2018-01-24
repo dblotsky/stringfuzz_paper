@@ -21,9 +21,9 @@
                 lengths       & Many variables (and their concats) with length constraints. \\ \hline
                 overlaps      & An expression of the form A.X = X.B. \\ \hline
                 equality      & An equality among concats, each with variables or constants. \\ \hline
-                regex         & Regexes of variying complexity. \\ \hline
-                random-text   & Random, likely syntactically invalid text. \\ \hline
-                random-ast    & Totally random, but semantically valid text. \\ \hline
+                regex         & Regexes of varying complexity. \\ \hline
+                random-text   & Random, likely syntactically \textit{in}valid text. \\ \hline
+                random-ast    & Random, but semantically \textit{valid} text. \\ \hline
             \end{tabular}
 
             \hfill \\
@@ -42,9 +42,9 @@
                 multiply      & Multiplies each number by N, and repeats each character N times. \\ \hline
                 nop           & Does nothing. \\ \hline
                 reverse       & Reverses all string literals and concat arguments. \\ \hline
-                rotate        & Performs a random concat tree rotation. \\ \hline
+                rotate        & Performs a random syntax tree rotation on two concats. \\ \hline
                 translate     & Maps every character X to a different character Y. \\ \hline
-                unprintable   & Replaces all characters with unprintable ones. \\ \hline
+                unprintable   & Randomly replaces all characters in literals with unprintable ones. \\ \hline
             \end{tabular}
 
             \hfill \\
@@ -63,7 +63,7 @@
 
     \subsection{Regex Fuzzing Capabilities}
 
-        \fuzzer{} can generate and transform problems with regular expression constratints. The command \texttt{stringfuzzg regex} invokes the regex problem generator, and has several options to control its output. It generates a problem in the form\footnote{Variable declarations omitted for brevity.}:
+        \fuzzer{} can generate and transform problems with regular expression constraints. The command \texttt{stringfuzzg regex} invokes the regex problem generator, and has several options to control its output. It generates a problem in the form\footnote{Variable declarations omitted for brevity.}:
 
         \begin{align*}
             \langle problem \rangle  & ::= \langle membership \rangle \; \langle membership \rangle * \\
@@ -77,7 +77,7 @@
 
     \subsection{Patterns}
 
-        \fuzzer{} can be used to generate static benchmarks as described in Section~\ref{sec:problems}. It cna also be used in a randomised fashion for exploratory debugging. As a motivating example, the following usage can feed random problems to \cvc{} until it returns an error:
+        \fuzzer{} can be used to generate static benchmarks as described in Section~\ref{sec:problems}. It can also be used in a randomised fashion for exploratory debugging. As a motivating example, the following usage can feed random problems to \cvc{} until it returns an error:
 
         {\scriptsize\begin{verbatim}
 while stringfuzzg -r random --num-terms 1000 | tee problem.smt25 | cvc4 --lang smt2.5 --tlimit=5000; do
