@@ -31,7 +31,7 @@
     \begin{table}
     \begin{tabular}{|l|l|r|}
         \hline
-        \textbf{Name} & \textbf{Seed}                            & \textbf{Qunatity} \\ \hline
+        \textbf{Name} & \textbf{Seed}                            & \textbf{Quantity} \\ \hline
         Amazon        & Two industrial regex membership problems & 516\\ \hline
         Regex         & Z3str2 regular expression test suite     & 10,577\\ \hline
     \end{tabular}
@@ -42,11 +42,10 @@
     The first category, labeled Amazon, started as two seed files.
     The first seed, z3-regex-1.smt2, encodes the assertions ``S not in aaabbb*'' and ``S in aaa*bbb*'' for a string constant S,
     while the second seed, z3-regex-2-negative.smt2, encodes the assertions ``S in aaabbb*'' and ``S not in aaa*bbb*''. 
-    \todo{Can I say something like that these problems were deemed industrially relevant by Amazon? Probably not, right?} 
+    Both problems come from our industrial collaborators. 
     In total, 516 unique problems were generated from these two seeds.
     
-    The second category, Regex, is seeded by the z3str2 regular expression test suite \cite{} 
-    \todo{Is this right? If so where we can cite?}. 
+    The second category, Regex, is seeded by the z3str2 regular expression test suite \cite{z3str2-tests}.
     This test suite contains 42 problems dealing with a wide variety of regular expressions.
     Through cumulative transformations, as before, we were able to produce 10,577 unique benchmarks.
 
