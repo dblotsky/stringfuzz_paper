@@ -22,17 +22,12 @@
     \todo{Federico: fill in descriptions. First draft - Federico}
 
     The \texttt{transformed} suite contains benchmarks derived from existing seed problems by iteratively applying \transformer{}.
-    Every problem in the suite is named according to its seed and the transformations it undertook. For example, a hypothetical file named ``seed-fuzz-graft.smt2'' began as a file named ``seed.smt'' and was transformed twice, first by fuzz and then by graft. See Table~\ref{tbl:transformed} for an overview description of the suite. 
+    Every problem in the suite is named according to its seed and the transformations it undertook. 
+    For example, a hypothetical file named ``seed-fuzz-graft.smt2'' began as a file named ``seed.smt'' and was transformed twice:
+    first by fuzz, and then by graft. 
     
-    The suite is divided into two categories. The first category, labeled Amazon, started as two seed files.
-    The first seed, z3-regex-1.smt2, encodes the assertions ``S not in aaabbb*'' and ``S in aaa*bbb*'' for a string constant S,
-    while the second seed, z3-regex-2-negative.smt2, encodes the assertions ``S in aaabbb*'' and ``S not in aaa*bbb*''. 
-    \todo{Can I say that these problems were deemed industrially relevant by Amazon? Probably not, right?} 
-    In total, 516 unique problems were generated from these two seeds.
+    The suite is divided into two categories. For an overview see Table~\ref{tbl:transformed}.
     
-    The second category, Regex, is seeded by the z3str2 regular expression test suite \cite{} \todo{Is this right? If so where we can cite?}. This test suite contains 42 problems dealing with a wide variety of regular expressions.
-    Through accumulative transformations, as before, we were able to produce 10,577 unique benchmarks.
-
     \begin{table}
     \begin{tabular}{|l|l|r|}
         \hline
@@ -43,6 +38,18 @@
     \caption{\transformer{} generated problem sets.}
     \label{tbl:transformed}
     \end{table}
+
+    The first category, labeled Amazon, started as two seed files.
+    The first seed, z3-regex-1.smt2, encodes the assertions ``S not in aaabbb*'' and ``S in aaa*bbb*'' for a string constant S,
+    while the second seed, z3-regex-2-negative.smt2, encodes the assertions ``S in aaabbb*'' and ``S not in aaa*bbb*''. 
+    \todo{Can I say something like that these problems were deemed industrially relevant by Amazon? Probably not, right?} 
+    In total, 516 unique problems were generated from these two seeds.
+    
+    The second category, Regex, is seeded by the z3str2 regular expression test suite \cite{} 
+    \todo{Is this right? If so where we can cite?}. 
+    This test suite contains 42 problems dealing with a wide variety of regular expressions.
+    Through cumulative transformations, as before, we were able to produce 10,577 unique benchmarks.
+
 
     \subsection{Usefulness to \us{}}
 
