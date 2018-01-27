@@ -54,7 +54,3 @@
         The first bug we found caused \us{} to perform poorly when equivalence classes of arithmetic terms was very large (e.g. where many strings were equal to the empty string, and thus had length 0). We discovered this bug using the \textit{Concats} problem suite. The slowdown was caused by a loop over the equivalence class of these terms to search for an integer constant. The fix was to check the root of the equivalence class for the integer constant, as Z3 makes "interpreted terms" (i.e. constants) the root of equivalence classes whenever possible. This bug was last observed in commit 6308636, and was fixed in commit 3865c45.
 
         The second bug we found caused \us{} to perform poorly when a variable had a large length constraint. We discovered this bug using the \textit{Lengths} problem suite. The slowdown was caused by the solver performing a linear search for a satisfying length when producing a model for the variable. This bug was an inconsistency between the implementation and the behaviour described in the \us{} paper \cite{z3str3}. This bug was last observed in commit 66bc68f, and was fixed in commit 7b536e9.
-
-        \todo{Federico - Can we describe the floating point error we found?}
-
-        \todo{Dmitry: maybe show graphs with before and after?}
