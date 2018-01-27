@@ -10,47 +10,51 @@
     \begin{description}
 
         \item[\generator{}] \hfill \\
-            This tool generates \smt{} problems. It supports several generators and options that specify its output. The generators it implements are: \\
-
-            \begin{tabular}{|l|l|}
-                \hline
-                \textbf{Name} & \textbf{Generated Problems have ...} \\ \hline
-                concats       & Long concats and optional random extracts. \\ \hline
-                lengths       & Many variables (and their concats) with length constraints. \\ \hline
-                overlaps      & An expression of the form A.X = X.B. \\ \hline
-                equality      & An equality among concats, each with variables or constants. \\ \hline
-                regex         & Regexes of varying complexity. \\ \hline
-                random-text   & Random, likely syntactically \textit{in}valid text. \\ \hline
-                random-ast    & Random, but semantically \textit{valid} text. \\ \hline
-            \end{tabular}
-
+            This tool generates \smt{} problems. It supports several generators and options that specify its output. Table~\ref{tbl:generators} describes them.
             \hfill \\
+
+            \begin{table}
+                \centering
+                \begin{tabular}{|l|l|}
+                    \hline
+                    \textbf{Name}        & \textbf{Generated Problems have ...} \\ \hline
+                    \textit{concats}     & Long concats and optional random extracts. \\ \hline
+                    \textit{lengths}     & Many variables (and their concats) with length constraints. \\ \hline
+                    \textit{overlaps}    & An expression of the form A.X = X.B. \\ \hline
+                    \textit{equality}    & An equality among concats, each with variables or constants. \\ \hline
+                    \textit{regex}       & Regexes of varying complexity. \\ \hline
+                    \textit{random-text} & Random, likely syntactically \textit{in}valid text. \\ \hline
+                    \textit{random-ast}  & Random, but semantically \textit{valid} text. \\ \hline
+                \end{tabular}
+                \caption{\generator{} generators}
+                \label{tbl:generators}
+            \end{table}
 
         \item[\transformer{}] \hfill \\
-
-            This tool transforms \smt{} problems.. It supports several transformers and options that specify its output and input. The transformers it implements are: \\
-
-            \todo{Dmitry: maybe add notes about SAT preservation?}
-
-            \begin{tabular}{|l|l|}
-                \hline
-                \textbf{Name} & \textbf{The transformer ...} \\ \hline
-                fuzz          & Randomly replaces literals and operators with similar ones. \\ \hline
-                graft         & For each sort, swaps a random non-leaf node with a leaf node. \\ \hline
-                multiply      & Multiplies each number by N, and repeats each character N times. \\ \hline
-                nop           & Does nothing. \\ \hline
-                reverse       & Reverses all string literals and concat arguments. \\ \hline
-                rotate        & Performs a random syntax tree rotation on two concats. \\ \hline
-                translate     & Maps every character X to a different character Y. \\ \hline
-                unprintable   & Randomly replaces all characters in literals with unprintable ones. \\ \hline
-            \end{tabular}
-
+            This tool transforms \smt{} problems. It supports several transformers and options that specify its output and input. Table~\ref{tbl:transformers} describes them. The following transformers also preserve problem satisfiability: \textit{translate}, \textit{reverse}. \cite{ifaz}
             \hfill \\
+
+            \begin{table}
+                \centering
+                \begin{tabular}{|l|l|}
+                    \hline
+                    \textbf{Name}        & \textbf{The transformer ...} \\ \hline
+                    \textit{fuzz}        & Randomly replaces literals and operators with similar ones. \\ \hline
+                    \textit{graft}       & For each sort, swaps a random non-leaf node with a leaf node. \\ \hline
+                    \textit{multiply}    & Multiplies each number by N, and repeats each character N times. \\ \hline
+                    \textit{nop}         & Does nothing. \\ \hline
+                    \textit{reverse}     & Reverses all string literals and concat arguments. \\ \hline
+                    \textit{rotate}      & Performs a random syntax tree rotation on two concats. \\ \hline
+                    \textit{translate}   & Maps every character X to a different character Y. \\ \hline
+                    \textit{unprintable} & Randomly replaces all characters in literals with unprintable ones. \\ \hline
+                \end{tabular}
+                \caption{\transformer{} transformers}
+                \label{tbl:transformers}
+            \end{table}
 
         \item[\texttt{stringstats}] \hfill \\
             This tool takes as input an \smt{} problem, and outputs its properties, such as: numbers of string variables and literals, max/median syntactic depth of expressions, and max/median length of literals.
-
-            \hfill
+            \hfill \\
 
         \item[\texttt{stringmerge}] \hfill \\
             This tool takes as input two \smt{} problems and combines them into one problem.
@@ -62,23 +66,38 @@
     \subsection{Regex Fuzzing Capabilities}
 
         \fuzzer{} can generate and transform problems with regular expression constraints. The command \texttt{stringfuzzg regex} invokes the regex problem generator, and has several options to control its output. It generates a problem of the form\footnote{Variable declarations omitted for brevity.}:
-
         \begin{align*}
-            \langle problem \rangle  & ::= \langle membership \rangle \; \langle membership \rangle * \\
-            \langle membership \rangle & ::= \texttt{(assert (str.in.re X}\; R\; \texttt{))}
+            & \texttt{(assert (str.in.re X}\; R_0\; \texttt{))} \\
+            & \texttt{(assert (str.in.re X}\; R_n\; \texttt{))}* \\
+            & \texttt{(assert (<= Min (str.len X)))}? \\
+            & \texttt{(assert (<= (str.len X)) Max)}?
         \end{align*}
 
+        where $R_i \in RegEx$, and $Min, Max \in Int$. More simply, the problem is a set of one or more regex constraints on a single variable, with optional maximum and minimum lengths constraints. The regex constraints $R$ are each of the form:
 
-        where $R \in RegEx$. More simply, the problem is a set of one or more regex constraints on a single variable.
+        \begin{align*}
+            & \texttt{(re.++}\; T_0\; T_1\; \texttt{...}\; T_n\; \texttt{)}
+        \end{align*}
 
-        \todo{Dmitry: further describe the properties of $R$.}
+        and each $T_i$ is a recursive term of the form:
+
+        \begin{align*}
+            & \texttt{(re.*}\; T_{i_j}\; \texttt{) | (re.+}\; T_{i_j}\; \texttt{) | (re.union}\; T_{i_{j_1}}\; T_{i_{j_2}}\; \texttt{)}
+        \end{align*}
+
+        where $j$ a specified depth of recursion. Terms at depth 0 are regex constants. Informally, this form describes a concatenation of regex terms. Each term is a random nested regex operator (chosen from regex Kleene star, repetition, and union), up to a specified depth, terminating in a regex literal. Below is example regex (with spacing added for clarity) of depth 2 produced by this scheme:
+
+        \begin{align*}
+            & ((\texttt{a}|\texttt{b})|(\texttt{cc})+)\quad ((\texttt{ddd})*)+\quad ((\texttt{ee})+|(\texttt{fff})*)
+        \end{align*}
+
+        \fuzzer{} can also transform the instances it generates. All of the transformers in \transformer{} can operate on regex terms. They can multiply and permute regex literals (e.g. \textit{reverse}, \textit{multiply}, \textit{translate}), randomly replace regex operators (e.g. \textit{fuzz}), and manipulate the syntax tree of a regex problem (e.g. \textit{graft}, \textit{rotate}).
 
     \subsection{Patterns}
 
-        \fuzzer{} can be used to generate static benchmarks as described in Section~\ref{sec:problems}. It can also be used in a randomised fashion for exploratory debugging. As a motivating example, the following usage can feed random problems to \cvc{} until it returns an error:
+        \fuzzer{} can be used to generate problems to be saved as static suites like those in Section~\ref{sec:problems}. It can also be used in a randomised fashion for exploratory debugging. As a motivating example, the following usage can feed random problems to \cvc{} until it returns an error:
 
-        {\scriptsize\begin{verbatim}
-while stringfuzzg -r random --num-terms 1000 | tee problem.smt25 | cvc4 --lang smt2.5 --tlimit=5000; do
+        {\scriptsize\begin{verbatim}while stringfuzzg -r random --num-terms 1000 | tee problem.smt25 | cvc4 --lang smt2.5 --tlimit=5000; do
     sleep 0
 done\end{verbatim}}
 

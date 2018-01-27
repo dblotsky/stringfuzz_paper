@@ -1,0 +1,169 @@
+% test tools
+@misc{kaluza,
+    title        = {Kaluza benchmark suite},
+    howpublished = {\url{http://webblaze.cs.berkeley.edu/2010/kaluza/}},
+}
+
+@inproceedings{kausler,
+    author    = {Kausler, Scott and Sherman, Elena},
+    title     = {Evaluation of String Constraint Solvers in the Context of Symbolic Execution},
+    booktitle = {Proceedings of the 29th ACM/IEEE International Conference on Automated Software Engineering},
+    series    = {ASE '14},
+    year      = {2014},
+    isbn      = {978-1-4503-3013-8},
+    location  = {Vasteras, Sweden},
+    pages     = {259--270},
+    numpages  = {12},
+    url       = {http://doi.acm.org/10.1145/2642937.2643003},
+    doi       = {10.1145/2642937.2643003},
+    acmid     = {2643003},
+    publisher = {ACM},
+    address   = {New York, NY, USA},
+    keywords  = {constraint solver analysis, string constraint solving, symbolic execution},
+}
+
+@inproceedings{fuzzsmt,
+    author    = {Brummayer, Robert and Biere, Armin},
+    title     = {Fuzzing and Delta-debugging SMT Solvers},
+    booktitle = {Proceedings of the 7th International Workshop on Satisfiability Modulo Theories},
+    series    = {SMT '09},
+    year      = {2009},
+    isbn      = {978-1-60558-484-3},
+    location  = {Montreal, Canada},
+    pages     = {1--5},
+    numpages  = {5},
+    url       = {http://doi.acm.org/10.1145/1670412.1670413},
+    doi       = {10.1145/1670412.1670413},
+    acmid     = {1670413},
+    publisher = {ACM},
+    address   = {New York, NY, USA},
+}
+
+@inproceedings{smtpp,
+    author    = {Richard Bonichon and David D\'eharbe and Pablo Dobal and Cl\'audia Tavares},
+    title     = {{SMTpp}: preprocessors and analyzers for {SMT-LIB}},
+    booktitle = {Proceedings of the 13th International Workshop on Satisfiability Modulo Theories},
+    series    = {SMT 2015},
+    year      = {2015},
+    location  = {San Francisco, California},
+    url       = {http://smt2015.csl.sri.com/wp-content/uploads/2015/06/2015-Bonichon-D%C3%A9harbe-Dobal-Tavares-SMTpp-preprocessors-and-analyzers-for-SMT-LIB.pdf},
+}
+
+% other
+% remaining: ifaz
+
+@TECHREPORT{smt,
+    author      = {Clark Barrett and Pascal Fontaine and Cesare Tinelli},
+    title       = {{The SMT-LIB Standard: Version 2.5}},
+    institution = {Department of Computer Science, The University of Iowa},
+    year        = 2015,
+    note        = {Available at {\tt www.SMT-LIB.org}}
+}
+
+% solvers
+@InProceedings{norn,
+    author    = "Abdulla, Parosh Aziz
+    and Atig, Mohamed Faouzi
+    and Chen, Yu-Fang
+    and Hol{\'i}k, Luk{\'a}{\v{s}}
+    and Rezine, Ahmed
+    and R{\"u}mmer, Philipp
+    and Stenman, Jari",
+    editor    = "Kroening, Daniel
+    and P{\u{a}}s{\u{a}}reanu, Corina S.",
+    title     = "Norn: An SMT Solver for String Constraints",
+    booktitle = "Computer Aided Verification",
+    year      = "2015",
+    publisher = "Springer International Publishing",
+    address   = "Cham",
+    pages     = "462--469",
+    abstract  = "We present version 1.0 of the Norn SMT solver for string constraints. Norn is a solver for an expressive constraint language, including word equations, length constraints, and regular membership queries. As a feature distinguishing Norn from other SMT solvers, Norn is a decision procedure under the assumption of a set of acyclicity conditions on word equations, without any restrictions on the use of regular membership.",
+    isbn      = "978-3-319-21690-4"
+}
+
+@Article{z3str3,
+    author  = "Zheng, Yunhui
+    and Ganesh, Vijay
+    and Subramanian, Sanu
+    and Tripp, Omer
+    and Berzish, Murphy
+    and Dolby, Julian
+    and Zhang, Xiangyu",
+    title    = "Z3str2: an efficient solver for strings, regular expressions, and length constraints",
+    journal  = "Formal Methods in System Design",
+    year     = "2017",
+    month    = "Jun",
+    day      = "01",
+    volume   = "50",
+    number   = "2",
+    pages    = "249--288",
+    abstract = "In recent years, string solvers have become an essential component in many formal verification, security analysis, and bug-finding tools. Such solvers typically support a theory of string equations, the length function, and the regular-expression membership predicate. These enable considerable expressive power, which comes at the cost of slow solving time, and in some cases even non-termination. We present three techniques, designed for word-based SMT string solvers, to mitigate these problems: (1) detecting overlapping variables, which is essential to avoiding common cases of non-termination; (2) pruning of the search space via bi-directional integration between the string and integer theories, enabling new cross-domain heuristics; and (3) a binary search based heuristic, allowing the procedure to skip unnecessary string length queries and converge on consistent length assignments faster for large strings. We have implemented above techniques atop the Z3-str solver, resulting in a significantly more robust and efficient solver, dubbed Z3str2, for the quantifier-free theory of string equations, the regular-expression membership predicate, and linear arithmetic over the length function. We report on a series of experiments over four sets of challenging real-world benchmarks, where we compare Z3str2 with five different string solvers: S3, CVC4, Kaluza, PISA and Stranger. Each of these tools utilizes a different solving strategy and/or string representation (based e.g. on words, bit vectors or automata). The results point to the efficacy of our proposed techniques, which yield dramatic performance improvement. We also demonstrate performance improvements enabled by Z3str2 in the context of symbolic execution for string-manipulating programs. We observe that the techniques presented here are of broad applicability, and can be integrated into other string solvers to improve their performance.",
+    issn     = "1572-8102",
+    doi      = "10.1007/s10703-016-0263-6",
+    url      = "https://doi.org/10.1007/s10703-016-0263-6"
+}
+
+@inproceedings{z3str2,
+    author    = {Yunhui Zheng and Xiangyu Zhang andVijay Ganesh},
+    title     = {Z3-str: a z3-based string solver for web application analysis},
+    booktitle = {Joint Meeting of the European Software Engineering Conference and
+               the {ACM} {SIGSOFT} Symposium on the Foundations of Software Engineering,
+               ESEC/FSE'13, Saint Petersburg, Russian Federation, August 18-26, 2013},
+    pages     = {114--124},
+    year      = {2013},
+    crossref  = {DBLP:conf/sigsoft/2013},
+    url       = {http://doi.acm.org/10.1145/2491411.2491456},
+    doi       = {10.1145/2491411.2491456},
+    timestamp = {Mon, 30 Oct 2017 11:35:10 +0100},
+    biburl    = {http://dblp.org/rec/bib/conf/sigsoft/ZhengZG13},
+    bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@proceedings{DBLP:conf/sigsoft/2013,
+    editor    = {Bertrand Meyer and
+               Luciano Baresi and
+               Mira Mezini},
+    title     = {Joint Meeting of the European Software Engineering Conference and
+               the {ACM} {SIGSOFT} Symposium on the Foundations of Software Engineering,
+               ESEC/FSE'13, Saint Petersburg, Russian Federation, August 18-26, 2013},
+    publisher = {{ACM}},
+    year      = {2013},
+    url       = {http://dl.acm.org/citation.cfm?id=2491411},
+    isbn      = {978-1-4503-2237-9},
+    timestamp = {Mon, 30 Oct 2017 11:35:10 +0100},
+    biburl    = {http://dblp.org/rec/bib/conf/sigsoft/2013},
+    bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@inbook{cvc4,
+    title     = "A DPLL(T) theory solver for a theory of strings and regular expressions",
+    abstract  = "An increasing number of applications in verification and security rely on or could benefit from automatic solvers that can check the satisfiability of constraints over a rich set of data types that includes character strings. Unfortunately, most string solvers today are standalone tools that can reason only about (some fragment) of the theory of strings and regular expressions, sometimes with strong restrictions on the expressiveness of their input language. These solvers are based on reductions to satisfiability problems over other data types, such as bit vectors, or to automata decision problems. We present a set of algebraic techniques for solving constraints over the theory of unbounded strings natively, without reduction to other problems. These techniques can be used to integrate string reasoning into general, multi-theory SMT solvers based on the DPLL(T) architecture. We have implemented them in our SMT solver cvc4 to expand its already large set of built-in theories to a theory of strings with concatenation, length, and membership in regular languages. Our initial experimental results show that, in addition, over pure string problems, cvc4 is highly competitive with specialized string solvers with a comparable input language.",
+    author    = "Tianyi Liang and Andrew Reynolds and Cesare Tinelli and Clark Barrett and Morgan Deters",
+    year      = "2014",
+    doi       = "10.1007/978-3-319-08867-9_43",
+    isbn      = "9783319088662",
+    volume    = "8559 LNCS",
+    series    = "Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics)",
+    publisher = "Springer Verlag",
+    pages     = "646--662",
+    booktitle = "Computer Aided Verification - 26th International Conference, CAV 2014, Held as Part of the Vienna Summer of Logic, VSL 2014, Proceedings",
+}
+
+% solver test suites
+@misc{cvc4-tests,
+    title        = {{CVC4} regression test suite},
+    howpublished = {\url{https://github.com/CVC4/CVC4/tree/master/test/regress}},
+    version      = {git commit 6c9a210},
+}
+
+@misc{z3str2-tests,
+    title        = {{Z3str2} test suite},
+    howpublished = {\url{https://github.com/z3str/Z3-str/tree/master/tests}},
+    version      = {git commit ec39964},
+}
+
+@misc{z3str3-tests,
+    title        = {{Z3str3} test scripts},
+    howpublished = {\url{https://github.com/Z3Prover/z3/tree/master/src/test}},
+    version      = {git commit b78c538},
+}
