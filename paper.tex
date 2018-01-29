@@ -13,6 +13,9 @@
 \usepackage{subcaption}
 \captionsetup{compatibility=false}
 
+\usepackage{varwidth}
+\usepackage{enumitem}
+
 \setlength{\pdfpageheight}{\paperheight}
 \setlength{\pdfpagewidth}{\paperwidth}
 
@@ -77,7 +80,16 @@
     \input{includes/problems.tex}
     \input{includes/experiment.tex}
     \input{includes/prior.tex}
-
+    
+    \section{Conclusion}
+    \vspace{-0.1in}
+    
+    We introduce a modular fuzzer for string solvers, \fuzzer{}, and describe 
+its utility as an exploratory validation tool.  We present a repository of 
+\smtfull{} string and regex problem suites we generated using \fuzzer{} and compare 
+\theSolvers{}. We demonstrate the effectiveness of \fuzzer{} by presenting 
+defects and limitations we identified in \us{}.
+    
     \bibliographystyle{abbrv}
     \bibliography{paper}
 
