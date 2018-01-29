@@ -1,8 +1,16 @@
 \section{Related Work}
 
-    Naturally, many solver developers author their own test suites to validate their solvers \cite{cvc4-tests} \cite{z3str3-tests} \cite{z3str2-tests}. In addition, several popular problem suites are publicly available for solver validation, such as the Kaluza \cite{kaluza} and Kausler \cite{kausler} suites.
+    Naturally, many solver developers author their own test suites to validate their solvers 
+    \cite{cvc4-tests} \cite{z3str3-tests} \cite{z3str2-tests}. 
+    In addition, several popular problem suites are publicly available for solver validation, 
+    such as the Kaluza \cite{kaluza} and Kausler \cite{kausler} suites.
 
-    There are likewise several fuzzers and problem generators currently available, but none of them can generate or transform string and regex problems. For example the FuzzSMT\cite{fuzzsmt} tool generates \smt{} problems with bit vectors and arrays, but does not support strings or regexes. The SMTpp\cite{smtpp} tool pre-processes and simplifies problems, but does not generate new ones or fuzz existing ones.
+    There are likewise several fuzzers and problem generators currently available.
+    However, none of these fuzzers can generate and transform string and regex problems. 
+    \todo{I know we talked about this one before, but I'm confused by it again.}
+    For example the FuzzSMT\cite{fuzzsmt} tool generates \smt{} problems with bit vectors and arrays, 
+    but does not support strings or regexes. 
+    The SMTpp\cite{smtpp} tool pre-processes and simplifies problems, but does not generate new ones or fuzz existing ones.
 
 % FuzzSMT: http://fmv.jku.at/papers/BrummayerBiere-SMT09.pdf
 % SMTpp: http://www.verit-solver.org/papers/smt2015.pdf
