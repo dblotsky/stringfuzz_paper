@@ -12,35 +12,41 @@ developers identify implementation defects and develop more
 sophisticated solving heuristics. Although extremely helpful, these
 suites are of limited value since they do not test the vast majority
 of interesting behaviors in solvers. There is an acute need for more
-robst, inexpensive, and automatic way of generating test suites to
-test SMT solvers, that can augment hand-crafted as well as application
-tests.
-    
+robst, inexpensive, and automatic way of generating benchmarks to test
+the correctness and performance of SMT solvers, that can augment
+hand-crafted as well as tests generated from industrial applications.
+
+%VG: add citation to SAT fuzzer
 Random and mutation fuzzing are widely used test all kinds of software
-including SAT solvers~\cite{}. Inspired by their utility, we introduce
-a fuzzer for string solvers, \fuzzer{}, and describe its value as an
-exploratory validation tool. We demonstrate the efficacy \fuzzer{} by
-presenting defects and limitations it enabled us to identify in
+including SAT solvers. Inspired by their utility, we introduce a
+fuzzer for string solvers, \fuzzer{}, and describe its value as an
+exploratory validation tool. We demonstrate the efficacy of \fuzzer{}
+by presenting defects and limitations it enabled us to identify in
 leading string solvers, which otherwise would have been difficult to
 detect. To the best of our knowledge, \fuzzer{} is the first such tool
-aimed at automatic generation of string constraints. \fuzzer{} allows
-to test string solvers by enabling us to mutate existing classes of
-benchmarks in interesting ways, as well as generate extremal inputs
-(e.g., inputs with very long strings or deep concatenations or
-highly-complex mix of string operations and regular
-expressions). Extremal inputs are particularly useful in empirically
-understanding asymptotic behavior of solvers in a way that no other
-class of instances can.
+aimed at automatic generation of string constraints. \fuzzer{} can be
+used to mutate or transform existing benchmarks, as well
+randomly-generate structured instances that can be scaled with respect
+to a variety of parameters, e.g., length of string constants, depth of
+concats, balanced or unbalanced concats, overlapping word equations,
+systems of word equations with arithmetic over length, nested regular
+expressions, rich combination of regular expressions and string
+constraints, and many more.
 
 \noindent{\textbf{Contributions:}} 
 
 \begin{enumerate}
 \item \textbf{The \fuzzer{} tool}: We describe in
   Section~\ref{sec:fuzzer} a modular fuzzer which can transform and
-  randomly generate extremal \smtfull{} string and regex problems. We
-  briefly document its components and modular architecture. We provide
-  example use cases to demonstrate its utility as an exploratory tool
-  for validating solvers.
+  randomly generate extremal \smtfull{} string and regular expression
+  (regex) problems~\footnote{We assume basic
+    familiarity with string solvers and their input
+    language.}. Extremal or scaling inputs (e.g., long string
+  constants, deep concatenations) are particularly useful in
+  identifying asymptotic behaviors in solvers. We briefly document its
+  components and modular architecture. We provide example use cases to
+  demonstrate its utility as an exploratory tool for validating
+  solvers.
   
 \item \textbf{A repository of \smtfull{} problems}: We present a
   repository of \smtfull{} string and regex problem suites we

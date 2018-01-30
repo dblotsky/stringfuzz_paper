@@ -11,6 +11,7 @@ outputs of generators can be piped into transformers, and transformers
 can be chained to produce a stream of tuned inputs to a
 solver.
 
+\vspace{0.1cm}
 \noindent{Specifically, \fuzzer{} is composed of the following tools:}
 
 \noindent{\textbf{\generator{}:}} This tool generates \smt{}
@@ -140,7 +141,8 @@ multiply and permute regex literals (e.g. \texttt{reverse},
 \texttt{multiply}, \texttt{translate}), randomly replace regex
 operators (e.g. \texttt{fuzz}), and manipulate the syntax tree
 (e.g. \texttt{graft}, \texttt{rotate}).
-        
+
+\vspace{0.2cm}
 \noindent{\textbf{Example Use Cases:}} \fuzzer{} can be used to
 generate benchmark suites in a batch mode, or can be used in an online
 randomized fashion for exploratory debugging. For example, \fuzzer{}
