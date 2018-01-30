@@ -9,14 +9,14 @@
 
     \fuzzer{} is organized to be easily extended: all generators and transformers are independent Python modules. Its components are also implemented as \unix{} ``filters'', to enable easy integration with other tools (including themselves). For example, the outputs of generators can be piped into transformers, and transformers can be chained to produce a stream of tuned inputs to a solver. 
     
-    Below are descriptions of the tools that constitute \fuzzer{}:
+    \fuzzer{} is composed of the following tools:
 
 
 \vspace{-0.15in}
-\subsection{\generator{}}
+\subsubsection{\generator{}:}
 % \vspace{-0.1in}
 
-\generator{} generates \smt{} problems. It supports several generators and options that specify its output. Details can be found in Table~\ref{tbl:generators}.
+This tool generates \smt{} problems. It supports several generators and options that specify its output. Details can be found in Table~\ref{tbl:generators}.
     
     
     
@@ -49,7 +49,7 @@
 
 
 \vspace{-0.15in}
-\subsection{\transformer{}}
+\subsubsection{\transformer{}:}
 % \vspace{-0.1in}
 
 This tool transforms \smt{} problems. It supports several transformers and options that specify its output and input, which are explained in Table~\ref{tbl:transformers}. Note that transformers \textit{translate} and \textit{reverse} also preserve problem satisfiability \cite{ifaz}.
@@ -86,7 +86,7 @@ This tool transforms \smt{} problems. It supports several transformers and optio
     
     
 \vspace{-0.15in}
-\subsection{\texttt{stringstats}}
+\subsubsection{\texttt{stringstats}:}
 
 This tool takes an \smt{} problem as input and outputs its properties: the number of variables/literals, the max/median syntactic depth of expressions, the max/median literal length, etc. 
 
@@ -164,7 +164,7 @@ This tool takes an \smt{} problem as input and outputs its properties: the numbe
             & \texttt{(assert (<= (str.len X)) Max)}?
         \end{align*}
         \endgroup
-        where $R_i \in RegEx$, and $Min, Max \in Int$. More simply, the problem is a set of one or more regex constraints on a single variable, with optional maximum and minimum lengths constraints. The regex constraints $R$ are each of the form:
+        where $R_i \in RegEx$, and $Min, Max \in Int$. More simply, the problem is a set of one or more regex constraints on a single variable, with optional maximum and minimum length constraints. The regex constraints $R$ are each of the form:
         \begingroup
         \footnotesize
         \begin{align*}
@@ -178,7 +178,7 @@ This tool takes an \smt{} problem as input and outputs its properties: the numbe
             & \texttt{(re.*}\; T_{i_j}\; \texttt{) | (re.+}\; T_{i_j}\; \texttt{) | (re.union}\; T_{i_{j_1}}\; T_{i_{j_2}}\; \texttt{)}
         \end{align*}
         \endgroup
-        where $j$ a specified depth of recursion. Terms at depth 0 are regex constants. Informally, this form describes a concatenation of regex terms. Each term is a random nested regex operator (chosen from regex Kleene star, repetition, and union), up to a specified depth, terminating in a regex literal. Below is example regex (with spacing added for clarity) of depth 2 produced by this scheme:
+        where $j$  is the specified depth of recursion. Terms at depth 0 are regex constants. Informally, this form describes a concatenation of regex terms. Each term is a random nested regex operator (chosen from regex Kleene star, repetition, and union), up to a specified depth, terminating in a regex literal. Below are several example regexes (with spacing added for clarity) of depth 2 produced by this scheme:
         \begingroup
         \footnotesize
         \begin{align*}
@@ -186,13 +186,13 @@ This tool takes an \smt{} problem as input and outputs its properties: the numbe
         \end{align*}
         \endgroup
 
-        {\it \fuzzer{} can also transform the instances it generates}. All of the transformers in \transformer{} can operate on regex terms. They can multiply and permute regex literals (e.g. \texttt{reverse}, \texttt{multiply}, \texttt{translate}), randomly replace regex operators (e.g. \texttt{fuzz}), and manipulate the syntax tree (e.g. \texttt{graft}, \texttt{rotate}).
+        \fuzzer{} can also transform the instances it generates. All of the transformers in \transformer{} can operate on regex terms. They can multiply and permute regex literals (e.g. \texttt{reverse}, \texttt{multiply}, \texttt{translate}), randomly replace regex operators (e.g. \texttt{fuzz}), and manipulate the syntax tree (e.g. \texttt{graft}, \texttt{rotate}).
 
         
-\section{Example Usages}
+\section{Example Use Cases}
 \vspace{-0.1in}
 
-        \fuzzer{} can be used to generate problems to be saved as static suites. It can also be used in a randomised fashion for exploratory debugging. As an example, the following usage can feed random problems to \cvc{} until it returns an error:
+        \fuzzer{} can be used to generate problems to be saved as static suites. It can also be used in a randomised fashion for exploratory debugging. As an example, \fuzzer{} can be invoked as follows to feed random problems to \cvc{} until it returns an error:
 \begin{center}
 \vspace{-0.05in}
 \begin{varwidth}{\linewidth}
@@ -211,7 +211,7 @@ done
     result=`z3str3 -T:5 problem.smt25`
     echo $result
     if [ "$result" == "timeout" ]; then
-        cat hard-problem.smt2
+        cat problem.smt25
         break
     fi
 done\end{verbatim}}
