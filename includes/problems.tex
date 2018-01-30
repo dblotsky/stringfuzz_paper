@@ -1,11 +1,11 @@
 \section{Problem Suites}
 \label{sec:problems}
-\vspace{-0.1in}
+
 
 In this section, we describe the benchmark suites that we generated with \fuzzer{} on which the experimental evaluation was conducted.
 
 \subsection{Generated suite}
-\vspace{-0.1in}
+
     We generated several suites of string and regex problems using \fuzzer{}\footnote{For review anonymity, we removed the link to the source code and the generated suites. They will be provided separately in the artifact submission.}. Table~\ref{tbl:generated} describes the suite \texttt{generated} by \generator{}.
     
 \todo{Specify how many total instances were generated.}
@@ -61,9 +61,9 @@ In this section, we describe the benchmark suites that we generated with \fuzzer
 %         \label{tbl:generated}
 %     \end{table}
 
-\vspace{-0.2in}
+
 \subsection{Transformed suite}
-\vspace{-0.1in}
+
     The \texttt{transformed} suite contains benchmarks derived from existing seed problems by iteratively applying \transformer{}. Table~\ref{tbl:transformed} shows the overview. Every problem in the suite is named according to its seed and the transformations it undertook. For example, input \texttt{seed-fuzz-graft.smt2} was transformed by applying \texttt{fuzz} and then \texttt{graft} from \texttt{seed.smt2}. 
 
 \begin{table}[h]

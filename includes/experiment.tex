@@ -1,6 +1,6 @@
 \section{Experimental Data}
 \label{sec:data}
-\vspace{-0.1in}
+
 
     We generated several problem suites with \fuzzer{} that made one solver perform poorly, but not others. These suites are \theSuites{}. Figure~\ref{fig:cvc-hard} shows the suites that were uniquely difficult for \cvc{}. Figure~\ref{fig:z3str3-hard} shows the suites that were uniquely difficult for \us{}. All experiments were run in series on the same Linux computer, with a timeout of 15 seconds. \todo{Specify CPU, memory}
 
@@ -46,13 +46,13 @@
 
     
 \section{Usefulness to \us{}: A Case Study}
-\vspace{-0.1in}
+\label{sec:analysis}
 
         We describe the defects and missing heuristics exposed by \fuzzer{} to illustrate why \fuzzer{} is a valuable asset in solver development.
 
-\vspace{-0.15in}
+
 \subsection{Defects discovered and fixed in \us{}}
-\vspace{-0.1in}
+
 
 The first issue we found caused \us{} to perform poorly when equivalence classes 
 of arithmetic terms were very large (e.g. the lengths of many strings were equal
@@ -79,9 +79,9 @@ This issue was last observed in commit \texttt{66bc68f}, and was fixed in commit
 %\texttt{7b536e9}.    
     
     
-\vspace{-0.15in}    
+
 \subsection{Solving heuristics}
-\vspace{-0.1in}
+
 
 In order to improve the efficiency of any solver, discovering new heuristics is crucial.
 As an illustrative example, consider detection of conflicting constraints.

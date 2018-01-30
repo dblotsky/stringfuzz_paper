@@ -1,6 +1,6 @@
 \section{\fuzzer{}}
 \label{sec:fuzzer}
-\vspace{-0.1in}
+
 
 %     This section describes the fuzzer \fuzzer{}, which generates new \smtfull{} problems and transforms existing ones. 
     \fuzzer{} is implemented as a Python package, and comes with several executables to generate, transform, and analyze \smtfull{} string problems. It can either be installed from source, or from the Python PIP package repository. 
@@ -12,9 +12,9 @@
     \fuzzer{} is composed of the following tools:
 
 
-\vspace{-0.15in}
+
 \subsubsection{\generator{}:}
-% \vspace{-0.1in}
+
 
 This tool generates \smt{} problems. It supports several generators and options that specify its output. Details can be found in Table~\ref{tbl:generators}.
     
@@ -48,9 +48,9 @@ This tool generates \smt{} problems. It supports several generators and options 
 \end{table}
 
 
-\vspace{-0.15in}
+
 \subsubsection{\transformer{}:}
-% \vspace{-0.1in}
+
 
 This tool transforms \smt{} problems. It supports several transformers and options that specify its output and input, which are explained in Table~\ref{tbl:transformers}. Note that transformers \textit{translate} and \textit{reverse} also preserve problem satisfiability \cite{ifaz}.
 
@@ -85,7 +85,7 @@ This tool transforms \smt{} problems. It supports several transformers and optio
     
     
     
-\vspace{-0.15in}
+
 \subsubsection{\texttt{stringstats}:}
 
 This tool takes an \smt{} problem as input and outputs its properties: the number of variables/literals, the max/median syntactic depth of expressions, the max/median literal length, etc. 
@@ -152,8 +152,8 @@ This tool takes an \smt{} problem as input and outputs its properties: the numbe
 
 %     \end{description}
 
-    \section{Regex Fuzzing Capabilities}
-    \vspace{-0.1in}
+    \subsection{Regex Fuzzing Capabilities}
+
         \fuzzer{} can generate and transform problems with regular expression constraints. The command \texttt{stringfuzzg regex} invokes the regex problem generator. It generates a problem of the form: %\footnote{Variable declarations omitted for brevity.}:
         \begingroup
         \footnotesize
@@ -189,8 +189,8 @@ This tool takes an \smt{} problem as input and outputs its properties: the numbe
         \fuzzer{} can also transform the instances it generates. All of the transformers in \transformer{} can operate on regex terms. They can multiply and permute regex literals (e.g. \texttt{reverse}, \texttt{multiply}, \texttt{translate}), randomly replace regex operators (e.g. \texttt{fuzz}), and manipulate the syntax tree (e.g. \texttt{graft}, \texttt{rotate}).
 
         
-\section{Example Use Cases}
-\vspace{-0.1in}
+\subsection{Example Use Cases}
+
 
         \fuzzer{} can be used to generate problems to be saved as static suites. It can also be used in a randomised fashion for exploratory debugging. As an example, \fuzzer{} can be invoked as follows to feed random problems to \cvc{} until it returns an error:
 \begin{center}
