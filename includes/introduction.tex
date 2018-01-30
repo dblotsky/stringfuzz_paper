@@ -11,13 +11,13 @@ applications~\cite{kaluza,kausler}. These test suites have helped
 developers identify implementation defects and develop more
 sophisticated solving heuristics. Although extremely helpful, these
 suites are of limited value since they do not test the vast majority
-of interesting behaviors in solvers. There is an acute need for more
-robst, inexpensive, and automatic way of generating benchmarks to test
+of interesting behaviors in solvers. There is an acute need for a more
+robust, inexpensive, and automatic way of generating benchmarks to test
 the correctness and performance of SMT solvers, that can augment
 hand-crafted as well as tests generated from industrial applications.
 
 %VG: add citation to SAT fuzzer
-Random and mutation fuzzing are widely used test all kinds of software
+Random and mutation fuzzing are widely used to test all kinds of software
 including SAT solvers. Inspired by their utility, we introduce a
 fuzzer for string solvers, \fuzzer{}, and describe its value as an
 exploratory validation tool. We demonstrate the efficacy of \fuzzer{}
@@ -25,15 +25,15 @@ by presenting defects and limitations it enabled us to identify in
 leading string solvers, which otherwise would have been difficult to
 detect. To the best of our knowledge, \fuzzer{} is the first such tool
 aimed at automatic generation of string constraints. \fuzzer{} can be
-used to mutate or transform existing benchmarks, as well
-randomly-generate structured instances that can be scaled with respect
-to a variety of parameters, e.g., length of string constants, depth of
-concats, balanced or unbalanced concats, overlapping word equations,
+used to mutate or transform existing benchmarks, as well as
+randomly generate structured instances that can be scaled with respect
+to a variety of parameters. Examples include: length of string constants,
+depth of concats, balanced or unbalanced concats, overlapping word equations,
 systems of word equations with arithmetic over length, nested regular
-expressions, rich combination of regular expressions and string
+expressions, rich combinations of regular expressions and string
 constraints, and many more.
 
-\noindent{\textbf{Contributions:}} 
+\noindent{\textbf{Contributions:}}
 
 \begin{enumerate}
 \item \textbf{The \fuzzer{} tool}: We describe in
@@ -43,11 +43,11 @@ constraints, and many more.
     familiarity with string solvers and their input
     language.}. Extremal or scaling inputs (e.g., long string
   constants, deep concatenations) are particularly useful in
-  identifying asymptotic behaviors in solvers. We briefly document its
+  identifying asymptotic behaviors in solvers. We briefly document \fuzzer{}'s
   components and modular architecture. We provide example use cases to
   demonstrate its utility as an exploratory tool for validating
   solvers.
-  
+
 \item \textbf{A repository of \smtfull{} problems}: We present a
   repository of \smtfull{} string and regex problem suites we
   generated using \fuzzer{} in Section~\ref{sec:problems}. We
@@ -56,9 +56,9 @@ constraints, and many more.
 
 \item \textbf{Experimental Results}: We compare \theSolvers{} on the
   \fuzzer{} suites and selectively present the experimental result on
-  \theSuites{} in Section~\ref{sec:data}. We highlighted these suites
-  because they uniquely made some solvers perform poorly, but not
-  others.
+  the suites \theSuites{} in Section~\ref{sec:data}. We highlighted
+  these suites because they uniquely made some solvers perform poorly,
+  but not others.
 
 \item \textbf{Analysis}: We analyze our experimental results in
   Section~\ref{sec:analysis} by inspecting the execution traces of the
