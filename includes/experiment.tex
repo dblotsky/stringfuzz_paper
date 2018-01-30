@@ -12,13 +12,13 @@ seconds. \todo{Specify CPU, memory}
     \begin{figure}[h]
         \vspace{-0.2in}
         \begin{subfigure}{.5\textwidth}
-            \includegraphics[width=\textwidth]{data/graphs/concats-extracts-small.png}                   
+            \includegraphics[width=\textwidth]{data/graphs/concats-extracts-small.png}
             \vspace{-0.25in}
-            \caption{Performance on concats-extracts-small} 
+            \caption{Performance on concats-extracts-small}
             \label{fig:concats-extracts-small}
         \end{subfigure}
         \begin{subfigure}{.5\textwidth}
-            \includegraphics[width=\textwidth]{data/graphs/different-prefix.png}            
+            \includegraphics[width=\textwidth]{data/graphs/different-prefix.png}
             \vspace{-0.25in}
             \caption{Performance on different-prefix}
             \label{fig:different-prefix}
@@ -49,7 +49,7 @@ seconds. \todo{Specify CPU, memory}
         \vspace{-0.3in}
     \end{figure}
 
-    
+
 \section{Usefulness to \us{}: A Case Study}
 \label{sec:analysis}
 
@@ -61,15 +61,15 @@ make full use of the solving context (e.g. some terms are empty
 strings) to simplify the concatenations of a long list of string terms
 before trying to reason about the equivalences among subterms. \us{}
 therefore introduced a large number of unnecessary intermediate
-variables and propagations.  As an immediate consequence of the
+variables and propagations. As an immediate consequence of the
 testing \us{} on \texttt{concats-big} benchmarks, we were able to
 identify the factors common to these instances and rapidly formulate a
 hypothesis as to why they were performing poorly. This allowed us to
-move forward with the development of new heuristic to resolve this
+move forward with the development of a new heuristic to resolve this
 issue and achieve better performance.
 
-        
-%% %VG: this subsection is not needed in the paper    
+
+%% %VG: this subsection is not needed in the paper
 %% \noindent{\textbf{Defects discovered and fixed in \us{}:}} The first
 %% issue we found caused \us{} to perform poorly when equivalence classes
 %% of arithmetic terms were very large (e.g. the lengths of many strings
