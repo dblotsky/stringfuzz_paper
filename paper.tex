@@ -28,7 +28,8 @@
 \def\smt{SMT-LIB}
 \def\unix{UNIX}
 
-\def\theSuites{\textit{concats-balanced}, \textit{concats-small}, \textit{concats-extracts-small}, and \textit{different-prefix}}
+\def\theSuites{\textit{concats-balanced}, \textit{concats-small},
+  \textit{concats-extracts-small}, and \textit{different-prefix}}
 \def\numSuites{four}
 
 \def\cvc{CVC4}
@@ -71,9 +72,9 @@
 %        % U of T for Federico
 %        % IBM for Yunhui
 %    }
-
+    
     \maketitle
-
+    
     \input{includes/abstract.tex}
     \input{includes/introduction.tex}
     \input{includes/stringfuzz.tex}
@@ -81,14 +82,17 @@
     \input{includes/experiment.tex}
     \input{includes/prior.tex}
     
-    \section{Conclusion}
-    \vspace{-0.1in}
+    %% \section{Conclusion}
+    %% \vspace{-0.1in}
     
-    We introduce a modular fuzzer for string solvers, \fuzzer{}, and describe 
-its utility as an exploratory validation tool.  We present a repository of 
-\smtfull{} string and regex problem suites we generated using \fuzzer{} and compare 
-\theSolvers{}. We demonstrate the effectiveness of \fuzzer{} by presenting 
-defects and limitations we identified in \us{}.
+    %% In this paper, we introduced a modular fuzzer for string solvers,
+    %% \fuzzer{}, and described its utility in finding both algorithmic
+    %% design flaws as well as implementation issues in string
+    %% solvers. Further, we presented a repository of \smtfull{} string
+    %% and regular expression problem suites we generated using
+    %% \fuzzer{}, and compare \theSolvers{} on them. We demonstrated the
+    %% effectiveness of \fuzzer{} by presenting defects and limitations
+    %% we identified in \us{}.
     
     \bibliographystyle{abbrv}
     \bibliography{paper}

@@ -1,12 +1,14 @@
 \section{Problem Suites}
 \label{sec:problems}
+In this section, we describe the benchmark suites that we generated
+with \fuzzer{} on which the experimental evaluation was conducted.
 
-
-In this section, we describe the benchmark suites that we generated with \fuzzer{} on which the experimental evaluation was conducted.
-
-\subsection{Generated suite}
-
-    We generated several suites of string and regex problems using \fuzzer{}\footnote{For review anonymity, we removed the link to the source code and the generated suites. They will be provided separately in the artifact submission.}. Table~\ref{tbl:generated} describes the suite \texttt{generated} by \generator{}.
+\noindent{\textbf{Generated Benchmarks:}} We generated several suites
+of string and regex problems using \fuzzer{}\footnote{For review
+  anonymity, we removed the link to the source code and the generated
+  suites. They will be provided separately in the artifact
+  submission.}. Table~\ref{tbl:generated} describes the suite
+\texttt{generated} by \generator{}.
     
 \todo{Specify how many total instances were generated.}
 
@@ -62,9 +64,13 @@ In this section, we describe the benchmark suites that we generated with \fuzzer
 %     \end{table}
 
 
-\subsection{Transformed suite}
-
-    The \texttt{transformed} suite contains benchmarks derived from existing seed problems by iteratively applying \transformer{}. Table~\ref{tbl:transformed} shows the overview. Every problem in the suite is named according to its seed and the transformations it undertook. For example, input \texttt{seed-fuzz-graft.smt2} was transformed by applying \texttt{fuzz} and then \texttt{graft} from \texttt{seed.smt2}. 
+\noindent{\textbf{Transformed Benchmarks:}} The \texttt{transformed}
+suite contains benchmarks derived from existing seed problems by
+iteratively applying \transformer{}. Table~\ref{tbl:transformed} shows
+the overview. Every problem in the suite is named according to its
+seed and the transformations it undertook. For example, input
+\texttt{seed-fuzz-graft.smt2} was transformed by applying
+\texttt{fuzz} and then \texttt{graft} from \texttt{seed.smt2}.
 
 \begin{table}[h]
 \vspace{-0.35in}
@@ -100,11 +106,16 @@ In this section, we describe the benchmark suites that we generated with \fuzzer
 %         \label{tbl:transformed}
 %     \end{table}
 
-    The Amazon category is obtained from two seeds: (1) \texttt{z3-regex-1.smt2} encodes the assertions \texttt{(S not in aaabbb*)} and \texttt{(S in aaa*bbb*)} for a string constant S; (2) \texttt{z3-regex-2-negative.smt2} includes regex \texttt{(S in aaabbb*)} and \texttt{(S not in aaa*bbb*)}.
-    Both problems come from our industrial collaborators. In total, 516 unique problems were generated from these two seeds.
-
-    The Regex category is seeded by the z3str2 regular expression test suite \cite{z3str2-tests}.
-    This test suite contains 42 problems dealing with a wide variety of regular expressions.
-    Through cumulative transformations, we have $10,577$ unique benchmarks.
+The Amazon category is obtained from two seeds: (1)
+\texttt{z3-regex-1.smt2} encodes the assertions \texttt{(S not in
+  aaabbb*)} and \texttt{(S in aaa*bbb*)} for a string constant S; (2)
+\texttt{z3-regex-2-negative.smt2} includes regex \texttt{(S in
+  aaabbb*)} and \texttt{(S not in aaa*bbb*)}.  Both problems come from
+our industrial collaborators. In total, 516 unique problems were
+generated from these two seeds. The Regex category is seeded by the
+z3str2 regular expression test suite \cite{z3str2-tests}.  This test
+suite contains 42 problems dealing with a wide variety of regular
+expressions.  Through cumulative transformations, we have $10,577$
+unique benchmarks.
 
 

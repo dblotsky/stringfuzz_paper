@@ -1,18 +1,63 @@
 \section{Introduction}
 
-    Many SMT solvers supporting the theory of strings (e.g., CVC4 \cite{cvc4},  Z3str2 \cite{z3str2}, Norn \cite{norn} and Z3str3 \cite{z3str3}) have been developed over the past decade. To validate and benchmark their solvers, many authors have relied on hand-crafted input suites~\cite{cvc4-tests,z3str3-tests,z3str2-tests} or real-world examples from industrial applications~\cite{kaluza,kausler}. These test suites have helped developers identify implementation defects and develop more sophisticated solving heuristics. Although extremely helpful, these suites can only cover a limited range of the problem space because they are either manually created or translated from carefully developed programs. 
+In recent years many algorithms for solving string constraints have
+been developed and implemented as part of SMT solvers such as CVC4
+\cite{cvc4} and Z3 (e.g., Z3str2 \cite{z3str2} and Z3str3
+\cite{z3str3}). To validate and benchmark these solvers, their
+developers have relied on hand-crafted input
+suites~\cite{cvc4-tests,z3str3-tests,z3str2-tests} or real-world
+examples from a limited class of industrial
+applications~\cite{kaluza,kausler}. These test suites have helped
+developers identify implementation defects and develop more
+sophisticated solving heuristics. Although extremely helpful, these
+suites are of limited value since they do not test the vast majority
+of interesting behaviors in solvers. There is an acute need for more
+robst, inexpensive, and automatic way of generating test suites to
+test SMT solvers, that can augment hand-crafted as well as application
+tests.
     
-    
-    Fuzzing, on the other hand, has already been widely used in similar scenarios to systematically generate more diverse test cases. Guided by different rules, it can also be applied to generate different instances that are particularly designed to challenge selected parts of the solvers. Inspired by traditional fuzzers, we introduce a modular fuzzer for string solvers, \fuzzer{}, and describe its utility as an exploratory validation tool. We demonstrate its effectiveness by presenting defects and limitations we were able to identify in leading solvers.
-%     Moreover, a standard input language for problem instances, \smtfull{}\cite{smt}, has been developed and widely adopted.
-    
-    
+Random and mutation fuzzing are widely used test all kinds of software
+including SAT solvers~\cite{}. Inspired by their utility, we introduce
+a fuzzer for string solvers, \fuzzer{}, and describe its value as an
+exploratory validation tool. We demonstrate the efficacy \fuzzer{} by
+presenting defects and limitations it enabled us to identify in
+leading string solvers, which otherwise would have been difficult to
+detect. To the best of our knowledge, \fuzzer{} is the first such tool
+aimed at automatic generation of string constraints. \fuzzer{} allows
+to test string solvers by enabling us to mutate existing classes of
+benchmarks in interesting ways, as well as generate extremal inputs
+(e.g., inputs with very long strings or deep concatenations or
+highly-complex mix of string operations and regular
+expressions). Extremal inputs are particularly useful in empirically
+understanding asymptotic behavior of solvers in a way that no other
+class of instances can.
 
-    \subsection{Contributions}
+\noindent{\textbf{Contributions:}} 
 
-        \begin{enumerate}
-            \item \textbf{The \fuzzer{} tool}: We describe in Section~\ref{sec:fuzzer} a modular fuzzer which can transform and generate \smtfull{} string and regex problems. We briefly document its components and modular architecture. We provide example use cases to demonstrate its usefulness as an exploratory tool for validating solvers. We additionally detail its regex generation and transformation capabilities.
-            \item \textbf{A repository of \smtfull{} problems}: We present a repository of \smtfull{} string and regex problem suites we generated using \fuzzer{} in Section~\ref{sec:problems}. We demonstrate the usefulness of these suites by revealing specific defects they helped uncover and fix in \us{}.
-            \item \textbf{Experimental Results}: We compare \theSolvers{} on the \fuzzer{} suites and selectively present the experimental result on \theSuites{} in Section~\ref{sec:data}. We highlighted these suites because they uniquely made some solvers perform poorly, but not others.
-            \item \textbf{Analysis}: We analyze our experimental results in Section~\ref{sec:analysis} by inspecting the execution traces of the solvers on the given problems. We pinpoint algorithmic limitations in \us{} that cause poor performance, and analyze proposed and implemented enhancements that address the issues which \fuzzer{} helped us to identify.
-        \end{enumerate}
+\begin{enumerate}
+\item \textbf{The \fuzzer{} tool}: We describe in
+  Section~\ref{sec:fuzzer} a modular fuzzer which can transform and
+  randomly generate extremal \smtfull{} string and regex problems. We
+  briefly document its components and modular architecture. We provide
+  example use cases to demonstrate its utility as an exploratory tool
+  for validating solvers.
+  
+\item \textbf{A repository of \smtfull{} problems}: We present a
+  repository of \smtfull{} string and regex problem suites we
+  generated using \fuzzer{} in Section~\ref{sec:problems}. We
+  demonstrate the usefulness of these suites by revealing specific
+  defects they helped uncover and fix in \us{}.
+
+\item \textbf{Experimental Results}: We compare \theSolvers{} on the
+  \fuzzer{} suites and selectively present the experimental result on
+  \theSuites{} in Section~\ref{sec:data}. We highlighted these suites
+  because they uniquely made some solvers perform poorly, but not
+  others.
+
+\item \textbf{Analysis}: We analyze our experimental results in
+  Section~\ref{sec:analysis} by inspecting the execution traces of the
+  solvers on the given problems. We pinpoint algorithmic limitations
+  in \us{} that cause poor performance, and analyze proposed and
+  implemented enhancements that address the issues which \fuzzer{}
+  helped us to identify.
+\end{enumerate}
