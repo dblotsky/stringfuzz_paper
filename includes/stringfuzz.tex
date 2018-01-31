@@ -3,7 +3,7 @@
 
 \fuzzer{} is implemented as a Python package, and comes with several
 executables to generate, transform, and analyze \smtfull{} string and regex
-problems. It can either be installed from source, or from the Python
+instances. It can either be installed from source, or from the Python
 PIP package repository.\footnote{The link to the
 source code will be added after double-blind review.}
 \fuzzer{} is organized to be easily extended:
@@ -15,19 +15,19 @@ can be chained to produce a stream of tuned inputs to a
 solver. \fuzzer{} is composed of the following tools:
 \begin{description}
     \item[\generator{}] \hfill \\
-        This tool generates \smt{} problems. It supports several generators and
+        This tool generates \smt{} instances. It supports several generators and
         options that specify its output. Details can be found in
         table~\ref{tbl:generators}.
     \item[\transformer{}] \hfill \\
         This tool transforms \smt{}
-        problems. It supports several transformers and options that specify
+        instances. It supports several transformers and options that specify
         its output and input, which are explained in
         table~\ref{tbl:transformers}. Note that transformers
         \textit{Translate} and \textit{Reverse} also preserve
         satisfiability under certain conditions~\cite{ifaz}.
     \item[\texttt{stringstats}] \hfill \\
         This tool takes an \smt{}
-        problem as input and outputs its properties: the number of
+        instance as input and outputs its properties: the number of
         variables/literals, the max/median syntactic depth of expressions, the
         max/median literal length, etc.
 \end{description}
@@ -38,7 +38,7 @@ solver. \fuzzer{} is composed of the following tools:
     \label{tbl:generators}
     \begin{tabular}{|l|l|}
         \hline
-        \textbf{Name}        & \textbf{Generated Problems have ...} \\ \hline
+        \textbf{Name}        & \textbf{Generated instances have ...} \\ \hline
         \textit{Concats}     & Long concats and optional random extracts. \\ \hline
         \textit{Lengths}     & Many variables (and their concats) with length constraints. \\ \hline
         \textit{Overlaps}    & An expression of the form A.X = X.B. \\ \hline
@@ -66,9 +66,9 @@ solver. \fuzzer{} is composed of the following tools:
 \subsubsection{Regex Fuzzing Capabilities}
 
 \fuzzer{} can generate
-and transform problems with regular expression constraints. The
-command \texttt{stringfuzzg regex} invokes the regex problem
-generator. It generates a problem of the form:
+and transform instances with regular expression constraints. The
+command \texttt{stringfuzzg regex} invokes the regex instance
+generator. It generates a instance of the form:
 \begin{align*}
     & \texttt{(assert (str.in.re X}\; R_0\; \texttt{))} \\
     & \texttt{(assert (str.in.re X}\; R_n\; \texttt{))}* \\
@@ -77,7 +77,7 @@ generator. It generates a problem of the form:
 \end{align*}
 
 where $R_i \in RegEx$, and $Min, Max \in Int$. More simply, the
-problem is a set of one or more regex constraints on a single
+instance is a set of one or more regex constraints on a single
 variable, with optional maximum and minimum length constraints. The
 regex constraints $R$ are each of the form:
 \begin{align*}
@@ -113,7 +113,7 @@ operators (e.g. \textit{Fuzz}), and manipulate the syntax tree
 \fuzzer{} can be used to
 generate benchmark suites in a batch mode, or can be used in an online
 randomized fashion for exploratory debugging. For example, \fuzzer{}
-can be invoked as follows to feed random problems to \cvc{} until it
+can be invoked as follows to feed random instances to \cvc{} until it
 returns an error:
 % \vspace{-0.15in}
 % \begin{figure}[H]
@@ -121,7 +121,7 @@ returns an error:
 %     \begin{minipage}[b]{0.91\linewidth}
 %         \begin{minted}{bash}
 {\scriptsize\begin{verbatim}
-while stringfuzzg -r random-ast -m | tee problem.smt25 | cvc4 --lang smt2.5 --tlimit=5000; do
+while stringfuzzg -r random-ast -m | tee instance.smt25 | cvc4 --lang smt2.5 --tlimit=5000; do
     sleep 0
 done\end{verbatim}}
 %         \end{minted}
@@ -130,7 +130,7 @@ done\end{verbatim}}
 % \vspace{-0.15in}
 
 Some more \unix{} scripting can yield other interesting results. For
-example, the following script finds a regex problem on which \us{}
+example, the following script finds a regex instance on which \us{}
 times out after 5 seconds:
 % \vspace{-0.15in}
 % \begin{figure}[H]
@@ -138,11 +138,11 @@ times out after 5 seconds:
 %     \begin{minipage}[b]{0.91\linewidth}
 %         \begin{minted}{bash}
 {\scriptsize\begin{verbatim}while true; do
-    stringfuzzg -r regex -c -a increasing -r 2 -t 5 -d 3 > problem.smt25
-    result=`z3str3 -T:5 problem.smt25`
+    stringfuzzg -r regex -c -a increasing -r 2 -t 5 -d 3 > instance.smt25
+    result=`z3str3 -T:5 instance.smt25`
     echo $result
     if [ "$result" == "timeout" ]; then
-        cat problem.smt25
+        cat instance.smt25
         break
     fi
 done\end{verbatim}}
