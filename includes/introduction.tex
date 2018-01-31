@@ -1,11 +1,11 @@
 \section{Introduction}
 
-In recent years many algorithms for solving string constraints have
+In recent years, many algorithms for solving string constraints have
 been developed and implemented in SMT solvers such as Norn~\cite{norn},
 CVC4~\cite{cvc4}, and Z3 (e.g., Z3str2~\cite{z3str2} and Z3str3~\cite{z3str3}).
 To validate and benchmark these solvers, their developers have relied on
 hand-crafted input suites~\cite{cvc4-tests,z3str3-tests,z3str2-tests} or
-real-world examples from a limited class of industrial
+real-world examples from a limited set of industrial
 applications~\cite{kaluza,kausler}. These test suites have helped
 developers identify implementation defects and develop more
 sophisticated solving heuristics. Unfortunately, as solvers grow,
@@ -15,9 +15,9 @@ of generating benchmarks to test
 the correctness and performance of SMT solvers.
 
 Fuzzing is often used to test all kinds of software,
-including SAT solvers. Inspired by their utility, we introduce a
-fuzzer for string solvers, \fuzzer{}, and describe its value as an
-exploratory validation tool. We demonstrate its efficacy
+including SAT solvers~\cite{fuzzsat}. Inspired by the utility of fuzzers,
+we introduce a fuzzer for string solvers, \fuzzer{}, and describe its value
+as an exploratory testing tool. We demonstrate its efficacy
 by presenting limitations it helped us find in
 leading string solvers. To the best of our knowledge, \fuzzer{} is the
 first tool aimed at automatic generation of string constraints. \fuzzer{} can
@@ -32,16 +32,15 @@ number of length constraints, and many more.
 \begin{enumerate}
     \item \textbf{The \fuzzer{} tool}:
         In section~\ref{sec:fuzzer}, we describe a modular fuzzer that can
-        transform and randomly generate \smtfull{} string and regular
+        transform and generate \smtfull{} string and regular
         expression (regex) instances.\footnote{We assume basic
         familiarity with string solvers and their input
         language.} Scaling inputs (e.g., long string constants,
         deep concatenations) are particularly useful in identifying asymptotic
-        behaviors in solvers, and \fuzzer{} has many options to generate such
-        scaling inputs. We briefly document \fuzzer{}'s
-        components and modular architecture. We provide example use cases to
-        demonstrate its utility as an exploratory tool for validating
-        solvers.
+        behaviors in solvers, and \fuzzer{} has many options to generate them.
+        We briefly document \fuzzer{}'s components and modular architecture.
+        We provide example use cases to demonstrate its utility as an
+        exploratory solver testing tool.
 
     \item \textbf{A repository of \smtfull{} instances}:
         We present a repository of \smtfull{} string and regex instance suites
@@ -57,6 +56,5 @@ number of length constraints, and many more.
         highlight these suites because they make some solvers perform poorly,
         but not others. We analyze our
         experimental results, and pinpoint algorithmic limitations
-        in \us{} that cause poor performance. We propose enhancements that
-        address these issues, which \fuzzer{} helped us find.
+        in \us{} that cause poor performance.
 \end{enumerate}
