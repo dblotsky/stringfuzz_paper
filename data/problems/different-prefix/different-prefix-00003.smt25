@@ -1,6 +1,0 @@
-(declare-fun var0 () String)
-(declare-fun var1 () String)
-(declare-fun var2 () String)
-(assert (= var0 (str.++ "e#}z]" (str.++ var1 ""))))
-(assert (= var0 (str.++ "J\\}af" (str.++ var2 ""))))
-(check-sat)

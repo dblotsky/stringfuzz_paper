@@ -1,8 +1,0 @@
-(declare-fun var0 () String)
-(declare-fun var1 () String)
-(declare-fun var2 () String)
-(declare-fun var3 () String)
-(declare-fun var4 () String)
-(assert (= var0 (Concat "QDe$-" (Concat var1 (Concat var2 "")))))
-(assert (= var0 (Concat "&j>!g" (Concat var3 (Concat var4 "")))))
-(check-sat)

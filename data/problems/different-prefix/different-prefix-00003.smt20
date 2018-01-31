@@ -1,6 +1,0 @@
-(declare-fun var0 () String)
-(declare-fun var1 () String)
-(declare-fun var2 () String)
-(assert (= var0 (Concat "#8=fA" (Concat var1 ""))))
-(assert (= var0 (Concat "z&V~m" (Concat var2 ""))))
-(check-sat)
