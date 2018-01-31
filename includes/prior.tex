@@ -1,13 +1,13 @@
 \section{Related Work}
 
-Naturally, many solver developers author their own test suites to
+Many solver developers author their own test suites to
 validate their solvers~\cite{cvc4-tests,z3str3-tests,z3str2-tests}. In
-addition, several popular problem suites are publicly available for
-solver validation, such as the Kaluza~\cite{kaluza} and
+addition, several popular instance suites are publicly available for
+solver testing and benchmarking, such as the Kaluza~\cite{kaluza} and
 Kausler~\cite{kausler} suites. There are likewise several fuzzers and
-problem generators currently available, but none of them can generate
-or transform string and regex problems. For example, the
-FuzzSMT~\cite{fuzzsmt} tool generates \smt{} problems with bit-vectors
+instance generators currently available, but none of them can generate
+or transform string and regex instances. For example, the
+FuzzSMT~\cite{fuzzsmt} tool generates \smt{} instances with bit-vectors
 and arrays, but does not support strings or regexes. The
-SMTpp~\cite{smtpp} tool pre-processes and simplifies problems, but
+SMTpp~\cite{smtpp} tool pre-processes and simplifies instances, but
 does not generate new ones or fuzz existing ones.

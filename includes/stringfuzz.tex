@@ -23,7 +23,7 @@ solver. \fuzzer{} is composed of the following tools:
         problems. It supports several transformers and options that specify
         its output and input, which are explained in
         table~\ref{tbl:transformers}. Note that transformers
-        \textit{translate} and \textit{reverse} also preserve
+        \textit{Translate} and \textit{Reverse} also preserve
         satisfiability under certain conditions~\cite{ifaz}.
     \item[\texttt{stringstats}] \hfill \\
         This tool takes an \smt{}
@@ -39,27 +39,27 @@ solver. \fuzzer{} is composed of the following tools:
     \begin{tabular}{|l|l|}
         \hline
         \textbf{Name}        & \textbf{Generated Problems have ...} \\ \hline
-        \textit{concats}     & Long concats and optional random extracts. \\ \hline
-        \textit{lengths}     & Many variables (and their concats) with length constraints. \\ \hline
-        \textit{overlaps}    & An expression of the form A.X = X.B. \\ \hline
-        \textit{equality}    & An equality among concats, each with variables or constants. \\ \hline
-        \textit{regex}       & Regexes of varying complexity. \\ \hline
-        \textit{random-text} & Random, likely syntactically \textit{in}valid text. \\ \hline
-        \textit{random-ast}  & Random, but semantically \textit{valid} text. \\ \hline
+        \textit{Concats}     & Long concats and optional random extracts. \\ \hline
+        \textit{Lengths}     & Many variables (and their concats) with length constraints. \\ \hline
+        \textit{Overlaps}    & An expression of the form A.X = X.B. \\ \hline
+        \textit{Equality}    & An equality among concats, each with variables or constants. \\ \hline
+        \textit{Regex}       & Regexes of varying complexity. \\ \hline
+        \textit{Random-Text} & Random, likely syntactically \textit{in}valid text. \\ \hline
+        \textit{Random-AST}  & Random, but semantically \textit{valid} text. \\ \hline
     \end{tabular}
     \caption{\transformer{} transformers.}
     \label{tbl:transformers}
     \begin{tabular}{|l|l|}
         \hline
         \textbf{Name}        & \textbf{The transformer ...} \\ \hline
-        \textit{fuzz}        & Randomly replaces literals and operators with similar ones. \\ \hline
-        \textit{graft}       & For each sort, swaps a random non-leaf node with a leaf node. \\ \hline
-        \textit{multiply}    & Multiplies each number by N, and repeats each character N times. \\ \hline
-        \textit{nop}         & Does nothing. \\ \hline
-        \textit{reverse}     & Reverses all string literals and concat arguments. \\ \hline
-        \textit{rotate}      & Performs a random syntax tree rotation on two concats. \\ \hline
-        \textit{translate}   & Maps every character X to a different character Y. \\ \hline
-        \textit{unprintable} & Randomly replaces all characters in literals with unprintable ones. \\ \hline
+        \textit{Fuzz}        & Randomly replaces literals and operators with similar ones. \\ \hline
+        \textit{Graft}       & For each sort, swaps a random non-leaf node with a leaf node. \\ \hline
+        \textit{Multiply}    & Multiplies each number by N, and repeats each character N times. \\ \hline
+        \textit{Nop}         & Doesn't transform (but can translate \smtfull{}). \\ \hline
+        \textit{Reverse}     & Reverses all string literals and concat arguments. \\ \hline
+        \textit{Rotate}      & Performs a random syntax tree rotation on two concats. \\ \hline
+        \textit{Translate}   & Maps every character X to a different character Y. \\ \hline
+        \textit{Unprintable} & Randomly replaces all characters in literals with unprintable ones. \\ \hline
     \end{tabular}
 \end{table}
 
@@ -103,10 +103,10 @@ terminating in a regex literal. Below are three example regexes
 
 \fuzzer{} can also transform the instances it generates. All of the
 transformers in \transformer{} can operate on regex terms. They can
-multiply and permute regex literals (e.g. \textit{reverse},
-\textit{multiply}, \textit{translate}), randomly replace regex
-operators (e.g. \textit{fuzz}), and manipulate the syntax tree
-(e.g. \textit{graft}, \textit{rotate}).
+multiply and permute regex literals (e.g. \textit{Reverse},
+\textit{Multiply}, \textit{Translate}), randomly replace regex
+operators (e.g. \textit{Fuzz}), and manipulate the syntax tree
+(e.g. \textit{Graft}, \textit{Rotate}).
 
 \subsubsection{Example Use Cases}
 

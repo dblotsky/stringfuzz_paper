@@ -1,5 +1,5 @@
-\section{Problem Suites}
-\label{sec:problems}
+\section{Instance Suites}
+\label{sec:suites}
 
 In this section, we describe the benchmark suites that we generated
 with \fuzzer{}, and on which we conducted our experimental
@@ -12,7 +12,7 @@ derived from existing seed instances by iteratively applying \transformer{}.
 Every transformed instance is named according to its
 seed and the transformations it undertook. For example, input
 \texttt{z3-regex-1-fuzz-graft.smt2} was transformed by applying
-\textit{fuzz} and then \textit{graft} to \texttt{z3-regex-1.smt2}.
+\textit{Fuzz} and then \textit{Graft} to \texttt{z3-regex-1.smt2}.
 
 The \textit{Amazon} category contains 472 instances, derived from two seeds
 supplied by our industrial collaborators. The \textit{Regex} category is
@@ -29,7 +29,8 @@ five industrial e-mail address and IPv4 sanitizers.
     \begin{tabular}{|l|l|}
         \hline
         \textbf{Name}             & \textbf{Instances have ...} \\ \hline
-        \textit{Concats}          & A single, deep tree of concats. \\ \hline
+        \textit{Concats}          & A right-heavy, deep tree of concats. \\ \hline
+        \textit{Concats-Balanced} & A balanced, deep tree of concats. \\ \hline
         \textit{Concats-Extracts} & A single concat tree, and random character extractions. \\ \hline
         \textit{Lengths}          & A single, large length constraint on a variable. \\ \hline
         \textit{Lengths-Concats}  & Variables and their concats, each with fixed lengths. \\ \hline
