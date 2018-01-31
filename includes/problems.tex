@@ -1,110 +1,57 @@
-\begin{table}[t]
-%\vspace{-0.4in}
-\centering
-\caption{\generator{}-generated problem sets.}
-\label{tbl:generated}
-{
-  \footnotesize
-  \bgroup
-  \def\arraystretch{1}
-  \resizebox{0.8\columnwidth}{!}{
-        \begin{tabular}{|l|l|}
-            \hline
-            \textbf{Name}             & \textbf{Problems have ...} \\ \hline
-            \textit{Concats}          & A single, deep tree of concats. \\ \hline
-            \textit{Concats-Extracts} & A single concat tree, and random character extractions. \\ \hline
-            \textit{Lengths}          & A single, large length constraint on a variable. \\ \hline
-            \textit{Lengths-Concats}  & Variables and their concats, each with fixed lengths. \\ \hline
-            \textit{Overlaps}         & A formula of the form A.X = X.B. \\ \hline
-            \textit{Regex}            & A test for regex membership of arbitrary complexity. \\ \hline
-            \textit{Many-Regexes}     & A test for membership in many random regexes. \\ \hline
-            \textit{Regex-Deep}       & A test for membership in a regex with many nested operators. \\ \hline
-            \textit{Regex-Pair}       & A test for membership in one regex, but not another. \\ \hline
-            \textit{Regex-Lengths}    & A test for membership in a regex, and a length constraint. \\ \hline
-        \end{tabular}
-  }
-  \egroup
-  \vspace{-0.2in}
-}
-\end{table}
-
 \section{Problem Suites}
 \label{sec:problems}
+
 In this section, we describe the benchmark suites that we generated
 with \fuzzer{} on which the experimental evaluation was conducted.
 
-\noindent{\textbf{Generated Benchmarks:}} We generated several suites
+\subsubsection{Generated Benchmarks}
+
+We generated several suites
 of string and regex problems using \fuzzer{}\footnote{For review
-  anonymity, we removed the link to the source code and the generated
-  suites. They will be provided separately in the artifact
-  submission.}. Table~\ref{tbl:generated} describes the suite
+anonymity, we removed the link to the source code and the generated
+suites. They will be provided separately in the artifact
+submission.}. Table~\ref{tbl:generated} describes the suite
 \texttt{generated} by \generator{}.
+\begin{table}[H]
+    \centering
+    \caption{\generator{}-generated problem sets.}
+    \label{tbl:generated}
+    \begin{tabular}{|l|l|}
+        \hline
+        \textbf{Name}             & \textbf{Problems have ...} \\ \hline
+        \textit{Concats}          & A single, deep tree of concats. \\ \hline
+        \textit{Concats-Extracts} & A single concat tree, and random character extractions. \\ \hline
+        \textit{Lengths}          & A single, large length constraint on a variable. \\ \hline
+        \textit{Lengths-Concats}  & Variables and their concats, each with fixed lengths. \\ \hline
+        \textit{Overlaps}         & A formula of the form A.X = X.B. \\ \hline
+        \textit{Regex}            & A test for regex membership of arbitrary complexity. \\ \hline
+        \textit{Many-Regexes}     & A test for membership in many random regexes. \\ \hline
+        \textit{Regex-Deep}       & A test for membership in a regex with many nested operators. \\ \hline
+        \textit{Regex-Pair}       & A test for membership in one regex, but not another. \\ \hline
+        \textit{Regex-Lengths}    & A test for membership in a regex, and a length constraint. \\ \hline
+    \end{tabular}
+\end{table}
 
-\todo{Specify how many total instances were generated.}
+\subsubsection{Transformed Benchmarks}
 
-
-%     \begin{table}
-%         \centering
-%         \begin{tabular}{|l|l|}
-%             \hline
-%             \textbf{Name}             & \textbf{Problems have ...} \\ \hline
-%             \textit{Concats}          & A single, deep tree of concats. \\ \hline
-%             \textit{Concats-Extracts} & A single concat tree, and random character extractions. \\ \hline
-%             \textit{Lengths}          & A single, large length constraint on a variable. \\ \hline
-%             \textit{Lengths-Concats}  & Variables and their concats, each with fixed lengths. \\ \hline
-%             \textit{Overlaps}         & A formula of the form A.X = X.B. \\ \hline
-%             \textit{Regex}            & A test for regex membership of arbitrary complexity. \\ \hline
-%             \textit{Many-Regexes}     & A test for membership in many random regexes. \\ \hline
-%             \textit{Regex-Deep}       & A test for membership in a regex with many nested operators. \\ \hline
-%             \textit{Regex-Pair}       & A test for membership in one regex, but not another. \\ \hline
-%             \textit{Regex-Lengths}    & A test for membership in a regex, and a length constraint. \\ \hline
-%         \end{tabular}
-%         \caption{\generator{}-generated problem sets.}
-%         \label{tbl:generated}
-%     \end{table}
-
-
-\noindent{\textbf{Transformed Benchmarks:}} The \texttt{transformed}
+The \texttt{transformed}
 suite contains benchmarks derived from existing seed problems by
 iteratively applying \transformer{}. Table~\ref{tbl:transformed} shows
 the overview. Every problem in the suite is named according to its
 seed and the transformations it undertook. For example, input
 \texttt{seed-fuzz-graft.smt2} was transformed by applying
 \texttt{fuzz} and then \texttt{graft} from \texttt{seed.smt2}.
-
-\begin{table}[t]
-%\vspace{-0.35in}
-\centering
-\caption{Transformed problem sets generated by \transformer{}.}
-\label{tbl:transformed}
-{
-  \footnotesize
-  \bgroup
-  \def\arraystretch{1}
-  \resizebox{0.6\columnwidth}{!}{
-          \begin{tabular}{|l|l|r|}
-            \hline
-            \textbf{Name}   & \textbf{Seed}                            & \textbf{Quantity} \\ \hline
-            \textit{Amazon} & Two industrial regex membership problems & 516\\ \hline
-            \textit{Regex}  & Z3str2 regular expression test suite     & 10,577\\ \hline
-        \end{tabular}
-    }
-  \egroup
-  \vspace{-0.2in}
-}
+\begin{table}[H]
+    \centering
+    \caption{Transformed problem sets generated by \transformer{}.}
+    \label{tbl:transformed}
+    \begin{tabular}{|l|l|r|}
+        \hline
+        \textbf{Name}   & \textbf{Seed}                            & \textbf{Quantity} \\ \hline
+        \textit{Amazon} & Two industrial regex membership problems & 516\\ \hline
+        \textit{Regex}  & Z3str2 regular expression test suite     & 10,577\\ \hline
+    \end{tabular}
 \end{table}
-
-%     \begin{table}
-%         \centering
-%         \begin{tabular}{|l|l|r|}
-%             \hline
-%             \textbf{Name}   & \textbf{Seed}                            & \textbf{Quantity} \\ \hline
-%             \textit{Amazon} & Two industrial regex membership problems & 516\\ \hline
-%             \textit{Regex}  & Z3str2 regular expression test suite     & 10,577\\ \hline
-%         \end{tabular}
-%         \caption{\transformer{}-generated problem sets.}
-%         \label{tbl:transformed}
-%     \end{table}
 
 The Amazon category is obtained from two seeds: (1)
 \texttt{z3-regex-1.smt2} encodes the assertions \texttt{(S not in
@@ -117,5 +64,3 @@ z3str2 regular expression test suite \cite{z3str2-tests}.  This test
 suite contains 42 problems dealing with a wide variety of regular
 expressions.  Through cumulative transformations, we have $10,577$
 unique benchmarks.
-
-

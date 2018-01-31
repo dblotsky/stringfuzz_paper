@@ -9,46 +9,45 @@ suites that were uniquely difficult for \us{}. All experiments were
 run in series on the same Linux computer, with a timeout of 15
 seconds. \todo{Specify CPU, memory}
 
-    \begin{figure}[h]
-        \vspace{-0.2in}
-        \begin{subfigure}{.5\textwidth}
-            \includegraphics[width=\textwidth]{data/graphs/concats-extracts-small.png}
-            \vspace{-0.25in}
-            \caption{Performance on concats-extracts-small}
-            \label{fig:concats-extracts-small}
-        \end{subfigure}
-        \begin{subfigure}{.5\textwidth}
-            \includegraphics[width=\textwidth]{data/graphs/different-prefix.png}
-            \vspace{-0.25in}
-            \caption{Performance on different-prefix}
-            \label{fig:different-prefix}
-        \end{subfigure}
-        \vspace{-0.1in}
-        \caption{Problems hard for \cvc{}}
-        \label{fig:cvc-hard}
-        \vspace{-0.3in}
-    \end{figure}
+\begin{figure}[h]
+    \vspace{-0.2in}
+    \begin{subfigure}{.5\textwidth}
+        \includegraphics[width=\textwidth]{data/graphs/concats-extracts-small.png}
+        \vspace{-0.25in}
+        \caption{Performance on concats-extracts-small}
+        \label{fig:concats-extracts-small}
+    \end{subfigure}
+    \begin{subfigure}{.5\textwidth}
+        \includegraphics[width=\textwidth]{data/graphs/different-prefix.png}
+        \vspace{-0.25in}
+        \caption{Performance on different-prefix}
+        \label{fig:different-prefix}
+    \end{subfigure}
+    \vspace{-0.1in}
+    \caption{Problems hard for \cvc{}}
+    \label{fig:cvc-hard}
+    \vspace{-0.3in}
+\end{figure}
 
-    \begin{figure}[h]
-    \vspace{-0.25in}
-        \begin{subfigure}{.5\textwidth}
-            \includegraphics[width=\textwidth]{data/graphs/concats-balanced.png}
-            \label{fig:concats-balanced}
-            \vspace{-0.25in}
-            \caption{Performance on concats-balanced}
-        \end{subfigure}
-        \begin{subfigure}{.5\textwidth}
-            \includegraphics[width=\textwidth]{data/graphs/concats-small.png}
-            \label{fig:concats-small}
-            \vspace{-0.25in}
-            \caption{Performance on concats-small}
-        \end{subfigure}
-        \vspace{-0.1in}
-        \caption{Problems hard for \us{}}
-        \label{fig:z3str3-hard}
-        \vspace{-0.3in}
-    \end{figure}
-
+\begin{figure}[h]
+\vspace{-0.25in}
+    \begin{subfigure}{.5\textwidth}
+        \includegraphics[width=\textwidth]{data/graphs/concats-balanced.png}
+        \label{fig:concats-balanced}
+        \vspace{-0.25in}
+        \caption{Performance on concats-balanced}
+    \end{subfigure}
+    \begin{subfigure}{.5\textwidth}
+        \includegraphics[width=\textwidth]{data/graphs/concats-small.png}
+        \label{fig:concats-small}
+        \vspace{-0.25in}
+        \caption{Performance on concats-small}
+    \end{subfigure}
+    \vspace{-0.1in}
+    \caption{Problems hard for \us{}}
+    \label{fig:z3str3-hard}
+    \vspace{-0.3in}
+\end{figure}
 
 \section{Usefulness to \us{}: A Case Study}
 \label{sec:analysis}
@@ -86,7 +85,6 @@ issue and achieve better performance.
 %% string term.  The fix was to check whether the integer solver had
 %% already assigned a length value before searching for length, and skip
 %% the search if this was the case.
-
 
 %% In order to improve the efficiency of any solver, discovering new
 %% heuristics is crucial.  As an illustrative example, consider the

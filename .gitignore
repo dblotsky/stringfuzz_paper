@@ -5,3 +5,4 @@
 *.fdb_latexmk
 *.log
 *.blg
+_minted-paper

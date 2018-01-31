@@ -110,7 +110,7 @@ $(TRACES_DIR)/$(Z3STR3_NAME)-%.trace: $(TRACE_PROBLEM_DIR)/% $(Z3STR3) | $(TRACE
 #      I don't want this target to generate graphs; I only want it to depend
 #      on graphs that are already in the directory (if any)
 %.pdf: %.tex $(PAPER_SECTIONS) %.bib $(wildcard $(GRAPHS_DIR)/*)
-	latexmk -pdf -bibtex $<
+	latexmk -pdf -bibtex --shell-escape $<
 
 # maintenance targets
 clean:

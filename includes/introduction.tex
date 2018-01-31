@@ -37,33 +37,33 @@ constraints, and many more.
 
 \begin{enumerate}
 \item \textbf{The \fuzzer{} tool}: We describe in
-  Section~\ref{sec:fuzzer} a modular fuzzer which can transform and
-  randomly generate extremal \smtfull{} string and regular expression
-  (regex) problems~\footnote{We assume basic
+    Section~\ref{sec:fuzzer} a modular fuzzer which can transform and
+    randomly generate extremal \smtfull{} string and regular expression
+    (regex) problems~\footnote{We assume basic
     familiarity with string solvers and their input
     language.}. Extremal or scaling inputs (e.g., long string
-  constants, deep concatenations) are particularly useful in
-  identifying asymptotic behaviors in solvers. We briefly document \fuzzer{}'s
-  components and modular architecture. We provide example use cases to
-  demonstrate its utility as an exploratory tool for validating
-  solvers.
+    constants, deep concatenations) are particularly useful in
+    identifying asymptotic behaviors in solvers. We briefly document \fuzzer{}'s
+    components and modular architecture. We provide example use cases to
+    demonstrate its utility as an exploratory tool for validating
+    solvers.
 
 \item \textbf{A repository of \smtfull{} problems}: We present a
-  repository of \smtfull{} string and regex problem suites we
-  generated using \fuzzer{} in Section~\ref{sec:problems}. We
-  demonstrate the usefulness of these suites by revealing specific
-  defects they helped uncover and fix in \us{}.
+    repository of \smtfull{} string and regex problem suites we
+    generated using \fuzzer{} in Section~\ref{sec:problems}. We
+    demonstrate the usefulness of these suites by revealing specific
+    defects they helped uncover and fix in \us{}.
 
 \item \textbf{Experimental Results}: We compare \theSolvers{} on the
-  \fuzzer{} suites and selectively present the experimental result on
-  the suites \theSuites{} in Section~\ref{sec:data}. We highlighted
-  these suites because they uniquely made some solvers perform poorly,
-  but not others.
+    \fuzzer{} suites and selectively present the experimental result on
+    the suites \theSuites{} in Section~\ref{sec:data}. We highlighted
+    these suites because they uniquely made some solvers perform poorly,
+    but not others.
 
 \item \textbf{Analysis}: We analyze our experimental results in
-  Section~\ref{sec:analysis} by inspecting the execution traces of the
-  solvers on the given problems. We pinpoint algorithmic limitations
-  in \us{} that cause poor performance, and analyze proposed and
-  implemented enhancements that address the issues which \fuzzer{}
-  helped us to identify.
+    Section~\ref{sec:analysis} by inspecting the execution traces of the
+    solvers on the given problems. We pinpoint algorithmic limitations
+    in \us{} that cause poor performance, and analyze proposed and
+    implemented enhancements that address the issues which \fuzzer{}
+    helped us to identify.
 \end{enumerate}
