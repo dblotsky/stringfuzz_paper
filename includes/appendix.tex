@@ -1,0 +1,61 @@
+\section{Appendix}
+
+In this section, we will prove some of the guarantees that transformations
+provide in \fuzzer{}.
+
+We assume that the reader is familiar with SMT-LIB syntax. The transformations
+work over boolean, integer, string literals and expressions, and regular
+expressions.
+
+We will make the folowing simplifications for our proofs:
+\begin{itemize}
+  \item
+    Since many of the operators can be expressed in terms of other, our
+    proofs will only consider a subset of the operators. In particular we will
+    drop the following:
+    \begin{itemize}
+      \item \texttt{|} (boolean or)
+      \item \texttt{=} for boolean expressions
+      \item \texttt{<=}, \texttt{>}, \texttt{>=}
+      \item \texttt{str.prefix}, \texttt{str.suffix}, \texttt{str.at}
+      \item \texttt{str.contains}
+      \item \texttt{re.range}
+    \end{itemize}
+
+  \item
+    In the above, we assume that \texttt{str.at} is expressible using
+    \texttt{substring} although the semantics slightly different when the index
+    is out of bounds.
+
+  \item
+    We will assume that our program instances are a single assertion. Multiple
+    assertions can be expressed by combining them using \texttt{and}.
+\end{itemize}
+
+\begin{definition}
+  A \emph{model} is a mapping from boolean, integer, and string variables to
+literals of the corresponding type.
+\end{definition}
+
+\begin{definition}
+  A \emph{program} $P$ satisfies a model $m$ if $P$ evaluates to \texttt{true}
+under the model $m$. The function $\eval (P)$ evaluates a program instance
+under a model; the specific model used is left implicit.
+\end{definition}
+
+The proofs all follow a very similar structure. For each transformation
+\texttt{Trans}, we show that a problem instance $P$ is satisfiable by a model $m$
+if and only if $\texttt{Trans}(P)$ is satisfiable by $\texttt{Trans}(m)$, where
+$\texttt{Trans}(M)$ is the transformation applied to all the constants in the
+model $m$. In other words, we show that $\eval (P) = \eval (\texttt{Trans}(P))$.
+This is proven using a straightforward induction on the structure of problem
+instances.
+
+\texttt{Multiply} has a weaker guarantee; it takes satisfiable problems to
+satisfiable problems. For instance, $y<x<y+1$ is UNSAT, but multiplying by 2
+transforms the problem into $y<x<y+2$ which is SAT. For \texttt{Multiply}, we
+prove that if $\eval (P)$ is \texttt{true}, then, $\eval \texttt{Multiply}(P)$
+is also \texttt{true}.
+
+\subsection{Translate}
+We now prove that translate transforms programs into equisatisfiable programs.
