@@ -1,43 +1,38 @@
 \section{Introduction}
 
 In recent years many algorithms for solving string constraints have
-been developed and implemented as part of SMT solvers such as CVC4
-\cite{cvc4} and Z3 (e.g., Z3str2 \cite{z3str2} and Z3str3
-\cite{z3str3}). To validate and benchmark these solvers, their
-developers have relied on hand-crafted input
-suites~\cite{cvc4-tests,z3str3-tests,z3str2-tests} or real-world
-examples from a limited class of industrial
+been developed and implemented in SMT solvers such as Norn~\cite{norn},
+CVC4~\cite{cvc4}, and Z3 (e.g., Z3str2~\cite{z3str2} and Z3str3~\cite{z3str3}).
+To validate and benchmark these solvers, their developers have relied on
+hand-crafted input suites~\cite{cvc4-tests,z3str3-tests,z3str2-tests} or
+real-world examples from a limited class of industrial
 applications~\cite{kaluza,kausler}. These test suites have helped
 developers identify implementation defects and develop more
-sophisticated solving heuristics. Although extremely helpful, these
-suites are of limited value since they do not test the vast majority
-of interesting behaviors in solvers. There is an acute need for a more
-robust, inexpensive, and automatic way of generating benchmarks to test
-the correctness and performance of SMT solvers, that can augment
-hand-crafted as well as tests generated from industrial applications.
+sophisticated solving heuristics. Unfortunately, as solvers grow,
+fixed benchmarks leave more functionality untested.
+There is an acute need for a more robust, inexpensive, and automatic way
+of generating benchmarks to test
+the correctness and performance of SMT solvers.
 
 %VG: add citation to SAT fuzzer
-Random and mutation fuzzing are widely used to test all kinds of software
+Fuzzing is often used to test all kinds of software,
 including SAT solvers. Inspired by their utility, we introduce a
 fuzzer for string solvers, \fuzzer{}, and describe its value as an
-exploratory validation tool. We demonstrate the efficacy of \fuzzer{}
-by presenting defects and limitations it enabled us to identify in
-leading string solvers, which otherwise would have been difficult to
-detect. To the best of our knowledge, \fuzzer{} is the first such tool
-aimed at automatic generation of string constraints. \fuzzer{} can be
+exploratory validation tool. We demonstrate its efficacy
+by presenting limitations it helped us find in
+leading string solvers. To the best of our knowledge, \fuzzer{} is the
+first tool aimed at automatic generation of string constraints. \fuzzer{} can be
 used to mutate or transform existing benchmarks, as well as
-randomly generate structured instances that can be scaled with respect
-to a variety of parameters. Examples include: length of string constants,
-depth of concats, balanced or unbalanced concats, overlapping word equations,
-systems of word equations with arithmetic over length, nested regular
-expressions, rich combinations of regular expressions and string
-constraints, and many more.
+randomly generate structured instances. These instances can be scaled with respect
+to a variety of parameters, e.g., length of string constants,
+depth of concats and regeular expressions, number of variables,
+number of length constraints, and many more.
 
-\noindent{\textbf{Contributions:}}
+\subsubsection{Contributions}
 
 \begin{enumerate}
-\item \textbf{The \fuzzer{} tool}: We describe in
-    Section~\ref{sec:fuzzer} a modular fuzzer which can transform and
+\item \textbf{The \fuzzer{} tool}:
+    In section~\ref{sec:fuzzer}, we describe a modular fuzzer that can transform and
     randomly generate extremal \smtfull{} string and regular expression
     (regex) problems~\footnote{We assume basic
     familiarity with string solvers and their input
@@ -48,22 +43,19 @@ constraints, and many more.
     demonstrate its utility as an exploratory tool for validating
     solvers.
 
-\item \textbf{A repository of \smtfull{} problems}: We present a
-    repository of \smtfull{} string and regex problem suites we
-    generated using \fuzzer{} in Section~\ref{sec:problems}. We
-    demonstrate the usefulness of these suites by revealing specific
-    defects they helped uncover and fix in \us{}.
+\item \textbf{A repository of \smtfull{} problems}:
+    We present a repository of \smtfull{} string and regex problem suites we
+    generated using \fuzzer{} in Section~\ref{sec:problems}. The repository
+    consists of two categories: \texttt{generated}, with new problems generated
+    by \fuzzer{}, and \texttt{transformed}, with transformed problems generated
+    from a small suite of industrial benchmarks.
 
-\item \textbf{Experimental Results}: We compare \theSolvers{} on the
-    \fuzzer{} suites and selectively present the experimental result on
-    the suites \theSuites{} in Section~\ref{sec:data}. We highlighted
-    these suites because they uniquely made some solvers perform poorly,
-    but not others.
-
-\item \textbf{Analysis}: We analyze our experimental results in
-    Section~\ref{sec:analysis} by inspecting the execution traces of the
-    solvers on the given problems. We pinpoint algorithmic limitations
-    in \us{} that cause poor performance, and analyze proposed and
-    implemented enhancements that address the issues which \fuzzer{}
-    helped us to identify.
+\item \textbf{Experimental Results and Analysis}:
+    We compare the performance of \theSolvers{} on the
+    the \fuzzer{} suites \theSuites{} in section~\ref{sec:data}. We highlight
+    these suites because they make some solvers perform poorly,
+    but not others. In section~\ref{sec:analysis}, we analyze our
+    experimental results, and pinpoint algorithmic limitations
+    in \us{} that cause poor performance. We propose enhancements that
+    address these issues, which \fuzzer{} helped us find.
 \end{enumerate}

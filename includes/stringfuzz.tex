@@ -2,15 +2,17 @@
 \label{sec:fuzzer}
 
 \fuzzer{} is implemented as a Python package, and comes with several
-executables to generate, transform, and analyze \smtfull{} string
+executables to generate, transform, and analyze \smtfull{} string and regex
 problems. It can either be installed from source, or from the Python
-PIP package repository. \fuzzer{} is organized to be easily extended:
+PIP package repository.\footnote{The link to the
+source code will be added after double-blind review.}
+\fuzzer{} is organized to be easily extended:
 all generators and transformers are independent Python modules. Its
 components are also implemented as \unix{} ``filters'', to enable easy
 integration with other tools (including themselves). For example, the
 outputs of generators can be piped into transformers, and transformers
 can be chained to produce a stream of tuned inputs to a
-solver. Specifically, \fuzzer{} is composed of the following tools:
+solver. \fuzzer{} is composed of the following tools:
 \begin{description}
     \item[\generator{}] \hfill \\
         This tool generates \smt{} problems. It supports several generators and
@@ -22,7 +24,7 @@ solver. Specifically, \fuzzer{} is composed of the following tools:
         its output and input, which are explained in
         Table~\ref{tbl:transformers}. Note that transformers
         \textit{translate} and \textit{reverse} also preserve problem
-        satisfiability \cite{ifaz}.
+        satisfiability under certain conditions~\cite{ifaz}.
     \item[\texttt{stringstats}] \hfill \\
         This tool takes an \smt{}
         problem as input and outputs its properties: the number of
@@ -44,9 +46,6 @@ solver. Specifically, \fuzzer{} is composed of the following tools:
         \textit{random-text} & Random, likely syntactically \textit{in}valid text. \\ \hline
         \textit{random-ast}  & Random, but semantically \textit{valid} text. \\ \hline
     \end{tabular}
-\end{table}
-
-\begin{table}[H]
     \caption{\transformer{} transformers.}
     \label{tbl:transformers}
     \begin{tabular}{|l|l|}
@@ -94,11 +93,11 @@ where $j$ is the specified depth of recursion. Terms at depth 0 are
 regex constants. Informally, this form describes a concatenation of
 regex terms. Each term is a random nested regex operator (chosen from
 regex Kleene star, repetition, and union), up to a specified depth,
-terminating in a regex literal. Below are several example regexes
-(with spacing added for clarity) of depth 2 produced by this scheme:
+terminating in a regex literal. Below are three example regexes
+(separated by spaces) of depth 2 produced by this scheme:
 \begin{align*}
-  & ((\texttt{a}|\texttt{b})|(\texttt{cc})+)\quad
-  ((\texttt{ddd})*)+\quad ((\texttt{ee})+|(\texttt{fff})*)
+  & ((\texttt{a}|\texttt{b})|(\texttt{cc})+)\quad\quad
+  ((\texttt{ddd})*)+\quad\quad ((\texttt{ee})+|(\texttt{fff})*)
 \end{align*}
 
 \fuzzer{} can also transform the instances it generates. All of the
