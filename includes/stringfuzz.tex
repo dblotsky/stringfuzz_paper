@@ -17,12 +17,12 @@ solver. \fuzzer{} is composed of the following tools:
     \item[\generator{}] \hfill \\
         This tool generates \smt{} problems. It supports several generators and
         options that specify its output. Details can be found in
-        Table~\ref{tbl:generators}.
+        table~\ref{tbl:generators}.
     \item[\transformer{}] \hfill \\
         This tool transforms \smt{}
         problems. It supports several transformers and options that specify
         its output and input, which are explained in
-        Table~\ref{tbl:transformers}. Note that transformers
+        table~\ref{tbl:transformers}. Note that transformers
         \textit{translate} and \textit{reverse} also preserve
         satisfiability under certain conditions~\cite{ifaz}.
     \item[\texttt{stringstats}] \hfill \\
@@ -103,10 +103,10 @@ terminating in a regex literal. Below are three example regexes
 
 \fuzzer{} can also transform the instances it generates. All of the
 transformers in \transformer{} can operate on regex terms. They can
-multiply and permute regex literals (e.g. \texttt{reverse},
-\texttt{multiply}, \texttt{translate}), randomly replace regex
-operators (e.g. \texttt{fuzz}), and manipulate the syntax tree
-(e.g. \texttt{graft}, \texttt{rotate}).
+multiply and permute regex literals (e.g. \textit{reverse},
+\textit{multiply}, \textit{translate}), randomly replace regex
+operators (e.g. \textit{fuzz}), and manipulate the syntax tree
+(e.g. \textit{graft}, \textit{rotate}).
 
 \subsubsection{Example Use Cases}
 
@@ -121,10 +121,7 @@ returns an error:
 %     \begin{minipage}[b]{0.91\linewidth}
 %         \begin{minted}{bash}
 {\scriptsize\begin{verbatim}
-while \
-  stringfuzzg -r random-ast -m \
-  | tee problem.smt25 \
-  | cvc4 --lang smt2.5 --tlimit=5000; do
+while stringfuzzg -r random-ast -m | tee problem.smt25 | cvc4 --lang smt2.5 --tlimit=5000; do
     sleep 0
 done\end{verbatim}}
 %         \end{minted}

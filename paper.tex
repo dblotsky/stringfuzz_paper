@@ -3,19 +3,20 @@
 \usepackage{amsmath}
 \usepackage{todonotes}
 \usepackage{url}
-\usepackage{makeidx} % allows for index generation
+\usepackage{makeidx}
 \usepackage{multirow}
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{titling}
 \usepackage{array}
 \usepackage{filecontents}
-\usepackage{subcaption}
-\captionsetup{compatibility=false}
-
 \usepackage{varwidth}
 \usepackage{enumitem}
 
+\usepackage{subcaption}
+\captionsetup{compatibility=false}
+
+% define dimensions
 \setlength{\pdfpageheight}{\paperheight}
 \setlength{\pdfpagewidth}{\paperwidth}
 
@@ -58,7 +59,7 @@
     }
     \titlerunning{\fuzzer{}} % abbreviated title (for running head)
 
-    % authors
+%    % authors
 %    \author{
 %        Dmitry Blotsky\inst{1}\orcidID{0},
 %        Federico Mora\inst{2}\orcidID{0},
@@ -69,7 +70,7 @@
 %    }
 %    \authorrunning{Dmitry Blotsky et al.}
 
-    % institutions
+%    % institutions
 %    \institute{
 %        University of Waterloo, Waterloo ON, Canada,\\
 %        \email{dblotsky@uwaterloo.ca}
@@ -85,18 +86,6 @@
     \input{includes/problems.tex}
     \input{includes/experiment.tex}
     \input{includes/prior.tex}
-
-    %% \section{Conclusion}
-    %% \vspace{-0.1in}
-
-    %% In this paper, we introduced a modular fuzzer for string solvers,
-    %% \fuzzer{}, and described its utility in finding both algorithmic
-    %% design flaws as well as implementation issues in string
-    %% solvers. Further, we presented a repository of \smtfull{} string
-    %% and regular expression problem suites we generated using
-    %% \fuzzer{}, and compare \theSolvers{} on them. We demonstrated the
-    %% effectiveness of \fuzzer{} by presenting defects and limitations
-    %% we identified in \us{}.
 
     \bibliographystyle{abbrv}
     \bibliography{paper}

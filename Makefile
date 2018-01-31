@@ -116,3 +116,4 @@ $(TRACES_DIR)/$(Z3STR3_NAME)-%.trace: $(TRACE_PROBLEM_DIR)/% $(Z3STR3) | $(TRACE
 clean:
 	latexmk -C
 	$(RM) *.fdb_latexmk *.fls *.run.xml *.bbl *.lol
+	$(RM) -r _minted-paper
