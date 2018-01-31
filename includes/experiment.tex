@@ -1,4 +1,4 @@
-\section{Experimental Data}
+\section{Experimental Data and Analysis}
 \label{sec:data}
 
 We generated several problem suites with \fuzzer{} that made one
@@ -10,47 +10,34 @@ run in series on the same Linux computer, with a timeout of 15
 seconds. \todo{Specify CPU, memory}
 
 \begin{figure}[h]
-    \vspace{-0.2in}
     \begin{subfigure}{.5\textwidth}
         \includegraphics[width=\textwidth]{data/graphs/concats-extracts-small.png}
-        \vspace{-0.25in}
         \caption{Performance on concats-extracts-small}
         \label{fig:concats-extracts-small}
     \end{subfigure}
     \begin{subfigure}{.5\textwidth}
         \includegraphics[width=\textwidth]{data/graphs/different-prefix.png}
-        \vspace{-0.25in}
         \caption{Performance on different-prefix}
         \label{fig:different-prefix}
     \end{subfigure}
-    \vspace{-0.1in}
     \caption{Problems hard for \cvc{}}
     \label{fig:cvc-hard}
-    \vspace{-0.3in}
-\end{figure}
 
-\begin{figure}[h]
-\vspace{-0.25in}
     \begin{subfigure}{.5\textwidth}
         \includegraphics[width=\textwidth]{data/graphs/concats-balanced.png}
         \label{fig:concats-balanced}
-        \vspace{-0.25in}
         \caption{Performance on concats-balanced}
     \end{subfigure}
     \begin{subfigure}{.5\textwidth}
         \includegraphics[width=\textwidth]{data/graphs/concats-small.png}
         \label{fig:concats-small}
-        \vspace{-0.25in}
         \caption{Performance on concats-small}
     \end{subfigure}
-    \vspace{-0.1in}
     \caption{Problems hard for \us{}}
     \label{fig:z3str3-hard}
-    \vspace{-0.3in}
 \end{figure}
 
-\section{Usefulness to \us{}: A Case Study}
-\label{sec:analysis}
+\subsubsection{Usefulness to \us{}: A Case Study}
 
 We found a number of performance-related issues and opportunities for
 new heuristics in \us{} thanks to \fuzzer{}. For example, the
@@ -60,13 +47,12 @@ make full use of the solving context (e.g. some terms are empty
 strings) to simplify the concatenations of a long list of string terms
 before trying to reason about the equivalences among subterms. \us{}
 therefore introduced a large number of unnecessary intermediate
-variables and propagations. As an immediate consequence of the
+variables and propagations. As an immediate consequence of
 testing \us{} on \texttt{concats-big} benchmarks, we were able to
 identify the factors common to these instances and rapidly formulate a
 hypothesis as to why they were performing poorly. This allowed us to
 move forward with the development of a new heuristic to resolve this
 issue and achieve better performance.
-
 
 %% %VG: this subsection is not needed in the paper
 %% \noindent{\textbf{Defects discovered and fixed in \us{}:}} The first

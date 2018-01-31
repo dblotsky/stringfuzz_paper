@@ -36,13 +36,15 @@ number of length constraints, and many more.
     transform and randomly generate \smtfull{} string and regular
     expression (regex) problems.\footnote{We assume basic
     familiarity with string solvers and their input
-    language.} Scaling inputs (e.g., long string
-    constants, deep concatenations) are particularly useful in
-    identifying asymptotic behaviors in solvers, and \fuzzer{}.
-    We briefly document \fuzzer{}'s
+    language.} SScaling inputs (e.g., long string constants,
+    deep concatenations) are particularly useful in identifying asymptotic
+    behaviors in solvers, and \fuzzer{} has many options to generate such
+    scaling inputs. We briefly document \fuzzer{}'s
     components and modular architecture. We provide example use cases to
     demonstrate its utility as an exploratory tool for validating
     solvers.
+
+    % Further, StringFuzz's modular design lets users extend it to generate scaling inputs along any parameter of the   input constraint.
 
 \item \textbf{A repository of \smtfull{} problems}:
     We present a repository of \smtfull{} string and regex problem suites we
@@ -55,7 +57,7 @@ number of length constraints, and many more.
     We compare the performance of \theSolvers{} on the
     the \fuzzer{} suites \theSuites{} in section~\ref{sec:data}. We highlight
     these suites because they make some solvers perform poorly,
-    but not others. In section~\ref{sec:analysis}, we analyze our
+    but not others. We analyze our
     experimental results, and pinpoint algorithmic limitations
     in \us{} that cause poor performance. We propose enhancements that
     address these issues, which \fuzzer{} helped us find.
