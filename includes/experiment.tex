@@ -3,13 +3,12 @@
 
 We generated several problem instance suites with \fuzzer{} that made one
 solver perform poorly, but not others. These suites are
-\theSuites{}. Figure~\ref{fig:cvc-hard} shows the suites that were
-uniquely difficult for \cvc{}. Figure~\ref{fig:z3str3-hard} shows the
+\theSuites{}. Fig.~\ref{fig:cvc-hard} shows the suites that were
+uniquely difficult for \cvc{}. Fig.~\ref{fig:z3str3-hard} shows the
 suites that were uniquely difficult for \us{}. All experiments were
-run in series, with a timeout of 15 seconds, on the same computer running
-Ubuntu Linux 16.04. The computer had 32GB of RAM and an
-Intel\textregistered{} Core\texttrademark{} i7-6700 CPU with clock speed
-of 3.40GHz.
+conducted in series, each with a timeout of 15 seconds,
+on an Ubuntu Linux 16.04 computer with 32GB of RAM and an
+Intel\textregistered{} Core\texttrademark{} i7-6700 CPU (3.40GHz).
 
 \begin{figure}[h]
     \begin{subfigure}{.5\textwidth}
@@ -45,22 +44,18 @@ of 3.40GHz.
 
 \fuzzer{}'s ability to produce scaling instances helped uncover several
 implementation issues and performance limitations in \us{}. Scaling inputs
-can reveal issues that would be out of scope for unit tests or
-industrial benchmarks because they elicit asymptotic behaviour. Three different
+can reveal issues that would normally be out of scope for unit tests or
+industrial benchmarks. Three different
 performance and implementation bugs were identified and fixed in \us{}
 as a result of testing with the \fuzzer{} scaling suites
 \textit{Lengths} and \textit{Concats}.
 
-We also found a number of performance-related issues and opportunities for
-new heuristics in \us{} thanks to \fuzzer{}. For example, the
-instances in the \textit{Concats} suite helped us discover a
-potential new heuristic. In particular, \us{} didn't
+\fuzzer also helped identify a number of performance-related issues and opportunities for
+new heuristics in \us{}. For example, by examining \us{}'s execution traces on the
+instances in the \textit{Concats} suite we discovered a
+potential new heuristic. In particular, \us{} does not
 make full use of the solving context (e.g. some terms are empty
 strings) to simplify the concatenations of a long list of string terms
-before trying to reason about the equivalences among subterms. \us{}
-therefore introduced a large number of unnecessary intermediate
-variables and propagations. As a consequence of
-testing \us{} with the \textit{Concats} suite, we were able to
-identify the factors common to its instances, examine \us{}'s execution
-traces on them, and rapidly formulate a hypothesis as to why \us{}
-was performing poorly.
+before trying to reason about the equivalences among sub-terms. \us{}
+therefore introduces a large number of unnecessary intermediate
+variables and propagations.
