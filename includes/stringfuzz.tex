@@ -10,7 +10,6 @@ integration with other tools (including themselves). For example, the
 outputs of generators can be piped into transformers, and transformers
 can be chained to produce a stream of tuned inputs to a
 solver. \fuzzer{} is composed of the following tools:
-
 \begin{description}
     \item[\generator{}] \hfill \\
     This tool generates \smt{} instances. It supports several generators and
@@ -29,7 +28,6 @@ solver. \fuzzer{} is composed of the following tools:
     variables/literals, the max/median syntactic depth of expressions, the
     max/median literal length, etc.
 \end{description}
-
 We organized \fuzzer{} to be easily extended. As evidence of our success we note
 that while the whole project 
 contains \linesInFuzzer{} lines of code, it takes an average of 
@@ -38,82 +36,66 @@ installed from source, or from the Python PIP package
 repository.\footnote{The link to the source code will be added after double-blind review.}
 
 \begin{table}[t]
-    \centering
-    \caption{\generator{} built-in generators.}
-    \label{tbl:generators}
-    \begin{tabular}{|l|l|}
-        \hline
-        \textbf{Name}
-        & \textbf{Generate instances that have ...}
-        \\ \hline
-        \textit{Concats}
-        & Long concats and optional random extracts.
-        \\ \hline
-        \textit{Lengths}
-        & Many variables (and their concats) with length constraints.
-        \\ \hline
-        \textit{Overlaps}
-        & An expression of the form A.X = X.B.
-        \\ \hline
-        \textit{Equality}
-        & An equality among concats, each with variables or constants.
-        \\ \hline
-        \textit{Regex}
-        & Regexes of varying complexity.
-        \\ \hline
-        \textit{Random-Text}
-        & Random, likely syntactically \textit{in}valid text.
-        \\ \hline
-        \textit{Random-AST}
-        & Random, but semantically \textit{valid} text.
-        \\ \hline
-    \end{tabular}
-    
-    \caption{\transformer{} built-in transformers.}
-    \label{tbl:transformers}
-    \begin{tabular}{|l|l|l|}
-        \hline
-        \textbf{Name}
-        & \textbf{The transformer ...}
-        & \textbf{Guarantee}\footnote{See Appendix for proofs and restrictions.}
-        \\ \hline
-        \textit{Fuzz}
-        & Randomly replaces literals and operators with similar ones.
-        & Well-formed
-        \\ \hline
-        \textit{Graft}
-        & For each sort, swaps a random non-leaf node with a leaf node.
-        & Well-formed
-        \\ \hline
-        \textit{Multiply}
-        & Multiplies each number by N, and repeats each character N times.
-        & Sat-sat
-        \\ \hline
-        \textit{Nop}
-        & Does not transform (can translate between \smtfull{}).
-        & Equisat
-        \\ \hline
-        \textit{Reverse}
-        & Reverses all string literals and concat arguments.
-        & Equisat
-        \\ \hline
-        \textit{Rotate}
-        & Performs a syntax tree rotation on compatible operators.
-        & Well-formed
-        \\ \hline
-        \textit{Translate}
-        & Permutes the alphabet.
-        & Equisat
-        \\ \hline
-        \textit{Unprintable}
-        & Randomly replaces all characters in literals with unprintable ones.
-        & Equisat
-        \\ \hline
-    \end{tabular}
+    \caption{\fuzzer{} built-in (a) generators and (b) transformers.}
+    \begin{subtable}{1\textwidth}
+        \centering
+        \caption{\generator{} built-in generators.}
+        \label{tbl:generators}
+        \begin{tabular}{ l l }
+            \toprule
+            \textbf{Name}
+            & \textbf{Generates instances that have ...} \\
+            \midrule
+            \textit{Concats}
+            & Long concats and optional random extracts. \\
+            \textit{Lengths}
+            & Many variables (and their concats) with length constraints. \\
+            \textit{Overlaps}
+            & An expression of the form A.X = X.B. \\
+            \textit{Equality}
+            & An equality among concats, each with variables or constants. \\
+            \textit{Regex}
+            & Regexes of varying complexity. \\
+            \textit{Random-Text}
+            & Random, likely syntactically \textit{in}valid text. \\
+            \textit{Random-AST}
+            & Random, but semantically \textit{valid} text. \\
+            \bottomrule
+        \end{tabular}
+    \end{subtable}
+    \begin{subtable}{1\textwidth}
+        \centering
+        \caption{\transformer{} built-in transformers.}
+        \label{tbl:transformers}
+        \begin{tabular}{l l}
+            \toprule
+            \textbf{Name}
+            & \textbf{The transformer ...} \\
+            \midrule
+            \textit{Fuzz}
+            & Replaces literals and operators with similar ones.\\
+            \textit{Graft}
+            & Randomly swaps non-leaf nodes with leaf nodes.\\
+            \textit{Multiply}\footnote{Satisfiable inputs 
+            will produce satisfiable outputs (see Appendix).}
+            & Multiplies integers and repeats strings by N.\\
+            \textit{Nop}
+            & Does nothing (can translate between \smtfull{}).\\
+            \textit{Reverse}\footnote{Input and output 
+            instances will be equisatisfiable (see Appendix).}
+            & Reverses all string literals and concat arguments.\\
+            \textit{Rotate}
+            & Rotates compatible nodes in syntax tree.\\
+            \textit{Translate}\footnotemark[4]
+            & Permutes the alphabet.\\
+            \textit{Unprintable}
+            & Replaces characters in literals with unprintable ones.\\
+            \bottomrule
+        \end{tabular}
+    \end{subtable}
 \end{table}
 
 \subsubsection{Regex Fuzzing Capabilities}
-
 \fuzzer{} can generate
 and transform instances with regular expression constraints. For example, the
 command \texttt{stringfuzzg regex} invokes the regex instance
@@ -156,7 +138,7 @@ This is done by manipulating parsed syntax trees.
 By default most of the built-in transformers 
 only guarantee well-formedness, however,
 some can even guarantee equisatisfiability. Table~\ref{tbl:transformers} 
-lists the built-in transformers and these guarantees.
+lists the built-in transformers and notes these guarantees.
 
 \subsubsection{Example Use Case}
 In Sect.~\ref{sec:suites} we use \fuzzer{} to generate benchmark suites in a batch mode.
