@@ -26,20 +26,60 @@ five industrial e-mail address and IPv4 sanitizers.
     \centering
     \caption{\generator{}-generated instances.}
     \label{tbl:generated}
-    \begin{tabular}{|l|l|}
+    \begin{tabular}{|l|l|l|}
         \hline
-        \textbf{Name}             & \textbf{Instances have ...} \\ \hline
-        \textit{Concats}          & A right-heavy, deep tree of concats. \\ \hline
-        \textit{Concats-Balanced} & A balanced, deep tree of concats. \\ \hline
-        \textit{Concats-Extracts} & A single concat tree, and random character extractions. \\ \hline
-        \textit{Lengths}          & A single, large length constraint on a variable. \\ \hline
-        \textit{Lengths-Concats}  & Variables and their concats, each with fixed lengths. \\ \hline
-        \textit{Overlaps}         & A formula of the form A.X = X.B. \\ \hline
-        \textit{Regex}            & A test for regex membership of arbitrary complexity. \\ \hline
-        \textit{Many-Regexes}     & A test for membership in many random regexes. \\ \hline
-        \textit{Regex-Deep}       & A test for membership in a regex with many nested operators. \\ \hline
-        \textit{Regex-Pair}       & A test for membership in one regex, but not another. \\ \hline
-        \textit{Regex-Lengths}    & A test for membership in a regex, and a length constraint. \\ \hline
+        \textbf{Name}
+            & \textbf{Instances have ...}
+            & \textbf{Quantity}
+            \\ \hline
+        \textit{Concats}
+            & A right-heavy, deep tree of concats.
+            & 600
+            \\ \hline
+        \textit{Concats-Balanced}
+            & A balanced, deep tree of concats.
+            & 100
+            \\ \hline
+        \textit{Concats-Extracts}
+            & A single concat tree, and random character extractions.
+            & 600
+            \\ \hline
+        \textit{Lengths}
+            & A single, large length constraint on a variable.
+            & 1,000
+            \\ \hline
+        \textit{Lengths-Concats}
+            & Variables and their concats, each with fixed lengths.
+            & 500
+            \\ \hline
+        \textit{Overlaps}
+            & A formula of the form A.X = X.B.
+            & 100
+            \\ \hline
+        \textit{Regex}
+            & A test for regex membership of arbitrary complexity.
+            & 1,200
+            \\ \hline
+        \textit{Many-Regexes}
+            & A test for membership in many random regexes.
+            & 600
+            \\ \hline
+        \textit{Regex-Deep}
+            & A test for membership in a regex with many nested operators.
+            & 450
+            \\ \hline
+        \textit{Regex-Pair}
+            & A test for membership in one regex, but not another.
+            & 600
+            \\ \hline
+        \textit{Regex-Lengths}
+            & A test for membership in a regex, and a length constraint.
+            & 600
+            \\ \hline
+        \textit{Different-Prefix}
+            & An equality between two deep concats with different prefixes.
+            & 300
+            \\ \hline
     \end{tabular}
 \end{table}
 

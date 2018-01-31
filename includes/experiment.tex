@@ -14,26 +14,28 @@ of 3.40GHz.
 \begin{figure}[h]
     \begin{subfigure}{.5\textwidth}
         \includegraphics[width=\textwidth]{data/graphs/concats-extracts-small.png}
-        \caption{Performance on concats-extracts-small}
+        \caption{Performance on \textit{Concats-Extracts-Small}}
         \label{fig:concats-extracts-small}
     \end{subfigure}
     \begin{subfigure}{.5\textwidth}
         \includegraphics[width=\textwidth]{data/graphs/different-prefix.png}
-        \caption{Performance on different-prefix}
+        \caption{Performance on \textit{Different-Prefix}}
         \label{fig:different-prefix}
     \end{subfigure}
     \caption{Instances hard for \cvc{}}
     \label{fig:cvc-hard}
 
+    \vspace{0.15in}
+
     \begin{subfigure}{.5\textwidth}
         \includegraphics[width=\textwidth]{data/graphs/concats-balanced.png}
         \label{fig:concats-balanced}
-        \caption{Performance on concats-balanced}
+        \caption{Performance on \textit{Concats-Balanced}}
     \end{subfigure}
     \begin{subfigure}{.5\textwidth}
         \includegraphics[width=\textwidth]{data/graphs/concats-small.png}
         \label{fig:concats-small}
-        \caption{Performance on concats-small}
+        \caption{Performance on \textit{Concats-Small}}
     \end{subfigure}
     \caption{Instances hard for \us{}}
     \label{fig:z3str3-hard}
@@ -41,8 +43,7 @@ of 3.40GHz.
 
 \subsubsection{Usefulness to \us{}: A Case Study}
 
-\fuzzer{}'s ability to produce scaling instances (e.g., long string constants,
-concats of increasing depth, etc.) helped uncover several
+\fuzzer{}'s ability to produce scaling instances helped uncover several
 implementation issues and performance limitations in \us{}. Scaling inputs
 can reveal issues that would be out of scope for unit tests or
 industrial benchmarks because they elicit asymptotic behaviour. Three different

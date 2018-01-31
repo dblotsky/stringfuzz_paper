@@ -1,14 +1,20 @@
 \section{\fuzzer{}}
 \label{sec:fuzzer}
 
+\subsubsection{Implementation and Architecture}
+
 \fuzzer{} is implemented as a Python package, and comes with several
 executables to generate, transform, and analyze \smtfull{} string and regex
 instances. It can either be installed from source, or from the Python
 PIP package repository.\footnote{The link to the
 source code will be added after double-blind review.}
 \fuzzer{} is organized to be easily extended:
-all generators and transformers are independent Python modules. Its
-components are also implemented as \unix{} ``filters'', to enable easy
+all generators and transformers are independent Python modules. To demonstrate
+its modularity, we note that the implementations of transformers in \fuzzer{}
+contain an average of \linesPerX{} lines of code, whereas the whole fuzzer
+contains \linesInFuzzer{} lines.
+
+Its components are also implemented as \unix{} ``filters'', to enable easy
 integration with other tools (including themselves). For example, the
 outputs of generators can be piped into transformers, and transformers
 can be chained to produce a stream of tuned inputs to a
@@ -38,28 +44,63 @@ solver. \fuzzer{} is composed of the following tools:
     \label{tbl:generators}
     \begin{tabular}{|l|l|}
         \hline
-        \textbf{Name}        & \textbf{Generated instances have ...} \\ \hline
-        \textit{Concats}     & Long concats and optional random extracts. \\ \hline
-        \textit{Lengths}     & Many variables (and their concats) with length constraints. \\ \hline
-        \textit{Overlaps}    & An expression of the form A.X = X.B. \\ \hline
-        \textit{Equality}    & An equality among concats, each with variables or constants. \\ \hline
-        \textit{Regex}       & Regexes of varying complexity. \\ \hline
-        \textit{Random-Text} & Random, likely syntactically \textit{in}valid text. \\ \hline
-        \textit{Random-AST}  & Random, but semantically \textit{valid} text. \\ \hline
+        \textbf{Name}
+            & \textbf{Generated instances have ...}
+            \\ \hline
+        \textit{Concats}
+            & Long concats and optional random extracts.
+            \\ \hline
+        \textit{Lengths}
+            & Many variables (and their concats) with length constraints.
+            \\ \hline
+        \textit{Overlaps}
+            & An expression of the form A.X = X.B.
+            \\ \hline
+        \textit{Equality}
+            & An equality among concats, each with variables or constants.
+            \\ \hline
+        \textit{Regex}
+            & Regexes of varying complexity.
+            \\ \hline
+        \textit{Random-Text}
+            & Random, likely syntactically \textit{in}valid text.
+            \\ \hline
+        \textit{Random-AST}
+            & Random, but semantically \textit{valid} text.
+            \\ \hline
     \end{tabular}
+
     \caption{\transformer{} transformers.}
     \label{tbl:transformers}
     \begin{tabular}{|l|l|}
         \hline
-        \textbf{Name}        & \textbf{The transformer ...} \\ \hline
-        \textit{Fuzz}        & Randomly replaces literals and operators with similar ones. \\ \hline
-        \textit{Graft}       & For each sort, swaps a random non-leaf node with a leaf node. \\ \hline
-        \textit{Multiply}    & Multiplies each number by N, and repeats each character N times. \\ \hline
-        \textit{Nop}         & Doesn't transform (but can translate \smtfull{}). \\ \hline
-        \textit{Reverse}     & Reverses all string literals and concat arguments. \\ \hline
-        \textit{Rotate}      & Performs a random syntax tree rotation on two concats. \\ \hline
-        \textit{Translate}   & Maps every character X to a different character Y. \\ \hline
-        \textit{Unprintable} & Randomly replaces all characters in literals with unprintable ones. \\ \hline
+        \textbf{Name}
+            & \textbf{The transformer ...}
+            \\ \hline
+        \textit{Fuzz}
+            & Randomly replaces literals and operators with similar ones.
+            \\ \hline
+        \textit{Graft}
+            & For each sort, swaps a random non-leaf node with a leaf node.
+            \\ \hline
+        \textit{Multiply}
+            & Multiplies each number by N, and repeats each character N times.
+            \\ \hline
+        \textit{Nop}
+            & Doesn't transform (but can translate \smtfull{}).
+            \\ \hline
+        \textit{Reverse}
+            & Reverses all string literals and concat arguments.
+            \\ \hline
+        \textit{Rotate}
+            & Performs a random syntax tree rotation on two concats.
+            \\ \hline
+        \textit{Translate}
+            & Maps every character X to a different character Y.
+            \\ \hline
+        \textit{Unprintable}
+            & Randomly replaces all characters in literals with unprintable ones.
+            \\ \hline
     \end{tabular}
 \end{table}
 
@@ -108,45 +149,16 @@ multiply and permute regex literals (e.g. \textit{Reverse},
 operators (e.g. \textit{Fuzz}), and manipulate the syntax tree
 (e.g. \textit{Graft}, \textit{Rotate}).
 
-\subsubsection{Example Use Cases}
+\subsubsection{Example Use Case}
 
-\fuzzer{} can be used to
-generate benchmark suites in a batch mode, or can be used in an online
-randomized fashion for exploratory debugging. For example, \fuzzer{}
-can be invoked as follows to feed random instances to \cvc{} until it
+\fuzzer{} can be used to generate benchmark suites in a batch mode, but also
+in an online randomized fashion for exploratory debugging. For example,
+\fuzzer{} can be invoked as follows to feed random instances to \cvc{} until it
 returns an error:
-% \vspace{-0.15in}
-% \begin{figure}[H]
-%     \centering
-%     \begin{minipage}[b]{0.91\linewidth}
-%         \begin{minted}{bash}
 {\scriptsize\begin{verbatim}
 while stringfuzzg -r random-ast -m | tee instance.smt25 | cvc4 --lang smt2.5 --tlimit=5000; do
     sleep 0
 done\end{verbatim}}
-%         \end{minted}
-%     \end{minipage}
-% \end{figure}
-% \vspace{-0.15in}
 
-Some more \unix{} scripting can yield other interesting results. For
-example, the following script finds a regex instance on which \us{}
-times out after 5 seconds:
-% \vspace{-0.15in}
-% \begin{figure}[H]
-%     \centering
-%     \begin{minipage}[b]{0.91\linewidth}
-%         \begin{minted}{bash}
-{\scriptsize\begin{verbatim}while true; do
-    stringfuzzg -r regex -c -a increasing -r 2 -t 5 -d 3 > instance.smt25
-    result=`z3str3 -T:5 instance.smt25`
-    echo $result
-    if [ "$result" == "timeout" ]; then
-        cat instance.smt25
-        break
-    fi
-done\end{verbatim}}
-%         \end{minted}
-%     \end{minipage}
-% \end{figure}
-% \vspace{-0.15in}
+Simply by running the above script, we managed to induce segmentation faults
+in \cvc{} and \us{}.
