@@ -114,31 +114,32 @@ generate benchmark suites in a batch mode, or can be used in an online
 randomized fashion for exploratory debugging. For example, \fuzzer{}
 can be invoked as follows to feed random problems to \cvc{} until it
 returns an error:
-\vspace{-0.15in}
-\begin{figure}[H]
-    \centering
-    \begin{minipage}[b]{0.91\linewidth}
-        \begin{minted}{bash}
+% \vspace{-0.15in}
+% \begin{figure}[H]
+%     \centering
+%     \begin{minipage}[b]{0.91\linewidth}
+%         \begin{minted}{bash}
+{\scriptsize\begin{verbatim}
 while \
   stringfuzzg -r random-ast -m \
   | tee problem.smt25 \
   | cvc4 --lang smt2.5 --tlimit=5000; do
     sleep 0
-done
-        \end{minted}
-    \end{minipage}
-\end{figure}
-\vspace{-0.15in}
+done\end{verbatim}}
+%         \end{minted}
+%     \end{minipage}
+% \end{figure}
+% \vspace{-0.15in}
 
 Some more \unix{} scripting can yield other interesting results. For
 example, the following script finds a regex problem on which \us{}
 times out after 5 seconds:
-\vspace{-0.15in}
-\begin{figure}[H]
-    \centering
-    \begin{minipage}[b]{0.91\linewidth}
-        \begin{minted}{bash}
-while true; do
+% \vspace{-0.15in}
+% \begin{figure}[H]
+%     \centering
+%     \begin{minipage}[b]{0.91\linewidth}
+%         \begin{minted}{bash}
+{\scriptsize\begin{verbatim}while true; do
     stringfuzzg -r regex -c -a increasing -r 2 -t 5 -d 3 > problem.smt25
     result=`z3str3 -T:5 problem.smt25`
     echo $result
@@ -146,8 +147,8 @@ while true; do
         cat problem.smt25
         break
     fi
-done
-        \end{minted}
-    \end{minipage}
-\end{figure}
-\vspace{-0.15in}
+done\end{verbatim}}
+%         \end{minted}
+%     \end{minipage}
+% \end{figure}
+% \vspace{-0.15in}
