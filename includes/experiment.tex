@@ -9,7 +9,6 @@ suites that were uniquely difficult for \us{}. All experiments were
 conducted in series, each with a timeout of 15 seconds,
 on an Ubuntu Linux 16.04 computer with 32GB of RAM and an
 Intel\textregistered{} Core\texttrademark{} i7-6700 CPU (3.40GHz).
-
 \begin{figure}[h]
     \begin{subfigure}{.5\textwidth}
         \includegraphics[width=\textwidth]{data/graphs/concats-extracts-small.png}
@@ -30,15 +29,16 @@ Intel\textregistered{} Core\texttrademark{} i7-6700 CPU (3.40GHz).
         \caption{Performance on \textit{Concats-Balanced}}
     \end{subfigure}
     \begin{subfigure}{.5\textwidth}
-        \includegraphics[width=\textwidth]{data/graphs/concats-small.png}
-        \label{fig:concats-small}
-        \caption{Performance on \textit{Concats-Small}}
+        \includegraphics[width=\textwidth]{data/graphs/concats-big.png}
+        \label{fig:concats-big}
+        \caption{Performance on \textit{Concats-Big}}
     \end{subfigure}
     \caption{Instances hard for \us{}}
     \label{fig:z3str3-hard}
 \end{figure}
 
 \subsubsection{Usefulness to \us{}: A Case Study}
+
 \fuzzer{}'s ability to produce scaling instances helped uncover several
 implementation issues and performance limitations in \us{}. Scaling inputs
 can reveal issues that would normally be out of scope for unit tests or
@@ -47,8 +47,9 @@ performance and implementation bugs were identified and fixed in \us{}
 as a result of testing with the \fuzzer{} scaling suites
 \textit{Lengths} and \textit{Concats}.
 
-\fuzzer also helped identify a number of performance-related issues and opportunities for
-new heuristics in \us{}. For example, by examining \us{}'s execution traces on the
+\fuzzer{} also helped identify a number of performance-related issues and
+opportunities for new heuristics in \us{}. For example, by examining \us{}'s
+execution traces on the
 instances in the \textit{Concats} suite we discovered a
 potential new heuristic. In particular, \us{} does not
 make full use of the solving context (e.g. some terms are empty
