@@ -1,31 +1,32 @@
 \section{Introduction}
 
 In recent years, many algorithms for solving string constraints have
-been developed and implemented in SMT solvers such as Norn~\cite{norn},
-CVC4~\cite{cvc4}, and Z3 (e.g., Z3str2~\cite{z3str2} and Z3str3~\cite{z3str3}).
-To validate and benchmark these solvers, their developers have relied on
-hand-crafted input suites~\cite{cvc4-tests,z3str3-tests,z3str2-tests} or
-real-world examples from a limited set of industrial
+been developed and implemented in SMT solvers such as
+Norn~\cite{norn}, CVC4~\cite{cvc4}, and Z3 (e.g., Z3str2~\cite{z3str2}
+and Z3str3~\cite{z3str3}).  To validate and benchmark these solvers,
+their developers have relied on hand-crafted input
+suites~\cite{cvc4-tests,z3str3-tests,z3str2-tests} or real-world
+examples from a limited set of industrial
 applications~\cite{kaluza,kausler}. These test suites have helped
 developers identify implementation defects and develop more
-sophisticated solving heuristics. Unfortunately, as solvers grow,
-these benchmarks remain stagnant, leaving increasing functionality untested.
-As such, there is an acute need for a more robust, inexpensive, and automatic way
-of generating benchmarks to test
-the correctness and performance of SMT solvers.
+sophisticated solving heuristics. Unfortunately, as more features are
+added to solvers, these benchmarks often remain stagnant, leaving
+increasing functionality untested.  As such, there is an acute need
+for a more robust, inexpensive, and automatic way of generating
+benchmarks to test the correctness and performance of SMT solvers.
 
-Fuzzing has been used to test all kinds of software
-including SAT solvers~\cite{fuzzsat}. Inspired by the utility of fuzzers,
-we introduce \fuzzer{} and describe its value
-as an exploratory testing tool. We demonstrate its efficacy
-by presenting limitations it helped discover in
-leading string solvers. To the best of our knowledge, \fuzzer{} is the
-only tool aimed at automatic generation of string constraints. \fuzzer{} can
-be used to mutate or transform existing benchmarks, as well as
-randomly generate structured instances. These instances can be scaled with
-respect to a variety of parameters, e.g., length of string constants,
-depth of concatenations (concats) and regular expressions (regexes),
-number of variables, number of length constraints, and many more.
+Fuzzing has been used to test all kinds of software including SAT
+solvers~\cite{fuzzsat}. Inspired by the utility of fuzzers, we
+introduce \fuzzer{} and describe its value as an exploratory testing
+tool. We demonstrate its efficacy by presenting limitations it helped
+discover in leading string solvers. To the best of our knowledge,
+\fuzzer{} is the only tool aimed at automatic generation of string
+constraints. \fuzzer{} can be used to mutate or transform existing
+benchmarks, as well as randomly generate structured instances. These
+instances can be scaled with respect to a variety of parameters, e.g.,
+length of string constants, depth of concatenations (concats) and
+regular expressions (regexes), number of variables, number of length
+constraints, and many more.
 
 \subsubsection{Contributions}
 
