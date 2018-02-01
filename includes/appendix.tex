@@ -104,3 +104,13 @@ We end our discussion on \textit{Reverse} by nothing that although it disallowed
 in the theory we were working with. If we expand our theory to also include an
 operator that replaces the last instance, we can transform problems that include
 \texttt{str.replace}.
+
+\subsection{Multiply}
+\textit{Multiply} does not transform programs that use \texttt{*},
+\texttt{str.indexof}, \texttt{str.to.int}, and \texttt{str.from.int}. These
+operators do not have a well-defined notion of a multiply. The required lemma is
+proved by induction on the rest of the operators similar to the above proofs.
+
+We disallow \texttt{*} for \textit{Multiply} because of problems instances such
+as \texttt{(= 10 (* 2 5))}. A naive \textit{Multiply} by $3$ would transform
+this satisfiable problem into the unsatisfiable \texttt{(= 30 (* 6 15))}.
