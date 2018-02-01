@@ -29,9 +29,9 @@ solver. \fuzzer{} is composed of the following tools:
     max/median literal length, etc.
 \end{description}
 We organized \fuzzer{} to be easily extended. As evidence of our success we note
-that while the whole project 
-contains \linesInFuzzer{} lines of code, it takes an average of 
-\linesPerX{} lines of code to create a transformer. \fuzzer{} can either be 
+that while the whole project
+contains \linesInFuzzer{} lines of code, it takes an average of
+\linesPerX{} lines of code to create a transformer. \fuzzer{} can either be
 installed from source, or from the Python PIP package
 repository.\footnote{The link to the source code will be added after double-blind review.}
 
@@ -76,12 +76,12 @@ repository.\footnote{The link to the source code will be added after double-blin
             & Replaces literals and operators with similar ones.\\
             \textit{Graft}
             & Randomly swaps non-leaf nodes with leaf nodes.\\
-            \textit{Multiply}\footnote{Satisfiable inputs 
+            \textit{Multiply}\footnote{Satisfiable inputs
             will produce satisfiable outputs (see Appendix for proof).}
             & Multiplies integers and repeats strings by N.\\
             \textit{Nop}
             & Does nothing (can translate between \smtfull{}).\\
-            \textit{Reverse}\footnote{Input and output 
+            \textit{Reverse}\footnote{Input and output
             instances will be equisatisfiable (see Appendix for proof).}
             & Reverses all string literals and concat arguments.\\
             \textit{Rotate}
@@ -98,7 +98,7 @@ repository.\footnote{The link to the source code will be added after double-blin
 \subsubsection{Regex Generating Capabilities}
 \fuzzer{} can generate
 and transform instances with regular expression constraints. For example, the
-command \texttt{stringfuzzg regex} invokes the regex instance
+following command - \texttt{stringfuzzg regex} - invokes the regex instance
 generator and produces an instance of the form:
 \begin{align*}
     & \texttt{(assert (str.in.re X}\; R_0\; \texttt{))} \\
@@ -136,15 +136,15 @@ terminating in a regex literal. Below are three example regex instances
 \subsubsection{Equisatisfiable String Transformations}
 \fuzzer{} can also transform problem instances.
 This is done by manipulating parsed syntax trees.
-By default most of the built-in transformers 
+By default most of the built-in transformers
 only guarantee well-formedness, however,
-some can even guarantee equisatisfiability. Table~\ref{tbl:transformers} 
+some can even guarantee equisatisfiability. Table~\ref{tbl:transformers}
 lists the built-in transformers and notes these guarantees.
 
 \subsubsection{Example Use Case}
 In Sect.~\ref{sec:suites} we use \fuzzer{} to generate benchmark suites in a batch mode.
-We can also use \fuzzer{} for on-line exploratory debugging. 
-For example, the script below repeatedly feeds random \fuzzer{} 
+We can also use \fuzzer{} for on-line exploratory debugging.
+For example, the script below repeatedly feeds random \fuzzer{}
 instances to \cvc{} until the solver produces an error:
 {\scriptsize\begin{verbatim}
 while stringfuzzg -r random-ast -m \
