@@ -1,10 +1,10 @@
 \section{Appendix}
 
-In this section, we discuss how we proved equisatisfiability
-guarantees that transformations provide in \fuzzer{}. We assume that
-the reader is familiar with SMT-LIB syntax. The transformations work
-over boolean, integer, string literals and expressions, and regular
-expressions.
+In this section, we informally discuss how we established
+equisatisfiability guarantees that transformations provide in
+\fuzzer{}. We assume that the reader is familiar with SMT-LIB
+syntax. The transformations work over boolean, integer, string
+literals and expressions, and regular expressions.
 
 To shorten our proofs, we make the following simplifications:
 \begin{enumerate}
@@ -64,12 +64,13 @@ transforms the problem into $y<x<y+2$ which is SAT.
 \subsection{Translate}
 We now prove that \textit{Translate} transforms constraints into
 equisatisfiable constraints. From above, we only need to show that for
-every expression $e$, $\textit{Translate}(\eval (e)) = \eval
-(\textit{Translate}(e))$. For now, we assume that \textit{Translate}
-fixes the digits pointwise and we prove the stronger fact that
-$\textit{Translate}$ also fixes characters pointwise in any string
-expression. (I.e., $\textit{Translate}$ are bijections and further
-that digits are not mapped to any other character.)
+every expression $e$, the following is true: $\textit{Translate}(\eval
+(e))$ = $\eval (\textit{Translate}(e))$. For now, we assume that
+\textit{Translate} fixes the digits pointwise and we prove the
+stronger fact that $\textit{Translate}$ also fixes characters
+pointwise in any string expression. (I.e., $\textit{Translate}$ are
+bijections and further that digits are not mapped to any other
+character.)
 
 It is clear that for literals $l$, $\textit{Translate}(\eval (l)) =
 \eval (\textit{Translate}(l))$. Then, assuming that the it holds for
@@ -88,7 +89,7 @@ fact that the digits were fixed pointwise.
 The restriction that \textit{Translate} must fix the digit characters
 can be relaxed if we are translating problem instances that do not use
 \texttt{str.to.int} or \texttt{str.from.int}. Without these operators
-we can show $\textit{Translate}(\eval (e)) = \eval
+we can show $\textit{Translate}(\eval (e))$ = $\eval
 (\textit{Translate}(e))$ directly by induction without having to worry
 about fixing digits pointwise.
 
