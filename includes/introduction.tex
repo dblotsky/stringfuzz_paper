@@ -24,16 +24,16 @@ only tool aimed at automatic generation of string constraints. \fuzzer{} can
 be used to mutate or transform existing benchmarks, as well as
 randomly generate structured instances. These instances can be scaled with
 respect to a variety of parameters, e.g., length of string constants,
-depth of concatenations (concats) and regular expressions, number of variables,
-number of length constraints, and many more.
+depth of concatenations (concats) and regular expressions (regexes),
+number of variables, number of length constraints, and many more.
 
 \subsubsection{Contributions}
 
 \begin{enumerate}
     \item \textbf{The \fuzzer{} tool}:
         In Sect.~\ref{sec:fuzzer}, we describe a modular fuzzer that can
-        transform and generate \smtfull{} string and regular
-        expression (regex) instances.\footnote{We assume basic
+        transform and generate \smtfull{} string and regex
+        instances.\footnote{We assume basic
         familiarity with string solvers and their input
         language.} Scaling inputs (e.g., long string constants,
         deep concatenations) are particularly useful in identifying asymptotic
