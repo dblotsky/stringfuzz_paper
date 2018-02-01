@@ -68,9 +68,9 @@ every expression $e$, the following is true: $\textit{Translate}(\eval
 (e))$ = $\eval (\textit{Translate}(e))$. For now, we assume that
 \textit{Translate} fixes the digits pointwise and we prove the
 stronger fact that $\textit{Translate}$ also fixes characters
-pointwise in any string expression. (I.e., $\textit{Translate}$ are
-bijections and further that digits are not mapped to any other
-character.)
+pointwise in any string expression. (i.e., in bijections of character
+sets used by $\textit{Translate}$ the digits are not mapped to any
+other character.)
 
 It is clear that for literals $l$, $\textit{Translate}(\eval (l)) =
 \eval (\textit{Translate}(l))$. Then, assuming that the it holds for
@@ -81,7 +81,7 @@ integers), \texttt{+}, \texttt{-}, \texttt{*}, \texttt{str.len},
 
 For \texttt{str.in.re} we had to show that a string literals $s$, is a
 member of a regular expression $r$ if and only if
-$\textit{Translate}(s)$ is a member of $\textit{Translate}{r}$ by
+$\textit{Translate}(s)$ is a member of $\textit{Translate}(r)$ by
 induction on regular expressions. For the inductive cases of
 \texttt{str.to.int}, and \texttt{str.from.int} we needed to use the
 fact that the digits were fixed pointwise.
