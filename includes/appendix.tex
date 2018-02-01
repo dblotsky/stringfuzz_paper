@@ -86,6 +86,21 @@ $\textit{Translate}{r}$ by induction on regular expressions. For the inductive
 cases of \texttt{str.to.int}, and \texttt{str.from.int} we needed to use the
 fact that the digits were fixed pointwise.
 
-The restriction that \texttt{Translate} must fix the digit characters can be
-relaxed if we are translaing problem instances that do not use
-\texttt{str.to.int} or \texttt{str.from.int}.
+The restriction that \textit{Translate} must fix the digit characters can be
+relaxed if we are translating problem instances that do not use
+\texttt{str.to.int} or \texttt{str.from.int}. Without these operators we can
+show $\textit{Translate}(\eval (e)) = \eval (\textit{Translate}(e))$ directly by
+induction without having to worry about fixing digits pointwise.
+
+\subsection{Reverse}
+\textit{Reverse} does not transform programs that use \texttt{str.replace},
+\texttt{str.indexof}, \texttt{str.to.int}, and \texttt{str.from.int}. These
+operators do not have a well-defined notion of a reverse. The required lemma is
+proved by induction on the rest of the operators similar to proof for
+\textit{Translate}.
+
+We end our discussion on \textit{Reverse} by nothing that although it disallowed
+\texttt{str.replace} only because it didn't have a natural notion of a reverse
+in the theory we were working with. If we expand our theory to also include an
+operator that replaces the last instance, we can transform problems that include
+\texttt{str.replace}.
