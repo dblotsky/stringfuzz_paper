@@ -95,26 +95,35 @@
     isbn      = "978-3-319-21690-4"
 }
 
-@Article{z3str3,
-    author  = "Zheng, Yunhui
-    and Ganesh, Vijay
-    and Subramanian, Sanu
-    and Tripp, Omer
-    and Berzish, Murphy
-    and Dolby, Julian
-    and Zhang, Xiangyu",
-    title    = "Z3str2: an efficient solver for strings, regular expressions, and length constraints",
-    journal  = "Formal Methods in System Design",
-    year     = "2017",
-    month    = "Jun",
-    day      = "01",
-    volume   = "50",
-    number   = "2",
-    pages    = "249--288",
-    abstract = "In recent years, string solvers have become an essential component in many formal verification, security analysis, and bug-finding tools. Such solvers typically support a theory of string equations, the length function, and the regular-expression membership predicate. These enable considerable expressive power, which comes at the cost of slow solving time, and in some cases even non-termination. We present three techniques, designed for word-based SMT string solvers, to mitigate these problems: (1) detecting overlapping variables, which is essential to avoiding common cases of non-termination; (2) pruning of the search space via bi-directional integration between the string and integer theories, enabling new cross-domain heuristics; and (3) a binary search based heuristic, allowing the procedure to skip unnecessary string length queries and converge on consistent length assignments faster for large strings. We have implemented above techniques atop the Z3-str solver, resulting in a significantly more robust and efficient solver, dubbed Z3str2, for the quantifier-free theory of string equations, the regular-expression membership predicate, and linear arithmetic over the length function. We report on a series of experiments over four sets of challenging real-world benchmarks, where we compare Z3str2 with five different string solvers: S3, CVC4, Kaluza, PISA and Stranger. Each of these tools utilizes a different solving strategy and/or string representation (based e.g. on words, bit vectors or automata). The results point to the efficacy of our proposed techniques, which yield dramatic performance improvement. We also demonstrate performance improvements enabled by Z3str2 in the context of symbolic execution for string-manipulating programs. We observe that the techniques presented here are of broad applicability, and can be integrated into other string solvers to improve their performance.",
-    issn     = "1572-8102",
-    doi      = "10.1007/s10703-016-0263-6",
-    url      = "https://doi.org/10.1007/s10703-016-0263-6"
+@inproceedings{z3str3,
+  author    = {Murphy Berzish and
+               Vijay Ganesh and
+               Yunhui Zheng},
+  title     = {ZSstrS: {A} string solver with theory-aware heuristics},
+  booktitle = {2017 Formal Methods in Computer Aided Design, {FMCAD} 2017, Vienna,
+               Austria, October 2-6, 2017},
+  pages     = {55--59},
+  year      = {2017},
+  crossref  = {DBLP:conf/fmcad/2017},
+  url       = {https://doi.org/10.23919/FMCAD.2017.8102241},
+  doi       = {10.23919/FMCAD.2017.8102241},
+  timestamp = {Fri, 17 Nov 2017 10:16:24 +0100},
+  biburl    = {http://dblp.org/rec/bib/conf/fmcad/BerzishGZ17},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@proceedings{DBLP:conf/fmcad/2017,
+  editor    = {Daryl Stewart and
+               Georg Weissenbacher},
+  title     = {2017 Formal Methods in Computer Aided Design, {FMCAD} 2017, Vienna,
+               Austria, October 2-6, 2017},
+  publisher = {{IEEE}},
+  year      = {2017},
+  url       = {http://ieeexplore.ieee.org/xpl/mostRecentIssue.jsp?punumber=8093672},
+  isbn      = {978-0-9835678-7-5},
+  timestamp = {Fri, 17 Nov 2017 10:12:51 +0100},
+  biburl    = {http://dblp.org/rec/bib/conf/fmcad/2017},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
 }
 
 @inproceedings{z3str2,
