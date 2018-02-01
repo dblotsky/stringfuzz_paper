@@ -95,7 +95,7 @@ repository.\footnote{The link to the source code will be added after double-blin
     \end{subtable}
 \end{table}
 
-\subsubsection{Regex Fuzzing Capabilities}
+\subsubsection{Regex Generating Capabilities}
 \fuzzer{} can generate
 and transform instances with regular expression constraints. For example, the
 command \texttt{stringfuzzg regex} invokes the regex instance
@@ -133,6 +133,7 @@ terminating in a regex literal. Below are three example regex instances
     ((\texttt{ddd})*)+\quad\quad ((\texttt{ee})+|(\texttt{fff})*)
 \end{align*}
 
+\subsubsection{Equisatisfiable String Transformations}
 \fuzzer{} can also transform problem instances.
 This is done by manipulating parsed syntax trees.
 By default most of the built-in transformers 
