@@ -40,6 +40,8 @@
 \def\smt{SMT-LIB}
 \def\unix{UNIX}
 
+\DeclareMathOperator{\eval}{eval}
+
 \def\theSuites{\textit{Concats-Balanced}, \textit{Concats-Big},
   \textit{Concats-Extracts-Small}, and \textit{Different-Prefix}}
 \def\numSuites{four}
@@ -99,6 +101,10 @@
 
     \bibliographystyle{abbrv}
     \bibliography{paper}
+
+    \newpage
+    \appendix
+    \input{includes/appendix.tex}
 
     % \appendix
     % \section{Appendix}

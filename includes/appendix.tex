@@ -1,0 +1,115 @@
+\section{Appendix}
+
+In this section, we will discuss how we proved equisatisfiability guarantees
+that transformations provide in \fuzzer{}.
+
+We assume that the reader is familiar with SMT-LIB syntax. The transformations
+work over boolean, integer, string literals and expressions, and regular
+expressions.
+
+To shorten our proofs, we will make the following simplifications:
+\begin{enumerate}
+  \item
+    Since many of the operators can be expressed in terms of other, our
+    proofs will only consider a subset of the operators. In particular we will
+    drop the following:
+    \begin{itemize}
+      \item \texttt{||} (boolean or)
+      \item \texttt{=} for boolean expressions
+      \item \texttt{<=}, \texttt{>}, \texttt{>=}
+      \item \texttt{str.prefixof}, \texttt{str.suffixof}, \texttt{str.at}, \texttt{str.contains}
+      \item \texttt{re.range}, \texttt{re.+}, \texttt{re.allchar}, \texttt{re.all}
+    \end{itemize}
+
+  \item
+    In the above, we assume that \texttt{str.at} is expressible using
+    \texttt{substring} although the semantics slightly differ when the index is
+    out of bounds.
+
+  \item
+    We will assume that our program instances are a single assertion. Multiple
+    assertions can be expressed by combining them using \texttt{and}.
+\end{enumerate}
+
+\begin{definition}
+  A \emph{model} is a mapping from boolean, integer, and string variables to
+literals of the corresponding type.
+\end{definition}
+
+\begin{definition}
+  A \emph{program} $P$ satisfies a model $m$ if $P$ evaluates to \texttt{true}
+under the model $m$. The function $\eval (P)$ evaluates a program instance
+under a model; the specific model used is left implicit as it is clear from
+context.
+\end{definition}
+
+The proofs all follow a very similar structure. For each transformation
+\textit{Trans}, we show that a problem instance $P$ is satisfiable by a model $m$
+if and only if $\textit{Trans}(P)$ is satisfiable by $\textit{Trans}(m)$, where
+$\textit{Trans}(m)$ is the transformation applied to all the constants in the
+model $m$.
+
+To show the above, we show that for all expressions $e$, $\textit{Trans}(\eval
+(e)) = \eval (\textit{Trans}(e))$. This is proven using a straightforward
+induction on the structure of expressions. Since the transformations fix
+boolean constants, we have, $\textit{Trans}(\eval (P)) = \eval (P)$, and hence
+if the original problem is satisfiable then the transformed problem is also
+satisfiable.
+
+For transformations that have an inverse, such as \textit{Translate} and
+\textit{Reverse} this also shows that if the transformed problem is satisfiable,
+then the original problem is satisfiable, proving that they are equisat
+transformations. \textit{Multiply} does not have an inverse and hence it only
+guarantees to take satisfiable problems to satisfiable problems. This can be
+seen in the problem instance $y<x<y+1$ which is UNSAT, but multiplying by 2
+transforms the problem into $y<x<y+2$ which is SAT.
+
+\subsection{Translate}
+We now prove that \textit{Translate} transforms programs into equisatisfiable
+programs. From above, we only need to show that for every expression $e$,
+$\textit{Translate}(\eval (e)) = \eval (\textit{Translate}(e))$. For now, we
+assume that \textit{Translate} fixes the digit characters pointwise and we prove
+the stronger fact that $\textit{Translate}$ also fixes the digits pointwise in
+any string expression.
+
+It is clear that for literals $l$, $\textit{Translate}(\eval (l)) = \eval
+(\textit{Translate}(l))$. Then, assuming that the it holds for smaller
+expressions, we show that it holds larger expressions $e$ created using the
+constructs \texttt{and}, \texttt{=} (for strings and integers), \texttt{+},
+\texttt{-}, \texttt{*}, \texttt{str.len}, \texttt{str.indexof}, \texttt{str.++},
+and \texttt{str.substr}.
+
+For \texttt{str.in.re} we had to show that a string literals $s$, is a member of
+a regular expression $r$ if and only if $\textit{Translate}(s)$ is a member of
+$\textit{Translate}{r}$ by induction on regular expressions. For the inductive
+cases of \texttt{str.to.int}, and \texttt{str.from.int} we needed to use the
+fact that the digits were fixed pointwise.
+
+The restriction that \textit{Translate} must fix the digit characters can be
+relaxed if we are translating problem instances that do not use
+\texttt{str.to.int} or \texttt{str.from.int}. Without these operators we can
+show $\textit{Translate}(\eval (e)) = \eval (\textit{Translate}(e))$ directly by
+induction without having to worry about fixing digits pointwise.
+
+\subsection{Reverse}
+\textit{Reverse} does not transform programs that use \texttt{str.replace},
+\texttt{str.indexof}, \texttt{str.to.int}, and \texttt{str.from.int}. These
+operators do not have a well-defined notion of a reverse. The required lemma is
+proved by induction on the rest of the operators similar to proof for
+\textit{Translate}.
+
+We end our discussion on \textit{Reverse} by nothing that although it disallowed
+\texttt{str.replace}, it only did so because it didn't have a natural notion of
+a reverse in the theory we were working with. If we expand our theory to also
+include an operator that replaces the last instance, we can transform problems
+that use \texttt{str.replace}.
+
+\subsection{Multiply}
+\textit{Multiply} does not transform programs that use \texttt{*},
+\texttt{str.indexof}, \texttt{str.to.int}, and \texttt{str.from.int}. These
+operators do not have a well-defined notion of a multiply. The required lemma is
+proved by induction on the rest of the operators similar to the above proofs.
+
+We disallow \texttt{*} for \textit{Multiply} because of problems instances such
+as \texttt{(= 10 (* 2 5))}. A naive \textit{Multiply} by $3$ would transform
+this satisfiable problem into the unsatisfiable \texttt{(= 30 (* 6 15))}.
