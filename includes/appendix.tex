@@ -1,17 +1,16 @@
 \section{Appendix}
 
 In this section, we informally discuss how we established
-equisatisfiability guarantees regarding the transformations provided in
-\fuzzer{}. We assume that the reader is familiar with SMT-LIB
-syntax. The transformations work over boolean, integer, string
-literals and expressions, and regular expressions.
+equisatisfiability guarantees regarding the transformations provided
+in \fuzzer{}.  The transformations work over boolean, integer, string
+literals and expressions, and regular expressions. To shorten our
+proofs, we make the following simplifications:
 
-To shorten our proofs, we make the following simplifications:
 \begin{enumerate}
   \item
     Since many of the operators can be expressed in terms of others,
     our proofs will only consider a subset of the operators. In
-    particular we drop the following:
+    particular we drop the following from consideration:
     \begin{itemize}
       \item \texttt{or} (boolean or)
       \item \texttt{=} for boolean expressions
