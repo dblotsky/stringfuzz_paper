@@ -129,3 +129,23 @@ many hours to run. Nonetheless, to run the full experiments (the results of
 which will be in experiments/), run this command:
 
     ./bin/run_all_experiments
+
+Things to Try
+=============
+
+Feed random problems to CVC4:
+
+    while stringfuzzg -r random-ast -m \
+        | ./solvers/bin/cvc4-latest-release --lang smt2.5 --strings-exp; do
+        sleep 0
+    done
+
+Explore the different transformers and generators:
+
+    stringfuzzg regex --depth 2 --num-regexes 4 --num-terms 2
+    stringfuzzg regex | stringfuzzx fuzz | stringfuzzx multiply --factor 7
+
+Feed problems directly to Z3str3:
+
+    stringfuzzg -r equality --add-infixes --prefix-len 0 --num-terms 8 \
+        ./solvers/bin/z3str3-develop-release smt.string_solver=z3str3 -in
