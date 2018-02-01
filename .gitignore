@@ -6,3 +6,5 @@
 *.log
 *.blg
 _minted-paper
+*.gz
+*.out

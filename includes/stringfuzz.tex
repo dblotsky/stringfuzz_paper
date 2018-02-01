@@ -5,110 +5,101 @@
 
 \fuzzer{} is implemented as a Python package, and comes with several
 executables to generate, transform, and analyze \smtfull{} string and regex
-instances. It can either be installed from source, or from the Python
-PIP package repository.\footnote{The link to the
-source code will be added after double-blind review.}
-\fuzzer{} is organized to be easily extended:
-all generators and transformers are independent Python modules. To demonstrate
-its modularity, we note that the implementations of transformers in \fuzzer{}
-contain \linesPerX{} lines of code on average, whereas the whole fuzzer
-contains \linesInFuzzer{} lines. Its components are also
-implemented as \unix{} ``filters'', to enable easy
+instances. Its components are implemented as \unix{} ``filters'' to enable easy
 integration with other tools (including themselves). For example, the
 outputs of generators can be piped into transformers, and transformers
 can be chained to produce a stream of tuned inputs to a
 solver. \fuzzer{} is composed of the following tools:
 \begin{description}
     \item[\generator{}] \hfill \\
-        This tool generates \smt{} instances. It supports several generators and
-        options that specify its output. Details can be found in
-        table~\ref{tbl:generators}.
+    This tool generates \smt{} instances. It supports several generators and
+    options that specify its output. Details can be found in
+    Table~\ref{tbl:generators}.
     \item[\transformer{}] \hfill \\
-        This tool transforms \smt{}
-        instances. It supports several transformers and options that specify
-        its output and input, which are explained in
-        table~\ref{tbl:transformers}. Note that transformers
-        \textit{Translate} and \textit{Reverse} also preserve
-        satisfiability under certain conditions~\cite{ifaz}.
+    This tool transforms \smt{}
+    instances. It supports several transformers and options that specify
+    its output and input, which are explained in
+    Table~\ref{tbl:transformers}. Note that transformers
+    \textit{Translate} and \textit{Reverse} also preserve
+    satisfiability under certain conditions~\cite{ifaz}.
     \item[\texttt{stringstats}] \hfill \\
-        This tool takes an \smt{}
-        instance as input and outputs its properties: the number of
-        variables/literals, the max/median syntactic depth of expressions, the
-        max/median literal length, etc.
+    This tool takes an \smt{}
+    instance as input and outputs its properties: the number of
+    variables/literals, the max/median syntactic depth of expressions, the
+    max/median literal length, etc.
 \end{description}
+We organized \fuzzer{} to be easily extended. As evidence of our success we note
+that while the whole project 
+contains \linesInFuzzer{} lines of code, it takes an average of 
+\linesPerX{} lines of code to create a transformer. \fuzzer{} can either be 
+installed from source, or from the Python PIP package
+repository.\footnote{The link to the source code will be added after double-blind review.}
 
 \begin{table}[t]
-    \centering
-    \caption{\generator{} generators.}
-    \label{tbl:generators}
-    \begin{tabular}{|l|l|}
-        \hline
-        \textbf{Name}
-            & \textbf{Generated instances have ...}
-            \\ \hline
-        \textit{Concats}
-            & Long concats and optional random extracts.
-            \\ \hline
-        \textit{Lengths}
-            & Many variables (and their concats) with length constraints.
-            \\ \hline
-        \textit{Overlaps}
-            & An expression of the form A.X = X.B.
-            \\ \hline
-        \textit{Equality}
-            & An equality among concats, each with variables or constants.
-            \\ \hline
-        \textit{Regex}
-            & Regexes of varying complexity.
-            \\ \hline
-        \textit{Random-Text}
-            & Random, likely syntactically \textit{in}valid text.
-            \\ \hline
-        \textit{Random-AST}
-            & Random, but semantically \textit{valid} text.
-            \\ \hline
-    \end{tabular}
-
-    \caption{\transformer{} transformers.}
-    \label{tbl:transformers}
-    \begin{tabular}{|l|l|}
-        \hline
-        \textbf{Name}
-            & \textbf{The transformer ...}
-            \\ \hline
-        \textit{Fuzz}
-            & Randomly replaces literals and operators with similar ones.
-            \\ \hline
-        \textit{Graft}
-            & For each sort, swaps a random non-leaf node with a leaf node.
-            \\ \hline
-        \textit{Multiply}
-            & Multiplies each number by N, and repeats each character N times.
-            \\ \hline
-        \textit{Nop}
-            & Doesn't transform (but can translate \smtfull{}).
-            \\ \hline
-        \textit{Reverse}
-            & Reverses all string literals and concat arguments.
-            \\ \hline
-        \textit{Rotate}
-            & Performs a random syntax tree rotation on two concats.
-            \\ \hline
-        \textit{Translate}
-            & Maps every character X to a different character Y.
-            \\ \hline
-        \textit{Unprintable}
-            & Randomly replaces all characters in literals with unprintable ones.
-            \\ \hline
-    \end{tabular}
+    \caption{\fuzzer{} built-in (a) generators and (b) transformers.}
+    \begin{subtable}{1\textwidth}
+        \centering
+        \caption{\generator{} built-in generators.}
+        \label{tbl:generators}
+        \begin{tabular}{ l l }
+            \toprule
+            \textbf{Name}
+            & \textbf{Generates instances that have ...} \\
+            \midrule
+            \textit{Concats}
+            & Long concats and optional random extracts. \\
+            \textit{Lengths}
+            & Many variables (and their concats) with length constraints. \\
+            \textit{Overlaps}
+            & An expression of the form A.X = X.B. \\
+            \textit{Equality}
+            & An equality among concats, each with variables or constants. \\
+            \textit{Regex}
+            & Regexes of varying complexity. \\
+            \textit{Random-Text}
+            & Random, likely syntactically \textit{in}valid text. \\
+            \textit{Random-AST}
+            & Random, but semantically \textit{valid} text. \\
+            \bottomrule
+        \end{tabular}
+    \end{subtable}
+    \begin{subtable}{1\textwidth}
+        \centering
+        \caption{\transformer{} built-in transformers.}
+        \label{tbl:transformers}
+        \begin{tabular}{l l}
+            \toprule
+            \textbf{Name}
+            & \textbf{The transformer ...} \\
+            \midrule
+            \textit{Fuzz}
+            & Replaces literals and operators with similar ones.\\
+            \textit{Graft}
+            & Randomly swaps non-leaf nodes with leaf nodes.\\
+            \textit{Multiply}\footnote{Satisfiable inputs 
+            will produce satisfiable outputs (see Appendix for proof).}
+            & Multiplies integers and repeats strings by N.\\
+            \textit{Nop}
+            & Does nothing (can translate between \smtfull{}).\\
+            \textit{Reverse}\footnote{Input and output 
+            instances will be equisatisfiable (see Appendix for proof).}
+            & Reverses all string literals and concat arguments.\\
+            \textit{Rotate}
+            & Rotates compatible nodes in syntax tree.\\
+            \textit{Translate}\footnotemark[4]
+            & Permutes the alphabet.\\
+            \textit{Unprintable}
+            & Replaces characters in literals with unprintable ones.\\
+            \bottomrule
+        \end{tabular}
+    \end{subtable}
 \end{table}
 
 \subsubsection{Regex Fuzzing Capabilities}
-
 \fuzzer{} can generate
-and transform instances with regular expression constraints. The
+and transform instances with regular expression constraints. For example, the
 command \texttt{stringfuzzg regex} invokes the regex instance
-generator. It generates a instance of the form:
+generator and produces an instance of the form:
 \begin{align*}
     & \texttt{(assert (str.in.re X}\; R_0\; \texttt{))} \\
     & \texttt{(assert (str.in.re X}\; R_n\; \texttt{))}* \\
@@ -121,40 +112,39 @@ instance is a set of one or more regex constraints on a single
 variable, with optional maximum and minimum length constraints. The
 regex constraints $R$ are each of the form:
 \begin{align*}
-  & \texttt{(re.++}\; T_0\; \texttt{(re.++}\; T_1\;
-  \texttt{...}\; \texttt{(re.++}\; T_{n-1}\; T_n\; \texttt{))}
+    & \texttt{(re.++}\; T_0\; \texttt{(re.++}\; T_1\;
+    \texttt{...}\; \texttt{(re.++}\; T_{n-1}\; T_n\; \texttt{))}
 \end{align*}
 
 and each $T_i$ is a recursive term of the form:
 \begin{align*}
-  & \texttt{(re.*}\; T_{i_j}\; \texttt{) | (re.+}\; T_{i_j}\;
-  \texttt{) | (re.union}\; T_{i_{j_1}}\; T_{i_{j_2}}\; \texttt{)}
+    & \texttt{(re.*}\; T_{i_j}\; \texttt{) | (re.+}\; T_{i_j}\;
+    \texttt{) | (re.union}\; T_{i_{j_1}}\; T_{i_{j_2}}\; \texttt{)}
 \end{align*}
 
 where $j$ is the specified depth of recursion. Terms at depth 0 are
 regex constants. Informally, this form describes a concatenation of
 regex terms, where each term is a random nested regex operator (chosen from
 regex Kleene star, repetition, and union), up to a specified depth,
-terminating in a regex literal. Below are three example regexes
+terminating in a regex literal. Below are three example regex instances
 (separated by spaces) of depth 2 produced by this scheme:
 \begin{align*}
-  & ((\texttt{a}|\texttt{b})|(\texttt{cc})+)\quad\quad
-  ((\texttt{ddd})*)+\quad\quad ((\texttt{ee})+|(\texttt{fff})*)
+    & ((\texttt{a}|\texttt{b})|(\texttt{cc})+)\quad\quad
+    ((\texttt{ddd})*)+\quad\quad ((\texttt{ee})+|(\texttt{fff})*)
 \end{align*}
 
-\fuzzer{} can also transform the instances it generates. All of the
-transformers in \transformer{} can operate on regex terms. They can
-multiply and permute regex literals (e.g. \textit{Reverse},
-\textit{Multiply}, \textit{Translate}), randomly replace regex
-operators (e.g. \textit{Fuzz}), and manipulate the syntax tree
-(e.g. \textit{Graft}, \textit{Rotate}).
+\fuzzer{} can also transform problem instances.
+This is done by manipulating parsed syntax trees.
+By default most of the built-in transformers 
+only guarantee well-formedness, however,
+some can even guarantee equisatisfiability. Table~\ref{tbl:transformers} 
+lists the built-in transformers and notes these guarantees.
 
 \subsubsection{Example Use Case}
-
-\fuzzer{} can be used to generate benchmark suites in a batch mode, but also
-in an online randomized fashion for exploratory debugging. For example,
-\fuzzer{} can be invoked as follows to feed random instances to \cvc{} until it
-returns an error:
+In Sect.~\ref{sec:suites} we use \fuzzer{} to generate benchmark suites in a batch mode.
+We can also use \fuzzer{} for on-line exploratory debugging. 
+For example, the script below repeatedly feeds random \fuzzer{} 
+instances to \cvc{} until the solver produces an error:
 {\scriptsize\begin{verbatim}
 while stringfuzzg -r random-ast -m \
     | tee instance.smt25 | cvc4 --lang smt2.5 --tlimit=5000 --strings-exp; do

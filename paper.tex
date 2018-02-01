@@ -1,5 +1,7 @@
 \documentclass{llncs}
 
+\usepackage{booktabs}
+\usepackage{footmisc}
 \usepackage{amsmath}
 \usepackage{url}
 \usepackage{makeidx}
@@ -12,8 +14,14 @@
 \usepackage{varwidth}
 \usepackage{enumitem}
 
+
 \usepackage{subcaption}
 \captionsetup{compatibility=false}
+
+% Footnotes is table
+\usepackage{footnote}
+\makesavenoteenv{tabular}
+\makesavenoteenv{table}
 
 % define dimensions
 \setlength{\pdfpageheight}{\paperheight}
