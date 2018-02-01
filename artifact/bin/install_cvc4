@@ -1,0 +1,108 @@
+#!/bin/bash
+
+# stop on errors
+set -e
+
+# constants
+CVC4_ZIP=packages/cvc4-1.4.1-prerelease-2016-01-03.tar.gz
+CVC4_URL=http://cvc4.cs.stanford.edu/downloads/builds/src/latest-stable.tar.gz
+CVC4_BUILD_DEFAULT=release
+
+MFLAGS=-j7
+
+TEAL="\033[36m"
+CLEAR="\033[m"
+RED="\033[31m"
+
+# functions
+function usage() {
+    echo "Usage:" $0 "install_dir revision [release|trace]"
+}
+
+function log() {
+    echo -e $TEAL$@$CLEAR
+}
+
+function main() {
+
+    # check args
+    if [ -z "$1" ]; then
+        usage
+        exit 1
+    fi
+
+    # get args
+    install_dir=$1
+
+    if [ -z "$2" ]; then
+        checkout_rev=$CVC4_REV_DEFAULT
+    else
+        checkout_rev=$2
+    fi
+
+    if [ -z "$3" ]; then
+        build=$CVC4_BUILD_DEFAULT
+    else
+        build=$3
+    fi
+
+    if [ "$build" == "trace" ]; then
+        true
+    elif [ "$build" == "release" ]; then
+        true
+    else
+        usage
+        exit 1
+    fi
+
+    # download source
+    log "downloading cvc4 source"
+    if [ -f "$CVC4_ZIP" ]; then
+        log "already downloaded"
+    else
+        curl $CVC4_URL > $CVC4_ZIP
+    fi
+
+    # unzip source
+    log "unzipping cvc4 in $RED$install_dir$CLEAR"
+    if [ -d "$install_dir" ]; then
+        log "already unzipped"
+    else
+        tar -xvzf $CVC4_ZIP
+        mv ./cvc4-1.5 $install_dir
+    fi
+
+    # build source
+    pushd $install_dir
+
+        # get absolute path to antlr dir
+        ABSOLUTE_CWD=$(pwd)
+        ANTLR_DIR=$ABSOLUTE_CWD/antlr-3.4
+        ANTLR_BIN=$ANTLR_DIR/bin/antlr3
+
+        # install antlr
+        log "installing antlr"
+        if [ -e "$ANTLR_BIN" ]; then
+            log "already installed"
+        else
+            ./contrib/get-antlr-3.4
+        fi
+
+        # install dependencies
+        sudo apt-get install libgmp3-dev libboost-all-dev
+
+        # get config args
+        if [ "$build" == "trace" ]; then
+            config_args="--with-build=debug --enable-tracing"
+        elif [ "$build" == "release" ]; then
+            config_args=
+        fi
+
+        # build cvc4
+        log "installing cvc4"
+        ./configure --with-antlr-dir=$ANTLR_DIR ANTLR=$ANTLR_BIN --enable-static-binary $config_args
+        make $MFLAGS
+    popd
+}
+
+main $@

@@ -1,0 +1,113 @@
+#!/bin/bash
+
+# stop on errors
+set -e
+
+# constants
+Z3STR2_REPO=https://github.com/z3str/Z3-str.git
+Z3STR2_REV=ec39964ad534d7cd604f27fc88da0221306e3dbf
+
+Z3_REPO=https://github.com/Z3Prover/z3.git
+Z3_REV=9823ee3b44815285fa028e9f1e5f300789ac9874
+
+CXX=g++-4.9
+CC=gcc-4.9
+
+MFLAGS=-j7
+
+TEAL="\033[36m"
+CLEAR="\033[m"
+RED="\033[31m"
+
+# functions
+function usage() {
+    echo "Usage:" $0 "install_dir"
+}
+
+function log() {
+    echo -e $TEAL$@$CLEAR
+}
+
+function checkout() {
+    local root=$1
+    local rev=$2
+
+    pushd $root
+    git fetch --all --prune
+    git checkout $rev
+    git reset --hard $rev
+    git pull || true
+    popd
+}
+
+function main() {
+
+    # check args
+    if [ -z "$1" ]; then
+        usage
+        exit 1
+    fi
+
+    # get args
+    install_dir=$1
+    z3_install_dir=$install_dir/z3
+
+    # get z3str2
+    log "cloning z3str2 into $RED$install_dir$CLEAR"
+    if [ ! -d "$install_dir" ]; then
+        git clone $Z3STR2_REPO $install_dir
+    else
+        log "already cloned"
+    fi
+
+    log "checking out Z3str2 revision $RED$Z3STR2_REV$CLEAR"
+    checkout $install_dir $Z3STR2_REV
+
+    # get z3
+    log "cloning z3 into $RED$z3_install_dir"
+    if [ ! -d "$z3_install_dir" ]; then
+        git clone $Z3_REPO $z3_install_dir
+    else
+        log "already cloned"
+    fi
+
+    log "checking out z3 revision $RED$Z3_REV$CLEAR"
+    checkout $z3_install_dir $Z3_REV
+
+    # convert and apply patch
+    log "patching z3"
+    dos2unix < $install_dir/z3.patch > $z3_install_dir/z3str2.patch
+    pushd $z3_install_dir
+    patch -Np0 < z3str2.patch || true
+    popd
+
+    # build z3
+    log "building z3"
+    pushd $z3_install_dir
+    autoconf
+    CXX=$CXX CC=$CC ./configure
+    CXX=$CXX CC=$CC make $MFLAGS a
+    popd
+
+    log "building z3str2"
+    pushd $install_dir
+
+    # set compiler and Z3 path
+    # NOTE:
+    #      using '~' as sed's regex delimiter because CXX might have slashes
+    sed -i -e 's~^Z3_path = $~Z3_path = "z3"~' Makefile
+    sed -i -e 's~^   CXX = g++-5$~  CXX = '$CXX'~' Makefile
+
+    # compile
+    make $MFLAGS
+
+    # set z3str2 path in wrapper file
+    # NOTE:
+    #      using '~' as sed's regex delimiter because PWD might have slashes
+    sed -i -e 's~^solver = ""$~solver = "'$PWD/str'"~' Z3-str.py
+    chmod +x Z3-str.py
+
+    popd
+}
+
+main $@

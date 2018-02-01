@@ -1,0 +1,3 @@
+#!/bin/sh
+
+./bin/run_one_experiment ./instances ./sample-experiments concats-small

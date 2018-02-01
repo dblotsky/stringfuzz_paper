@@ -8,3 +8,7 @@
 _minted-paper
 *.gz
 *.out
+artifact/stringfuzz
+*.ova
+data/traces
+notes

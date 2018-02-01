@@ -1,0 +1,75 @@
+#!/bin/sh
+
+instances_dir=$1
+experiment_dir=$2
+suite=$3
+
+RESULTS_DIR=$experiment_dir/results
+GRAPHS_DIR=$experiment_dir/graphs
+LISTS_DIR=$experiment_dir/problem_lists
+
+TIMEOUT=15
+
+# create directories
+mkdir -p $RESULTS_DIR
+mkdir -p $GRAPHS_DIR/versus
+mkdir -p $GRAPHS_DIR/cactus
+mkdir -p $LISTS_DIR
+
+# generate problem lists
+find $instances_dir/$suite -name *.smt25 > $LISTS_DIR/$suite-smt25.csv
+find $instances_dir/$suite -name *.smt20 > $LISTS_DIR/$suite-smt20.csv
+
+# run solvers
+bin/timesolver.py \
+        norn \
+        "solvers/bin/norn  " \
+        --verbose \
+        --timeout $TIMEOUT \
+        --problem-list $LISTS_DIR/$suite-smt25.csv \
+        > $RESULTS_DIR/$suite-norn.csv
+bin/csv2json.py < $RESULTS_DIR/$suite-norn.csv > $RESULTS_DIR/$suite-norn.json
+
+bin/timesolver.py \
+        cvc4-latest-release \
+        "solvers/bin/cvc4-latest-release --strings-exp --lang smt2  < " \
+        --verbose \
+        --timeout $TIMEOUT \
+        --problem-list $LISTS_DIR/$suite-smt25.csv \
+        > $RESULTS_DIR/$suite-cvc4.csv
+bin/csv2json.py < $RESULTS_DIR/$suite-cvc4.csv > $RESULTS_DIR/$suite-cvc4.json
+
+# bin/timesolver.py \
+#         z3str2 \
+#         "solvers/bin/Z3-str.py -f  " \
+#         --verbose \
+#         --timeout $TIMEOUT \
+#         --problem-list $LISTS_DIR/$suite-smt20.csv \
+#         > $RESULTS_DIR/$suite-z3str2.csv
+# bin/csv2json.py < $RESULTS_DIR/$suite-z3str2.csv > $RESULTS_DIR/$suite-z3str2.json
+
+bin/timesolver.py \
+        z3str3-develop-release \
+        "solvers/bin/z3str3-develop-release smt.string_solver=z3str3  " \
+        --verbose \
+        --timeout $TIMEOUT \
+        --problem-list $LISTS_DIR/$suite-smt25.csv \
+        > $RESULTS_DIR/$suite-z3str3.csv
+bin/csv2json.py < $RESULTS_DIR/$suite-z3str3.csv > $RESULTS_DIR/$suite-z3str3.json
+
+# generate graphs
+bin/json2cactus.py $suite $TIMEOUT $RESULTS_DIR/$suite-norn.json $RESULTS_DIR/$suite-cvc4.json $RESULTS_DIR/$suite-z3str2.json $RESULTS_DIR/$suite-z3str3.json > $GRAPHS_DIR/cactus/$suite-cactus.png
+bin/json2compare.py $suite $RESULTS_DIR/$suite-cvc4.json $RESULTS_DIR/$suite-z3str3.json > $GRAPHS_DIR/versus/$suite-cvc4-vs-z3str3.png
+bin/json2compare.py $suite $RESULTS_DIR/$suite-cvc4.json $RESULTS_DIR/$suite-z3str2.json > $GRAPHS_DIR/versus/$suite-cvc4-vs-z3str2.png
+bin/json2compare.py $suite $RESULTS_DIR/$suite-cvc4.json $RESULTS_DIR/$suite-norn.json > $GRAPHS_DIR/versus/$suite-cvc4-vs-norn.png
+bin/json2compare.py $suite $RESULTS_DIR/$suite-z3str2.json $RESULTS_DIR/$suite-cvc4.json > $GRAPHS_DIR/versus/$suite-z3str2-vs-cvc4.png
+bin/json2compare.py $suite $RESULTS_DIR/$suite-z3str2.json $RESULTS_DIR/$suite-z3str3.json > $GRAPHS_DIR/versus/$suite-z3str2-vs-z3str3.png
+bin/json2compare.py $suite $RESULTS_DIR/$suite-z3str2.json $RESULTS_DIR/$suite-norn.json > $GRAPHS_DIR/versus/$suite-z3str2-vs-norn.png
+bin/json2compare.py $suite $RESULTS_DIR/$suite-z3str3.json $RESULTS_DIR/$suite-cvc4.json > $GRAPHS_DIR/versus/$suite-z3str3-vs-cvc4.png
+bin/json2compare.py $suite $RESULTS_DIR/$suite-z3str3.json $RESULTS_DIR/$suite-z3str2.json > $GRAPHS_DIR/versus/$suite-z3str3-vs-z3str2.png
+bin/json2compare.py $suite $RESULTS_DIR/$suite-z3str3.json $RESULTS_DIR/$suite-norn.json > $GRAPHS_DIR/versus/$suite-z3str3-vs-norn.png
+bin/json2compare.py $suite $RESULTS_DIR/$suite-norn.json $RESULTS_DIR/$suite-cvc4.json > $GRAPHS_DIR/versus/$suite-norn-vs-cvc4.png
+bin/json2compare.py $suite $RESULTS_DIR/$suite-norn.json $RESULTS_DIR/$suite-z3str2.json > $GRAPHS_DIR/versus/$suite-norn-vs-z3str2.png
+bin/json2compare.py $suite $RESULTS_DIR/$suite-norn.json $RESULTS_DIR/$suite-z3str3.json > $GRAPHS_DIR/versus/$suite-norn-vs-z3str3.png
+
+echo "done gathering data for $suite"

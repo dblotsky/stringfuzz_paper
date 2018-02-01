@@ -1,0 +1,101 @@
+#!/bin/bash
+
+# stop on errors
+set -e
+
+# constants
+Z3STR3_REPO=https://github.com/mtrberzi/z3
+Z3STR3_REV_DEFAULT=develop
+Z3STR3_BUILD_DEFAULT=release
+
+MFLAGS=-j7
+
+TEAL="\033[36m"
+CLEAR="\033[m"
+RED="\033[31m"
+
+# functions
+function usage() {
+    echo "Usage:" $0 "install_dir revision [release|trace]"
+}
+
+function log() {
+    echo -e $TEAL$@$CLEAR
+}
+
+function checkout() {
+    local root=$1
+    local rev=$2
+
+    pushd $root
+    git fetch --all --prune
+    git checkout $rev
+    git reset --hard $rev
+    git pull || true
+    popd
+}
+
+function main() {
+
+    # check args
+    if [ -z "$1" ]; then
+        usage
+        exit 1
+    fi
+
+    # get args
+    install_dir=$1
+
+    if [ -z "$2" ]; then
+        checkout_rev=$Z3STR3_REV_DEFAULT
+    else
+        checkout_rev=$2
+    fi
+
+    if [ -z "$3" ]; then
+        build=$Z3STR3_BUILD_DEFAULT
+    else
+        build=$3
+    fi
+
+    if [ "$build" == "trace" ]; then
+        true
+    elif [ "$build" == "release" ]; then
+        true
+    else
+        usage
+        exit 1
+    fi
+
+    # clone code
+    log "cloning z3str3 into $RED$install_dir$CLEAR"
+    if [ ! -d "$install_dir" ]; then
+        git clone $Z3STR3_REPO $install_dir
+    else
+        log "already cloned"
+    fi
+
+    log "checking out revision $RED$checkout_rev$CLEAR"
+    checkout $install_dir $checkout_rev
+
+    # build
+    log "building z3str3"
+    pushd $install_dir
+
+        # erase old build directory
+        rm -rf build
+
+        if [ "$build" == "trace" ]; then
+            python scripts/mk_make.py --trace
+            # python scripts/mk_make.py --trace --debug
+        elif [ "$build" == "release" ]; then
+            python scripts/mk_make.py
+        fi
+
+        pushd build
+            make $MFLAGS
+        popd
+    popd
+}
+
+main $@

@@ -1,0 +1,23 @@
+#!/bin/sh
+
+solvers_dir=./solvers
+bin_dir=$solvers_dir/bin
+
+mkdir -p $solvers_dir
+mkdir -p $bin_dir
+
+echo "\033[32m"installing norn"\033[m"
+bin/install_norn $solvers_dir/norn
+ln -s -f $PWD/$solvers_dir/norn/norn $bin_dir/norn
+
+echo "\033[32m"installing cvc4"\033[m"
+bin/install_cvc4 $solvers_dir/cvc4 latest release
+cp $solvers_dir/cvc4/builds/bin/cvc4 $bin_dir/cvc4-latest-release
+
+echo "\033[32m"installing z3str2"\033[m"
+bin/install_z3str2 $solvers_dir/z3str2
+cp $solvers_dir/z3str2/Z3-str.py $bin_dir/Z3-str.py
+
+echo "\033[32m"installing z3str3"\033[m"
+bin/install_z3str3 $solvers_dir/z3str3 develop release
+cp $solvers_dir/z3str3/build/z3 $bin_dir/z3str3-develop-release

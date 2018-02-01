@@ -6,6 +6,8 @@ EXPERIMENT_SUITE_NAMES = \
 	concats-big \
 	different-prefix
 
+ROPTIONS = --recursive --verbose --executability --times --perms
+
 # paper config
 PAPER          = paper.pdf
 INCLUDES_DIR   = includes
@@ -73,6 +75,25 @@ re-graphs:
 	$(RM) -r $(GRAPHS_DIR)
 	$(RM) -r ../../experiment/results
 	$(MAKE) graphs
+
+# artifact-specific targets
+login:
+	ssh -p 2223 cav@localhost
+
+artifact/stringfuzz:
+	git clone https://github.com/dblotsky/stringfuzz artifact/stringfuzz
+
+package: artifact/stringfuzz
+	$(RM) -r artifact/stringfuzz/.git
+	$(RM) artifact/stringfuzz/.gitignore
+
+sync: package
+	rsync $(ROPTIONS) -e "ssh -p 2223" ./artifact/ cav@localhost:/home/cav/artifact/
+
+deploy: sync
+	ssh -p 2223 cav@localhost -t "cd /home/cav/artifact/stringfuzz && sudo make install"
+	ssh -p 2223 cav@localhost -t "cd /home/cav/artifact && rm .DS_Store"
+	ssh -p 2223 cav@localhost -t "cd /home/cav/artifact && ./bin/install_solvers"
 
 # real targets
 $(TRACES_DIR) $(GRAPHS_DIR) $(PROBLEM_DIR):

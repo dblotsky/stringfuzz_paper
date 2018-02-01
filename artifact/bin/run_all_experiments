@@ -1,0 +1,5 @@
+#!/bin/sh
+
+for suite in `ls instances`; do
+    ./bin/run_one_experiment ./instances ./experiments $suite
+done

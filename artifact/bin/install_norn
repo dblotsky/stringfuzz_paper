@@ -1,0 +1,48 @@
+#!/bin/bash
+
+# stop on errors
+set -e
+
+# constants
+NORN_URL=http://user.it.uu.se/~jarst116/norn/norn-1.0.1.tar.gz
+NORN_ZIP=`pwd`/packages/norn.tar.gz
+
+MFLAGS=-j7
+
+TEAL="\033[36m"
+CLEAR="\033[m"
+RED="\033[31m"
+
+# functions
+function usage() {
+    echo "Usage:" $0 "install_dir"
+}
+
+function log() {
+    echo -e $TEAL$@$CLEAR
+}
+
+function main() {
+
+    # check args
+    if [ -z "$1" ]; then
+        usage
+        exit 1
+    fi
+
+    # get args
+    install_dir=$1
+
+    log "downloading and unzipping norn in $RED$install_dir$CLEAR"
+    if [ ! -d "$install_dir" ]; then
+        mkdir $install_dir
+        pushd $install_dir/..
+        # curl $NORN_URL > norn.tar.gz
+        tar -xvzf $NORN_ZIP
+        popd
+    else
+        log "already downloaded"
+    fi
+}
+
+main $@
