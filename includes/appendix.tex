@@ -1,7 +1,7 @@
 \section{Appendix}
 
-In this section, we will prove some of the guarantees that transformations
-provide in \fuzzer{}.
+In this section, we will discuss how we proved equisatisfiability guarantees
+that transformations provide in \fuzzer{}.
 
 We assume that the reader is familiar with SMT-LIB syntax. The transformations
 work over boolean, integer, string literals and expressions, and regular
@@ -14,12 +14,12 @@ We will make the folowing simplifications for our proofs:
     proofs will only consider a subset of the operators. In particular we will
     drop the following:
     \begin{itemize}
-      \item \texttt{|} (boolean or)
+      \item \texttt{||} (boolean or)
       \item \texttt{=} for boolean expressions
       \item \texttt{<=}, \texttt{>}, \texttt{>=}
       \item \texttt{str.prefixof}, \texttt{str.suffixof}, \texttt{str.at}
       \item \texttt{str.contains}
-      \item \texttt{re.range}
+      \item \texttt{re.range}, \texttt{re.+}, \texttt{re.allchar}, \texttt{re.all}
     \end{itemize}
 
   \item
@@ -40,7 +40,8 @@ literals of the corresponding type.
 \begin{definition}
   A \emph{program} $P$ satisfies a model $m$ if $P$ evaluates to \texttt{true}
 under the model $m$. The function $\eval (P)$ evaluates a program instance
-under a model; the specific model used is left implicit.
+under a model; the specific model used is left implicit as it is clear from
+context.
 \end{definition}
 
 The proofs all follow a very similar structure. For each transformation
@@ -65,4 +66,26 @@ problems. This can be seen in the problem instance $y<x<y+1$ which is UNSAT, but
 multiplying by 2 transforms the problem into $y<x<y+2$ which is SAT.
 
 \subsection{Translate}
-We now prove that translate transforms programs into equisatisfiable programs.
+We now prove that translate transforms programs into equisatisfiable
+programs. From above, we only need to show that for every expression $e$,
+$\textit{Translate}(\eval (e)) = \eval (\textit{Translate}(e))$. For now, we
+assume that \textit{Translate} fixes the digit characters pointwise and we prove
+the stronger fact that $\textit{Translate}$ also fixes the digits pointwise in
+any string expression.
+
+It is clear that for literals $l$, $\textit{Translate}(\eval (l)) = \eval
+(\textit{Translate}(l))$. Then, assuming that the it holds for smaller
+expressions, we show that it holds larger expressions $e$ created using the
+constructs \texttt{and}, \texttt{=} (for strings and integers), \texttt{+},
+\texttt{-}, \texttt{*}, \texttt{str.len}, \texttt{str.indexof}, \texttt{str.++},
+and \texttt{str.substr}.
+
+For \texttt{str.in.re} we had to show that a string literals $s$, is a member of
+a regular expression $r$ if and only if $\textit{Translate}(s)$ is a member of
+$\textit{Translate}{r}$ by induction on regular expressions. For the inductive
+cases of \texttt{str.to.int}, and \texttt{str.from.int} we needed to use the
+fact that the digits were fixed pointwise.
+
+The restriction that \texttt{Translate} must fix the digit characters can be
+relaxed if we are translaing problem instances that do not use
+\texttt{str.to.int} or \texttt{str.from.int}.
