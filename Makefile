@@ -93,7 +93,6 @@ sync: package
 deploy: sync
 	ssh -p 2223 cav@localhost -t "cd /home/cav/artifact/stringfuzz && sudo make install"
 	ssh -p 2223 cav@localhost -t "cd /home/cav/artifact && rm .DS_Store"
-	ssh -p 2223 cav@localhost -t "cd /home/cav/artifact && ./bin/install_solvers"
 
 # real targets
 $(TRACES_DIR) $(GRAPHS_DIR) $(PROBLEM_DIR):
