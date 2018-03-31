@@ -1,0 +1,136 @@
+----------------------- REVIEW 1 ---------------------
+PAPER: 21
+TITLE: StringFuzz: A Fuzzer for String Solvers
+AUTHORS: Dmitry Blotsky, Federico Mora, Murphy Berzish, Yunhui Zheng, Ifaz Kabir and Vijay Ganesh
+
+Overall evaluation: 1 (weak accept)
+
+----------- Overall evaluation -----------
+The authors present StringFuzz: a fuzzer for string SMT solvers. StringFuzz can be used to generate new instance suites and randomly modify existing ones (in a way which preserves satisfiability). The tool is inteded to help the developers of the solvers to test the correctness and analyze performance issues.
+
+The main usage of StringFuzz, reported in the paper, is finding, analyzing and solving performance issues in Z3str3. In addition, the authors report about instances which are very difficult for CVC, but easy for other solvers. Finding and fixing performance issues is indeed very useful. However, in [8], critical bugs were found using their fuzzer. Were you able to find any bugs in existing solvers with your tool? Have you tried to? Is the tool more suitable for performance analysis, rather than correctness testing?
+
+I am not sure how useful the modified industrial sets are... Is it intended for correctness testing or performance tuning? Solvers are expected to take advantage of structural properties of industrial formulas. Destroying such properties might lead the solvers astray, but I am not sure if one can learn anything from such experiments...
+
+----------------------- REVIEW 2 ---------------------
+PAPER: 21
+TITLE: StringFuzz: A Fuzzer for String Solvers
+AUTHORS: Dmitry Blotsky, Federico Mora, Murphy Berzish, Yunhui Zheng, Ifaz Kabir and Vijay Ganesh
+
+Overall evaluation: 1 (weak accept)
+
+----------- Overall evaluation -----------
+The paper presents StringFuzz: a tool generating and transforming queries for string solvers with the aim of checking their stability and efficiency. The tool comes with a number of generators (generating concatenation constraints, length constraints, equality constraints, etc.) and a number of transformers (reversion, rotation, permutation, etc.). Moreover, the tool is designed such that new generators and transformers can be easily added. StringFuzz was used to generate several benchmark suites on which the CVC4 and Z3str3 solvers were tested. Based on experiments with these benchmark suites, several possibilities to optimize Z3Str3 have been identified.
+
+Although StringFuzz may be quite useful for improving the quality of string solvers already in its present form, both the entire framework as well as the generators and transforms seem to be still relatively simple.  As for the framework, it is a pity that it does not offer some more advanced strategy for generating new queries than random generation. For instance, I would expect some form of evolutionary algorithms to be supported as is often the case in various fuzzers. As for the generators/transformers, it would be nice to support some more complex operations on strings, such as different kinds of replacements or transductions.
+
+Further, the description of some of the generators and transformers is very brief, restricted to one line in a table. Based on that, it is difficult to see what exactly they are doing. It would be better to describe them in more detail even for the price of reducing some other part of the paper.
+
+Minor comments
+
+1. Page 3, last two lines above the footnotes: (a) there should be no indentation there, (b) RegEx is not defined.
+2. Page 4, the first paragraph: (a) two cases of wrong indentation, (b) not clear enough: in particular, can concatenation appear lower in the terms too?
+
+----------------------- REVIEW 3 ---------------------
+PAPER: 21
+TITLE: StringFuzz: A Fuzzer for String Solvers
+AUTHORS: Dmitry Blotsky, Federico Mora, Murphy Berzish, Yunhui Zheng, Ifaz Kabir and Vijay Ganesh
+
+Overall evaluation: 2 (accept)
+
+----------- Overall evaluation -----------
+This paper describes a fuzzer that generates SMT string solver instances. It can be used to generate a special type of string formulas or to randomly generate new sets of benchmarks. The paper also introduces particular sets of benchmarks of so generated formulas. Finally, the paper also shows how different solvers have different bottlenecks in certain categories of benchmarks and how this can be used to improve their performance via new heuristics.
+
+The paper is well written, structured clearly and easy to follow. It provides a tool to generate benchmarks plus a set of precompiled benchmarks. Overall, this tool could help new tool developers to find new performance pitfalls. It would be nice to consider extending the fuzzing to cover other theories as well, such as bit-vectors.
+
+----------------------- REVIEW 4 ---------------------
+PAPER: 21
+TITLE: StringFuzz: A Fuzzer for String Solvers
+AUTHORS: Dmitry Blotsky, Federico Mora, Murphy Berzish, Yunhui Zheng, Ifaz Kabir and Vijay Ganesh
+
+Overall evaluation: -1 (weak reject)
+
+----------- Overall evaluation -----------
+This paper describes a tool for generating random or transformed inputs to SMT solvers over the theory of strings with regular expressions.  The tool is highly relevant to the CAV community and to SMT developers in particular.
+
+In fact, I very much like the work and the paper, except for one glaring omission.  Section 3 describes a suite of over 10000 string benchmarks.  Section 4 promises an experimental evaluation, but presents results on only a tiny fraction of these benchmarks, including none of the industrial benchmarks.  There is no explanation as to why so few results are reported.  I think that the paper is pretty weak without a full set of experimental results on the new benchmarks.
+
+Other than that, here are a few more minor issues:
+
+1. The theory of strings is not yet an official theory of SMT-LIB.  How did this affect your work?  Did you have to adjust the fuzzer for different tools, or do the tools generally agree on an input syntax?
+
+2. The subsection on Regex generating capabilities is rather informal and quite unclear.  Are you mixing SMT-LIB syntax with regular expression syntax at the meta-level?  It's very confusing.
+
+3. You mention two data sets, "Concats-Big" and "Concats-Extracts-Small", both of which are not listed in Table 2a.  Where do these data sets come from?
+
+----------------------- REVIEW 5 ---------------------
+PAPER: 21
+TITLE: StringFuzz: A Fuzzer for String Solvers
+AUTHORS: Dmitry Blotsky, Federico Mora, Murphy Berzish, Yunhui Zheng, Ifaz Kabir and Vijay Ganesh
+
+Overall evaluation: 2 (accept)
+
+----------- Overall evaluation -----------
+Coverage (exceeds expectations / 4):
+
+The artifact and its instructions follow the paper, and thus cover the breadth of topics in the paper. Each of the binaries for the tool referenced in the submission are available.
+
+The experiments are able to be run using several scripts on the VM. Since the experiments take many hours to run, several sample scripts are giving to run smaller experiments. I found that these scripts also took quite some time to run, but appear to be making appropriate calls to the string solvers, and even automatically generate plots upon completion.
+
+
+Instructions (exceeds expectations / 4):
+
+The instructions were accurate with regard to the directory structure and how to use the tools and run the sample experiments.
+
+
+Quality (exceeds expectations / 4):
+
+The source code tree is available, the instructions point to several interesting files in the implementation. As the paper claims, the code is fairly straightforward and understandable. The LOC claimed in the paper seems reasonable.
+
+The use of the stringfuzz tool was easy. I found several use cases of it very interesting, including its use as "exploratory debugger", feeding problems to a string solver until it finds an error. I ran this script:
+
+   while stringfuzzg -r random-ast -m \
+       | ./solvers/bin/cvc4-latest-release --tlimit=5000 --lang smt2.5 --strings-exp; do
+       sleep 0
+   done
+
+but did not see any errors after 30 minutes or so. It would have been nice to say if the stringfuzz tool was able to find any crashing inputs for the string solvers. Regardless, the results on finding inputs where each respective solver performs poorly is highly interesting.
+
+As a minor comment, it would have been helpful to have some of the suggested use cases made into scripts that were preloaded on the VM.
+
+Overall, I think this is a high quality artifact and potentially a very useful tool.
+
+----------------------- REVIEW 6 ---------------------
+PAPER: 21
+TITLE: StringFuzz: A Fuzzer for String Solvers
+AUTHORS: Dmitry Blotsky, Federico Mora, Murphy Berzish, Yunhui Zheng, Ifaz Kabir and Vijay Ganesh
+
+Overall evaluation: 2 (accept)
+
+----------- Overall evaluation -----------
+The artefact, StringFuzz, is a fuzzer for string solvers,
+which creates and fuzzes input problems in the SMT-LIB 2.0 and 2.5 format.
+The artefact comes, as required, as a VirtualBox image and
+consists of the actual program written in Python3,
+supporting scripts, pre-generated problem instances,
+pre-compiled solvers for use in the experiments,
+and a computed output from a sample experiment.
+
+Discovering the artefact was a pleasant experience.
+The attached readme file clearly explains all the content,
+including how to reproduce the experiments.
+The Python3 code of the tool itself looks elegant and
+care has been taken to make it extensible.
+I think I can say that the artefact exceeds
+expectations for all of coverage, instructions, and quality.
+
+There are only two small downsides to mention.
+First, as the authors themselves admit, they didn't manage to build the solver Z3str2 on the VM.
+Second, I was surprised to see the checksum for the machine image
+delivered as part of the content of the image itself.
+(Since adding this file must have again changed the actual checksum,
+I hope it's clear this defeated the purpose of this measure.
+Besides the file checksum.sha1 doesn't not seem to contain what I would expect anyway
+- it looks like it has binary content.)
+
+------------------------------------------------------
