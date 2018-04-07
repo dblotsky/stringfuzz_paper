@@ -1,4 +1,4 @@
-\documentclass{llncs}
+\documentclass[runningheads]{llncs}
 
 \usepackage{booktabs}
 \usepackage{footmisc}
@@ -8,28 +8,18 @@
 \usepackage{multirow}
 \usepackage{graphicx}
 \usepackage{float}
-\usepackage{titling}
 \usepackage{array}
 \usepackage{filecontents}
 \usepackage{varwidth}
 \usepackage{enumitem}
 
-
 \usepackage{subcaption}
 \captionsetup{compatibility=false}
 
-% Footnotes is table
+% Footnotes in table
 \usepackage{footnote}
 \makesavenoteenv{tabular}
 \makesavenoteenv{table}
-
-% define dimensions
-\setlength{\pdfpageheight}{\paperheight}
-\setlength{\pdfpagewidth}{\paperwidth}
-
-% % configure minted
-% \usepackage{minted}
-% \setminted[bash]{linenos}
 
 % constants
 \def\fuzzer{StringFuzz}
@@ -56,38 +46,29 @@
 \def\linesPerX{45}
 \def\linesInFuzzer{3,183}
 
-% \def\problemRepo{\url{https://example.com}}
-% \def\sourceRepo{\url{https://github.com/dblotsky/stringfuzz}}
-
 \begin{document}
 
-    % styles
-    \pagestyle{headings} % switches on printing of running heads
-    \addtocmark{Hamiltonian Mechanics} % additional mark in the TOC
-
     % title
-    \title{
-        \fuzzer{}: A Fuzzer for String Solvers
-    }
-    \titlerunning{\fuzzer{}} % abbreviated title (for running head)
+    \title{\fuzzer{}: A Fuzzer for String Solvers}
 
    % authors
    \author{
-       Dmitry Blotsky\inst{1},
-       Federico Mora\inst{2},
-       Murphy Berzish\inst{1},\and
-       Yunhui Zheng\inst{3},
-       Ifaz Kabir\inst{1},
+       Dmitry Blotsky\inst{1} \and
+       Federico Mora\inst{2} \and
+       Murphy Berzish\inst{1} \and \\
+       Yunhui Zheng\inst{3} \and
+       Ifaz Kabir\inst{1} \and
        Vijay~Ganesh\inst{1}
    }
    \authorrunning{Blotsky et al.}
 
    % institutions
    \institute{
-       University of Waterloo, Waterloo ON, Canada,\\
-       \email{dblotsky@uwaterloo.ca}
-       % U of T for Federico
-       % IBM for Yunhui
+       University of Waterloo
+       \and
+       University of Toronto
+       \and
+       IBM T.J. Watson Research Center
    }
 
     \maketitle
@@ -101,12 +82,5 @@
 
     \bibliographystyle{abbrv}
     \bibliography{paper}
-
-    \newpage
-    \appendix
-    \input{includes/appendix.tex}
-
-    % \appendix
-    % \section{Appendix}
 
 \end{document}

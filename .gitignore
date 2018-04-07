@@ -12,3 +12,5 @@ artifact/stringfuzz
 *.ova
 data/traces
 notes
+
+__latexindent_temp.tex

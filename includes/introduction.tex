@@ -28,15 +28,13 @@ length of string constants, depth of concatenations (concats) and
 regular expressions (regexes), number of variables, number of length
 constraints, and many more.
 
-\subsubsection{Contributions}
-
+\subsubsection{Contributions}\footnote{All source code, problem suites, and supplementary material
+referenced in this paper are available at the \fuzzer{} website \cite{website}.}
 \begin{enumerate}
     \item \textbf{The \fuzzer{} tool}:
         In Sect.~\ref{sec:fuzzer}, we describe a modular fuzzer that can
         transform and generate \smtfull{} string and regex
-        instances.\footnote{We assume basic
-        familiarity with string solvers and their input
-        language.} Scaling inputs (e.g., long string constants,
+        instances. Scaling inputs (e.g., long string constants,
         deep concatenations) are particularly useful in identifying asymptotic
         behaviors in solvers, and \fuzzer{} has many options to generate them.
         We briefly document \fuzzer{}'s components and modular architecture.

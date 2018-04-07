@@ -32,8 +32,7 @@ We organized \fuzzer{} to be easily extended. As evidence of our success we note
 that while the whole project
 contains \linesInFuzzer{} lines of code, it takes an average of
 \linesPerX{} lines of code to create a transformer. \fuzzer{} can either be
-installed from source, or from the Python PIP package
-repository.\footnote{The link to the source code will be added after double-blind review.}
+installed from source, or from the Python PIP package repository.
 
 \begin{table}[t]
     \caption{\fuzzer{} built-in (a) generators and (b) transformers.}
@@ -76,17 +75,17 @@ repository.\footnote{The link to the source code will be added after double-blin
             & Replaces literals and operators with similar ones.\\
             \textit{Graft}
             & Randomly swaps non-leaf nodes with leaf nodes.\\
-            \textit{Multiply}\footnote{Satisfiable inputs
-            will produce satisfiable outputs (see Appendix).}
+            \textit{Multiply}\footnote{Can guarantee satisfiable output instances 
+            from satisfiable input instances \cite{website}.}
             & Multiplies integers and repeats strings by N.\\
             \textit{Nop}
             & Does nothing (can translate between \smtfull{}).\\
-            \textit{Reverse}\footnote{Input and output
-            instances will be equisatisfiable (see Appendix).}
+            \textit{Reverse}\footnote{Can guarantee input and output
+            instances will be equisatisfiable \cite{website}.}
             & Reverses all string literals and concat arguments.\\
             \textit{Rotate}
             & Rotates compatible nodes in syntax tree.\\
-            \textit{Translate}\footnotemark[4]
+            \textit{Translate}\footnotemark[6]
             & Permutes the alphabet.\\
             \textit{Unprintable}
             & Replaces characters in literals with unprintable ones.\\
@@ -107,7 +106,7 @@ generator and produces an instance of the form:
     & \texttt{(assert (<= (str.len X)) Max)}?
 \end{align*}
 
-where $R_i \in RegEx$, and $Min, Max \in Int$. More simply, the
+\noindent where $R_i \in RegEx$, and $Min, Max \in Int$. More simply, the
 instance is a set of one or more regex constraints on a single
 variable, with optional maximum and minimum length constraints. The
 regex constraints $R$ are each of the form:
@@ -116,13 +115,13 @@ regex constraints $R$ are each of the form:
     \texttt{...}\; \texttt{(re.++}\; T_{n-1}\; T_n\; \texttt{))}
 \end{align*}
 
-and each $T_i$ is a recursive term of the form:
+\noindent and each $T_i$ is a recursive term of the form:
 \begin{align*}
     & \texttt{(re.*}\; T_{i_j}\; \texttt{) | (re.+}\; T_{i_j}\;
     \texttt{) | (re.union}\; T_{i_{j_1}}\; T_{i_{j_2}}\; \texttt{)}
 \end{align*}
 
-where $j$ is the specified depth of recursion. Terms at depth 0 are
+\noindent where $j$ is the specified depth of recursion. Terms at depth 0 are
 regex constants. Informally, this form describes a concatenation of
 regex terms, where each term is a random nested regex operator (chosen from
 regex Kleene star, repetition, and union), up to a specified depth,
