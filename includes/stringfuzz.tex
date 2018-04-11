@@ -75,8 +75,8 @@ installed from source, or from the Python PIP package repository.
             & Replaces literals and operators with similar ones.\\
             \textit{Graft}
             & Randomly swaps non-leaf nodes with leaf nodes.\\
-            \textit{Multiply}\footnote{Can guarantee satisfiable output instances 
-            from satisfiable input instances \cite{website}.}
+            \textit{Multiply}\footnote{Can guarantee satisfiable output
+            instances from satisfiable input instances \cite{website}.}
             & Multiplies integers and repeats strings by N.\\
             \textit{Nop}
             & Does nothing (can translate between \smtfull{}).\\
@@ -95,41 +95,39 @@ installed from source, or from the Python PIP package repository.
 \end{table}
 
 \subsubsection{Regex Generating Capabilities}
-\fuzzer{} can generate
-and transform instances with regular expression constraints. For example,
-\texttt{stringfuzzg regex} invokes the regex
-generator and produces an instance of the form:
+
+\fuzzer{} can generate and transform instances with regex
+constraints. For example, the command
+``\texttt{stringfuzzg regex -r 2 -d 1 -t 1 -M 3 -X 10}'' produces this instance:
+{\small\begin{verbatim}        (set-logic QF_S)
+        (declare-fun var0 () String)
+        (assert (str.in.re var0 (re.+ (str.to.re "R5"))))
+        (assert (str.in.re var0 (re.+ (str.to.re "!PC"))))
+        (assert (<= 3 (str.len var0)))
+        (assert (<= (str.len var0) 10))
+        (check-sat)\end{verbatim}}
+
+Each instance is a set of one or more regex constraints on a single
+variable, with optional maximum and minimum length constraints. Each regex
+constraint is a concatenation (\texttt{re.++} in SMT-LIB string syntax)
+of regex terms:
 \begin{align*}
-    & \texttt{(assert (str.in.re X}\; R_0\; \texttt{))} \\
-    & \texttt{(assert (str.in.re X}\; R_n\; \texttt{))}* \\
-    & \texttt{(assert (<= Min (str.len X)))}? \\
-    & \texttt{(assert (<= (str.len X)) Max)}?
+    & \texttt{(re.++ T1 (re.++ T2} \; ... \; \texttt{(re.++ Tn-1 Tn )))}
 \end{align*}
 
-\noindent where $R_i \in RegEx$, and $Min, Max \in Int$. More simply, the
-instance is a set of one or more regex constraints on a single
-variable, with optional maximum and minimum length constraints. The
-regex constraints $R$ are each of the form:
-\begin{align*}
-    & \texttt{(re.++}\; T_0\; \texttt{(re.++}\; T_1\;
-    \texttt{...}\; \texttt{(re.++}\; T_{n-1}\; T_n\; \texttt{))}
-\end{align*}
+\noindent and each term is recursively defined as any one of: repetition
+(\texttt{re.*}), Kleene star (\texttt{re.+}), union (\texttt{re.union}), or a
+character literal. Nested operators are nested up to a specified depth of
+recursion. Terms at depth 0 are always regex constants.
 
-\noindent and each $T_i$ is a recursive term of the form:
+Intuitively, each instance is a concatenation of regex terms, where each
+term is a random nested regex operator with random arguments
+(up to a specified depth) terminating in a regex literal.
+Below are three example regexes (in regex syntax, not in the SMT-LIB language)
+of depth 2 that can be produced by this scheme:
 \begin{align*}
-    & \texttt{(re.*}\; T_{i_j}\; \texttt{) | (re.+}\; T_{i_j}\;
-    \texttt{) | (re.union}\; T_{i_{j_1}}\; T_{i_{j_2}}\; \texttt{)}
-\end{align*}
-
-\noindent where $j$ is the specified depth of recursion. Terms at depth 0 are
-regex constants. Informally, this form describes a concatenation of
-regex terms, where each term is a random nested regex operator (chosen from
-regex Kleene star, repetition, and union), up to a specified depth,
-terminating in a regex literal. Below are three example regex instances
-(separated by spaces) of depth 2 produced by this scheme:
-\begin{align*}
-    & ((\texttt{a}|\texttt{b})|(\texttt{cc})+)\quad\quad
-    ((\texttt{ddd})*)+\quad\quad ((\texttt{ee})+|(\texttt{fff})*)
+    & ((\texttt{a}|\texttt{b})|(\texttt{cc})+)\quad\quad\quad
+    ((\texttt{ddd})*)+\quad\quad\quad ((\texttt{ee})+|(\texttt{fff})*)
 \end{align*}
 
 \subsubsection{Equisatisfiable String Transformations}
