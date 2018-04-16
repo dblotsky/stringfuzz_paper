@@ -4,7 +4,8 @@
 We generated several problem instance suites with \fuzzer{} that made one
 solver perform poorly, but not others.\footnote{Only the
 results that made one solver perform poorly and not others are presented, but
-results for all \fuzzer{} suites are available on the \fuzzer{} website.}
+results for all \fuzzer{} suites are available on the \fuzzer{}
+website\cite{website}.}
 They are \theSuites{}. Fig.~\ref{fig:cvc-hard} shows the suites that were
 uniquely difficult for \cvc{}. Fig.~\ref{fig:z3str3-hard} shows the
 suites that were uniquely difficult for \us{}. All experiments were
@@ -47,12 +48,12 @@ can reveal issues that would normally be out of scope for unit tests or
 industrial benchmarks. Three different
 performance and implementation bugs were identified and fixed in \us{}
 as a result of testing with the \fuzzer{} scaling suites
-\textit{Lengths} and \textit{Concats}.
+\textit{Lengths-Long} and \textit{Concats-Big}.
 
 \fuzzer{} also helped identify a number of performance-related issues and
 opportunities for new heuristics in \us{}. For example, by examining \us{}'s
 execution traces on the
-instances in the \textit{Concats} suite we discovered a
+instances in the \textit{Concats-Big} suite we discovered a
 potential new heuristic. In particular, \us{} does not
 make full use of the solving context (e.g. some terms are empty
 strings) to simplify the concatenations of a long list of string terms
